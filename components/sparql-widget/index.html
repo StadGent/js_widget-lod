@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Besluiten - detail</title>
+    <script type="module" src="./main.js"></script>
+    <script type="module" src="../teaser/ArticlePreview.js"></script>
+    <link
+      media="all"
+      rel="stylesheet"
+      href="https://stijlgids.stad.gent/v6/css/main.css"
+    />
+    <link media="all" rel="stylesheet" href="./styling.css" />
+    <link
+      media="all"
+      rel="stylesheet"
+      href="https://stijlgids.stad.gent/v6/css/styleguide.css"
+    />
+  </head>
+  <body class="cs--blue">
+    <sparkql-widget
+      sparkql-endpoint="https://probe.stad.gent/sparql"
+      sparkql-query="PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX eli: <http://data.europa.eu/eli/ontology#>
+PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+ 
+SELECT (?title AS ?Besluit) (STR(?stemming) AS ?Status) (STR(?orgaan) AS ?Orgaan) (?zitting_datum AS ?Datum_zitting) (?link AS ?Link)
+WHERE {
+  ?besluit a besluit:Besluit ;
+    eli:title_short ?title ;
+    prov:wasDerivedFrom ?link ;
+    prov:wasGeneratedBy ?behandelingVanAgendapunt .
+  ?behandelingVanAgendapunt dct:subject ?agendapunt ;
+    besluit:heeftStemming/besluit:gevolg ?stemming .
+  ?agendapunt ^besluit:behandelt ?zitting .
+  ?zitting besluit:isGehoudenDoor ?bestuursorgaanURI ;
+  besluit:geplandeStart ?zitting_datum.
+  ?bestuursorgaanURI skos:prefLabel ?orgaan .
+VALUES ?bestuursorgaanURI{ <http://data.lblod.info/id/bestuursorganen/0d0c1eeff199e9f0d9aabfa7e68b0600d6092fff099c5d7a0caba3d8ef762fb4> }
+} 
+GROUP BY ?orgaan
+ORDER BY DESC(?zitting_datum) ?orgaan
+LIMIT 100"
+    ></sparkql-widget>
+  </body>
+</html>

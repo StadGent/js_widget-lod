@@ -1,0 +1,96 @@
+.sparql-widget-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.pager__items {
+    justify-content: center !important;
+}
+
+.results-text {
+    margin-bottom: 20px;
+}
+
+.sparql-data-btn {
+    align-self: flex-start;
+    font-size: 16px;
+    line-height: 24px;
+    margin-left: 30px;
+    margin-bottom: 60px;
+}
+
+.sparql-data-btn:before {
+    content: url('./assets/share-icon.svg');
+    width: 24px;
+    height: 24px;
+    margin-left: 0;
+    border-bottom:0;
+    position: absolute;
+    vertical-align: -50%;
+    left: -30px;
+    padding-top: 1px;
+}
+
+.article-preview-description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.article-preview-description p {
+    margin: 0;
+}
+
+.article-preview-description a {
+    align-self: flex-start;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+    border-bottom-width: 1px;
+    margin-left: 21px;
+    cursor: pointer;
+}
+
+.article-preview-description a:before {
+    content: url('./assets/location.svg');
+    width: 16px;
+    height: 16px;
+    margin-left: 0;
+    border-bottom:0;
+    position: absolute;
+    vertical-align: -50%;
+    left: -21px;
+    padding-top: 1px;
+}
+
+.article-preview-description time {
+    align-self: flex-start;
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 400;
+    border-bottom-width: 1px;
+    margin-left: 21px;
+    cursor: pointer;
+}
+
+.article-preview-description time:before {
+    content: url('./assets/clock.svg');
+    width: 16px;
+    height: 16px;
+    margin-left: 0;
+    border-bottom:0;
+    position: absolute;
+    vertical-align: -50%;
+    left: 0;
+    padding-top: 3px;
+}
+
+.filter__results {
+    margin-left: 0;
+}
+
+body {
+    padding: 10px 200px;
+    
+}
