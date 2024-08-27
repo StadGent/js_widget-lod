@@ -1,0 +1,61 @@
+.article-preview {
+  &__description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    #previous,
+    #next {
+      cursor: pointer;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    a {
+      align-self: flex-start;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 400;
+      border-bottom-width: 1px;
+      margin-left: 21px;
+      cursor: pointer;
+
+      &:before {
+        content: url("./assets/location.svg");
+        width: 16px;
+        height: 16px;
+        margin-left: 0;
+        border-bottom: 0;
+        position: absolute;
+        vertical-align: -50%;
+        left: -21px;
+        padding-top: 1px;
+      }
+    }
+
+    time {
+      align-self: flex-start;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 400;
+      border-bottom-width: 1px;
+      margin-left: 21px;
+      cursor: pointer;
+
+      &:before {
+        content: url("./assets/clock.svg");
+        width: 16px;
+        height: 16px;
+        margin-left: 0;
+        border-bottom: 0;
+        position: absolute;
+        vertical-align: -50%;
+        left: 0;
+        padding-top: 3px;
+      }
+    }
+  }
+}

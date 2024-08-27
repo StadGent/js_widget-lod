@@ -1,0 +1,41 @@
+.article-preview-list {
+  display: flex;
+  flex-direction: column;
+
+  .pager__items {
+    justify-content: center !important;
+  }
+
+  .results-text {
+    margin-bottom: 20px;
+  }
+
+  .cta-btn {
+    align-self: flex-start;
+    font-size: 16px;
+    line-height: 24px;
+    margin-left: 30px;
+    margin-bottom: 60px;
+
+    &:before {
+      content: url("./assets/share-icon.svg");
+      width: 24px;
+      height: 24px;
+      margin-left: 0;
+      border-bottom: 0;
+      position: absolute;
+      vertical-align: -50%;
+      left: -30px;
+      padding-top: 1px;
+    }
+  }
+
+  .filter__results {
+    margin-left: 0;
+  }
+
+  #previous,
+  #next {
+    cursor: pointer;
+  }
+}

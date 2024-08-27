@@ -1,0 +1,60 @@
+{
+  "name": "lod-widgets",
+  "version": "0.0.1",
+  "description": "Stencil Component Starter",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/lod-widgets/lod-widgets.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/lod-widgets/lod-widgets.esm.js",
+      "require": "./dist/lod-widgets/lod-widgets.cjs.js"
+    },
+    "./article-preview-list": {
+      "import": "./dist/components/article-preview-list.js",
+      "types": "./dist/components/article-preview-list.d.ts"
+    },
+    "./article-preview-table": {
+      "import": "./dist/components/article-preview-table.js",
+      "types": "./dist/components/article-preview-table.d.ts"
+    },
+    "./lod-card": {
+      "import": "./dist/components/lod-card.js",
+      "types": "./dist/components/lod-cardd.ts"
+    },
+    "./loader": {
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs",
+      "types": "./loader/index.d.ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ionic-team/stencil-component-starter.git"
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "build": "stencil build",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "generate": "stencil generate"
+  },
+  "devDependencies": {
+    "@stencil/core": "^4.7.0",
+    "@stencil/sass": "^3.0.12",
+    "@types/jest": "^29.5.6",
+    "@types/node": "^16.18.11",
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "prettier": "3.3.3",
+    "puppeteer": "^21.9.0"
+  },
+  "license": "MIT"
+}
