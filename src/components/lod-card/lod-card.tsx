@@ -34,7 +34,7 @@ export class LodCard {
 
   render() {
     return (
-      <li class="teaser teaser--wide">
+      <li class="lod-card teaser teaser--wide">
         <article class="teaser-content">
           <div class="content__second">
             <h3 class="h4">{this.articleTitle}</h3>
@@ -49,7 +49,7 @@ export class LodCard {
               </ul>
             </div>
 
-            <div class="article-preview__description">
+            <div class="lod-card__description">
               {this.description && this.description !== "" && (
                 <p>{this.description}</p>
               )}
@@ -62,7 +62,7 @@ export class LodCard {
                   {this.address}
                 </a>
               )}
-              {this.date && this.date !== "" && <time>20 augustus</time>}
+              {this.date && this.date !== "" && <time>{this.date}</time>}
             </div>
             <a href={this.readMoreUrl} class="read-more standalone-link">
               {this.readMoreTextFormatted}

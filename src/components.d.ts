@@ -6,22 +6,6 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface ArticlePreviewList {
-        "countquery": string;
-        "ctatext": string;
-        "ctaurl": string;
-        "endpoint": string;
-        "itemsperpage": string;
-        "query": string;
-    }
-    interface ArticlePreviewTable {
-        "countquery": string;
-        "ctatext": string;
-        "ctaurl": string;
-        "endpoint": string;
-        "itemsperpage": string;
-        "query": string;
-    }
     interface LodCard {
         "address": string;
         "addressUrl": string;
@@ -33,49 +17,49 @@ export namespace Components {
         "readMoreUrl": string;
         "tag": string;
     }
+    interface LodCards {
+        "countquery": string;
+        "ctatext": string;
+        "ctaurl": string;
+        "endpoint": string;
+        "itemsperpage": string;
+        "query": string;
+    }
+    interface LodTable {
+        "countquery": string;
+        "ctatext": string;
+        "ctaurl": string;
+        "endpoint": string;
+        "itemsperpage": string;
+        "query": string;
+    }
 }
 declare global {
-    interface HTMLArticlePreviewListElement extends Components.ArticlePreviewList, HTMLStencilElement {
-    }
-    var HTMLArticlePreviewListElement: {
-        prototype: HTMLArticlePreviewListElement;
-        new (): HTMLArticlePreviewListElement;
-    };
-    interface HTMLArticlePreviewTableElement extends Components.ArticlePreviewTable, HTMLStencilElement {
-    }
-    var HTMLArticlePreviewTableElement: {
-        prototype: HTMLArticlePreviewTableElement;
-        new (): HTMLArticlePreviewTableElement;
-    };
     interface HTMLLodCardElement extends Components.LodCard, HTMLStencilElement {
     }
     var HTMLLodCardElement: {
         prototype: HTMLLodCardElement;
         new (): HTMLLodCardElement;
     };
+    interface HTMLLodCardsElement extends Components.LodCards, HTMLStencilElement {
+    }
+    var HTMLLodCardsElement: {
+        prototype: HTMLLodCardsElement;
+        new (): HTMLLodCardsElement;
+    };
+    interface HTMLLodTableElement extends Components.LodTable, HTMLStencilElement {
+    }
+    var HTMLLodTableElement: {
+        prototype: HTMLLodTableElement;
+        new (): HTMLLodTableElement;
+    };
     interface HTMLElementTagNameMap {
-        "article-preview-list": HTMLArticlePreviewListElement;
-        "article-preview-table": HTMLArticlePreviewTableElement;
         "lod-card": HTMLLodCardElement;
+        "lod-cards": HTMLLodCardsElement;
+        "lod-table": HTMLLodTableElement;
     }
 }
 declare namespace LocalJSX {
-    interface ArticlePreviewList {
-        "countquery"?: string;
-        "ctatext"?: string;
-        "ctaurl"?: string;
-        "endpoint"?: string;
-        "itemsperpage"?: string;
-        "query"?: string;
-    }
-    interface ArticlePreviewTable {
-        "countquery"?: string;
-        "ctatext"?: string;
-        "ctaurl"?: string;
-        "endpoint"?: string;
-        "itemsperpage"?: string;
-        "query"?: string;
-    }
     interface LodCard {
         "address"?: string;
         "addressUrl"?: string;
@@ -87,19 +71,35 @@ declare namespace LocalJSX {
         "readMoreUrl"?: string;
         "tag"?: string;
     }
+    interface LodCards {
+        "countquery"?: string;
+        "ctatext"?: string;
+        "ctaurl"?: string;
+        "endpoint"?: string;
+        "itemsperpage"?: string;
+        "query"?: string;
+    }
+    interface LodTable {
+        "countquery"?: string;
+        "ctatext"?: string;
+        "ctaurl"?: string;
+        "endpoint"?: string;
+        "itemsperpage"?: string;
+        "query"?: string;
+    }
     interface IntrinsicElements {
-        "article-preview-list": ArticlePreviewList;
-        "article-preview-table": ArticlePreviewTable;
         "lod-card": LodCard;
+        "lod-cards": LodCards;
+        "lod-table": LodTable;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "article-preview-list": LocalJSX.ArticlePreviewList & JSXBase.HTMLAttributes<HTMLArticlePreviewListElement>;
-            "article-preview-table": LocalJSX.ArticlePreviewTable & JSXBase.HTMLAttributes<HTMLArticlePreviewTableElement>;
             "lod-card": LocalJSX.LodCard & JSXBase.HTMLAttributes<HTMLLodCardElement>;
+            "lod-cards": LocalJSX.LodCards & JSXBase.HTMLAttributes<HTMLLodCardsElement>;
+            "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;
         }
     }
 }

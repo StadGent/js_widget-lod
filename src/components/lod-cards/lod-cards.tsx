@@ -1,11 +1,15 @@
 import { Component, Prop, State, h } from "@stencil/core";
+import {
+  getFormattedObjectValue,
+  getQueryWithoutLimit,
+} from "../../utils/utils";
 
 @Component({
-  tag: "article-preview-list",
-  styleUrl: "article-preview-list.scss",
+  tag: "lod-cards",
+  styleUrl: "lod-cards.scss",
   shadow: false,
 })
-export class ArticlePreviewList {
+export class LodCards {
   @Prop() endpoint: string;
   @Prop() query: string;
   @Prop() countquery: string;
@@ -16,12 +20,11 @@ export class ArticlePreviewList {
   @State() queryModified: string;
   @State() count: number = 0;
   @State() page: number = 1;
-  @State() headers: string[];
   @State() items: any[];
   @State() paginationString: string;
   @State() itemsPerPage: number = 10;
   @State() pagesResult: { page: number; result: any }[] = [];
-  @State() currentItem: any;
+  @State() currentPageItems: any;
   @State() isFetching: boolean = false;
 
   componentWillLoad() {
@@ -37,17 +40,6 @@ export class ArticlePreviewList {
     this.queryModified += ` ${this.paginationString}`;
     this.executeQuery();
     this.executeCountQuery();
-  }
-
-  formatHeader(input: string) {
-    // Replace all underscores with spaces
-    let formattedString = input.replace(/_/g, " ");
-
-    // Capitalize the first letter
-    formattedString =
-      formattedString.charAt(0).toUpperCase() + formattedString.slice(1);
-
-    return formattedString;
   }
 
   get queryUrl() {
@@ -91,12 +83,6 @@ export class ArticlePreviewList {
       if (response.ok) {
         const result: any = await response.json();
 
-        const filteredHeaders = result.head.vars.filter(
-          (header) => !header.startsWith("_"),
-        );
-
-        this.headers = filteredHeaders;
-
         const data = result.results.bindings;
 
         this.pagesResult.push({
@@ -104,23 +90,20 @@ export class ArticlePreviewList {
           result: data,
         });
 
-        this.currentItem = data;
+        this.currentPageItems = data;
       } else {
         console.log("Error when getting data.");
         console.log(this.queryModified);
       }
     } else {
-      this.currentItem = this.pagesResult.find(
+      this.currentPageItems = this.pagesResult.find(
         (res) => res.page === this.page,
       ).result;
     }
   }
 
   get queryWithoutLimit() {
-    return this.queryModified.replace(
-      new RegExp(`${this.paginationString}(?=\\s*$)`),
-      "",
-    );
+    return getQueryWithoutLimit(this.queryModified);
   }
 
   decrementPage() {
@@ -143,31 +126,15 @@ export class ArticlePreviewList {
     }
   }
 
-  formatValue(item: any) {
-    if (item.datatype === "http://www.w3.org/2001/XMLSchema#dateTime") {
-      var dateString = item.value;
-
-      const date = new Date(dateString);
-      return date.toLocaleString(["nl-BE"], {
-        weekday: "short",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    } else return item.value;
-  }
-
   render() {
-    if (this.count !== 0 && this.currentItem) {
+    if (this.count !== 0 && this.currentPageItems) {
       return (
-        <div class="article-preview-list">
+        <div class="lod-cards">
           <span class="results-text">
             <b>Er zijn {this.count} resultaten</b>
           </span>
           <ul class="filter__results">
-            {this.currentItem?.map((item) => (
+            {this.currentPageItems?.map((item) => (
               <lod-card
                 tag={item["tag"]?.value}
                 address={item["loc"]?.value}
@@ -175,6 +142,7 @@ export class ArticlePreviewList {
                 imageUrl={item["img"]?.value}
                 description={item["txt"]?.value}
                 readMoreUrl={item["url"]?.value}
+                date={getFormattedObjectValue(item["dat"])}
               />
             ))}
           </ul>
@@ -188,7 +156,7 @@ export class ArticlePreviewList {
           >
             {this.ctatext ?? "Bekijk de data via ons SPARQL-endpoint"}
           </a>
-          {this.count !== 0 && this.currentItem && (
+          {this.count !== 0 && this.currentPageItems && (
             <nav class="pager" aria-labelledby="pagination_1-55553">
               <h2 id="pagination_1-55553" class="visually-hidden">
                 Pagination

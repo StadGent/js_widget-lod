@@ -1,7 +1,15 @@
-.article-preview-list {
-  display: flex;
-  flex-direction: column;
+.lod-table {
+  td {
+    -ms-word-break: break-all;
+    word-break: break-all;
 
+    // Non standard for webkit
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+  }
   .pager__items {
     justify-content: center !important;
   }
@@ -32,10 +40,5 @@
 
   .filter__results {
     margin-left: 0;
-  }
-
-  #previous,
-  #next {
-    cursor: pointer;
   }
 }

@@ -13,13 +13,13 @@
       "import": "./dist/lod-widgets/lod-widgets.esm.js",
       "require": "./dist/lod-widgets/lod-widgets.cjs.js"
     },
-    "./article-preview-list": {
-      "import": "./dist/components/article-preview-list.js",
-      "types": "./dist/components/article-preview-list.d.ts"
+    "./lod-cards": {
+      "import": "./dist/components/lod-cards.js",
+      "types": "./dist/components/lod-cardsd.ts"
     },
-    "./article-preview-table": {
-      "import": "./dist/components/article-preview-table.js",
-      "types": "./dist/components/article-preview-table.d.ts"
+    "./lod-table": {
+      "import": "./dist/components/lod-table.js",
+      "types": "./dist/components/lod-table.d.ts"
     },
     "./lod-card": {
       "import": "./dist/components/lod-card.js",

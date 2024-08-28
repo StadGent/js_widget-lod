@@ -1,11 +1,16 @@
-import { Component, Fragment, Prop, State, Watch, h } from "@stencil/core";
+import { Component, Fragment, Prop, State, h } from "@stencil/core";
+import {
+  isNumber,
+  getQueryWithoutLimit,
+  getFormattedObjectValue,
+} from "../../utils/utils";
 
 @Component({
-  tag: "article-preview-table",
-  styleUrl: "article-preview-table.scss",
+  tag: "lod-table",
+  styleUrl: "lod-table.scss",
   shadow: false,
 })
-export class ArticlePreviewTable {
+export class LodTable {
   @Prop() endpoint: string;
   @Prop() query: string;
   @Prop() countquery: string;
@@ -26,11 +31,7 @@ export class ArticlePreviewTable {
 
   componentWillLoad() {
     this.queryModified = this.query;
-    if (
-      this.itemsperpage &&
-      this.itemsperpage !== "" &&
-      Number(this.itemsperpage)
-    ) {
+    if (isNumber(this.itemsperpage)) {
       this.itemsPerPage = Number(this.itemsperpage);
     }
     this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
@@ -117,10 +118,7 @@ export class ArticlePreviewTable {
   }
 
   get queryWithoutLimit() {
-    return this.queryModified.replace(
-      new RegExp(`${this.paginationString}(?=\\s*$)`),
-      "",
-    );
+    return getQueryWithoutLimit(this.queryModified);
   }
 
   decrementPage() {
@@ -143,25 +141,9 @@ export class ArticlePreviewTable {
     }
   }
 
-  formatValue(item: any) {
-    if (item.datatype === "http://www.w3.org/2001/XMLSchema#dateTime") {
-      var dateString = item.value;
-
-      const date = new Date(dateString);
-      return date.toLocaleString(["nl-BE"], {
-        weekday: "short",
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    } else return item.value;
-  }
-
   render() {
     return (
-      <div class="article-preview-table">
+      <div class="lod-table">
         <div class="responsive-table">
           <div class="table-wrapper">
             <table>
@@ -175,7 +157,7 @@ export class ArticlePreviewTable {
                 <tr>
                   {this.headers &&
                     this.headers.map((header) => (
-                      <td>{this.formatValue(item?.[header])}</td>
+                      <td>{getFormattedObjectValue(item?.[header])}</td>
                     ))}
                 </tr>
               ))}
