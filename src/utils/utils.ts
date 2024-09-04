@@ -18,7 +18,7 @@ type DataObject = {
 };
 
 export function getFormattedObjectValue(object: DataObject) {
-  if (object.datatype === "http://www.w3.org/2001/XMLSchema#dateTime") {
+  if (object?.datatype === "http://www.w3.org/2001/XMLSchema#dateTime") {
     var dateString = object.value;
 
     const date = new Date(dateString);
@@ -32,5 +32,5 @@ export function getFormattedObjectValue(object: DataObject) {
     });
   }
 
-  return object.value;
+  return object?.value || "";
 }
