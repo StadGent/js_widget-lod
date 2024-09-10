@@ -13,6 +13,9 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -24,10 +27,12 @@ jobs:
       - name: Build Stencil.js project
         run: npm run build
 
-      - name: Copy index.html to dist folder
-        run: cp src/index.html index.html
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Upload webcomponents directory
+          path: 'www'
+  
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
