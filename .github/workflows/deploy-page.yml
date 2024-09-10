@@ -25,10 +25,9 @@ jobs:
         run: npm run build
 
       - name: Copy index.html to dist folder
-        run: cp src/index.html dist/index.html
+        run: cp src/index.html index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
