@@ -140,7 +140,7 @@ export class LodCards {
           <ul class="filter__results">
             {this.currentPageItems?.map((item) => (
               <lod-card
-                tag={item["tag"]?.value}
+                tag={item["cat"]?.value}
                 address={item["loc"]?.value}
                 card-title={"test"}
                 image-url={item["img"]?.value}
