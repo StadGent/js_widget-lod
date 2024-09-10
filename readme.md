@@ -51,7 +51,7 @@ Need help? Check out the docs [here](https://stenciljs.com/docs/my-first-compone
 
 You can import the components like this:
 ```html
-<script type="module" src="https://unpkg.com/@district09/lod-widgets@1.0.0/dist/lod-widgets/lod-widgets.esm.js"></script>
+<script type="module" src="https://unpkg.com/@district09/lod-widgets/dist/lod-widgets/lod-widgets.esm.js"></script>
 
 <lod-cards></lod-cards>
 <lod-table></lod-table>
