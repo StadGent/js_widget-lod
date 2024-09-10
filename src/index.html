@@ -23,7 +23,7 @@
   </head>
   <body class="cs--blue">
     <lod-cards
-      itemsperpage="5"
+      items-per-page="5"
       query="PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX schema: <http://schema.org/>
       PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -34,7 +34,7 @@
         ?url
       (SAMPLE(STR(?img)) AS ?img)
         (GROUP_CONCAT(DISTINCT ?catname_nl; separator='; ') AS ?cat)
-        CONCAT(?address, ' ,', ?postal, ' ', ?local) AS ?loc
+        CONCAT(?address, ' , ', ?postal, ' ', ?local) AS ?loc
       FROM <http://stad.gent/tourism/pois/>
       FROM <http://stad.gent/tourism/terms/>
       WHERE {
@@ -72,7 +72,7 @@
           OPTIONAL { ?_cat schema:name ?catname_es.  FILTER (lang(?catname_es) = 'es')}
         }
       ORDER BY ?name_nl"
-      countquery="PREFIX dct: <http://purl.org/dc/terms/>
+      count-query="PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX schema: <http://schema.org/>
       PREFIX geo: <http://www.opengis.net/ont/geosparql#>
       SELECT (COUNT(DISTINCT ?_poi) AS ?count)
@@ -112,7 +112,7 @@
           OPTIONAL { ?_cat schema:name ?catname_es.  FILTER (lang(?catname_es) = 'es')}
         }"
       endpoint="https://stad.gent/sparql"
-      ctatext="Gepersonaliseerde CTA tekst"
+      cta-text="Gepersonaliseerde CTA tekst"
     ></lod-cards>
   </body>
 </html>

@@ -12,31 +12,32 @@ import {
 export class LodCards {
   @Prop() endpoint: string;
   @Prop() query: string;
-  @Prop() countquery: string;
-  @Prop() itemsperpage: string;
-  @Prop() ctatext: string;
-  @Prop() ctaurl: string;
+  @Prop() countQuery: string;
+  @Prop() itemsPerPage: string;
+  @Prop() ctaText: string;
+  @Prop() ctaUrl: string;
 
   @State() queryModified: string;
   @State() count: number = 0;
   @State() page: number = 1;
   @State() items: any[];
   @State() paginationString: string;
-  @State() itemsPerPage: number = 10;
+  @State() _itemsPerPage: number = 10;
   @State() pagesResult: { page: number; result: any }[] = [];
   @State() currentPageItems: any;
   @State() isFetching: boolean = false;
+  @State() visualPage: number = 1;
 
   componentWillLoad() {
     this.queryModified = this.query;
     if (
-      this.itemsperpage &&
-      this.itemsperpage !== "" &&
-      Number(this.itemsperpage)
+      this.itemsPerPage &&
+      this.itemsPerPage !== "" &&
+      Number(this.itemsPerPage)
     ) {
-      this.itemsPerPage = Number(this.itemsperpage);
+      this._itemsPerPage = Number(this.itemsPerPage);
     }
-    this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
+    this.paginationString = `LIMIT ${this._itemsPerPage} OFFSET ${this._itemsPerPage * this.page - this._itemsPerPage}`;
     this.queryModified += ` ${this.paginationString}`;
     this.executeQuery();
     this.executeCountQuery();
@@ -50,7 +51,7 @@ export class LodCards {
 
   async executeCountQuery() {
     const url = new URL(this.endpoint);
-    url.searchParams.set("query", this.countquery);
+    url.searchParams.set("query", this.countQuery);
 
     this.isFetching = true;
     const response = await fetch(url.toString(), {
@@ -103,26 +104,29 @@ export class LodCards {
   }
 
   get queryWithoutLimit() {
-    return getQueryWithoutLimit(this.queryModified);
+    return getQueryWithoutLimit(this.queryModified, this.paginationString);
   }
 
-  decrementPage() {
+  async decrementPage() {
     if (this.page > 1) {
       this.queryModified = this.queryWithoutLimit;
       this.page -= 1;
-      this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
+
+      this.paginationString = `LIMIT ${this._itemsPerPage} OFFSET ${this._itemsPerPage * this.page - this._itemsPerPage}`;
       this.queryModified += this.paginationString;
-      this.executeQuery();
+      await this.executeQuery();
+      this.visualPage -= 1;
     }
   }
 
-  incrementPage() {
+  async incrementPage() {
     if (this.page < this.count) {
       this.queryModified = this.queryWithoutLimit;
       this.page += 1;
-      this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
+      this.paginationString = `LIMIT ${this._itemsPerPage} OFFSET ${this._itemsPerPage * this.page - this._itemsPerPage}`;
       this.queryModified += this.paginationString;
-      this.executeQuery();
+      await this.executeQuery();
+      this.visualPage += 1;
     }
   }
 
@@ -138,10 +142,10 @@ export class LodCards {
               <lod-card
                 tag={item["tag"]?.value}
                 address={item["loc"]?.value}
-                title={"test"}
-                imageUrl={item["img"]?.value}
+                card-title={"test"}
+                image-url={item["img"]?.value}
                 description={item["txt"]?.value}
-                readMoreUrl={item["url"]?.value}
+                read-more-url={item["url"]?.value}
                 date={getFormattedObjectValue(item["dat"])}
               />
             ))}
@@ -149,12 +153,12 @@ export class LodCards {
           <a
             class="cta-btn"
             href={
-              this.ctaurl && this.ctaurl !== ""
-                ? this.ctaurl
+              this.ctaUrl && this.ctaUrl !== ""
+                ? this.ctaUrl
                 : `${this.queryUrl.toString()}`
             }
           >
-            {this.ctatext ?? "Bekijk de data via ons SPARQL-endpoint"}
+            {this.ctaText ?? "Bekijk de data via ons SPARQL-endpoint"}
           </a>
           {this.count !== 0 && this.currentPageItems && (
             <nav class="pager" aria-labelledby="pagination_1-55553">
@@ -165,9 +169,9 @@ export class LodCards {
               <ul class="pager__items">
                 <li
                   onClick={() =>
-                    this.isFetching ? null : this.decrementPage()
+                    this.visualPage === this.page ? this.decrementPage() : null
                   }
-                  style={{ display: this.page === 1 ? "none" : "block" }}
+                  style={{ display: this.visualPage === 1 ? "none" : "block" }}
                   id="previous"
                   class="previous"
                 >
@@ -177,19 +181,20 @@ export class LodCards {
                   </a>
                 </li>
                 <li class="current-page">
-                  Pagina {this.page} van {this.count}
+                  Pagina {this.visualPage} van {this.count}
                 </li>
 
-                <li id="next" class="next">
-                  <a
-                    onClick={() =>
-                      this.isFetching ? null : this.incrementPage()
-                    }
-                    class="standalone-link"
-                    style={{
-                      display: this.page == this.count ? "none" : "block",
-                    }}
-                  >
+                <li
+                  onClick={() =>
+                    this.visualPage === this.page ? this.incrementPage() : null
+                  }
+                  style={{
+                    display: this.visualPage == this.count ? "none" : "block",
+                  }}
+                  id="next"
+                  class="next"
+                >
+                  <a class="standalone-link">
                     Volgende
                     <span class="visually-hidden">pagina</span>
                   </a>

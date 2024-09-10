@@ -9,7 +9,7 @@ export namespace Components {
     interface LodCard {
         "address": string;
         "addressUrl": string;
-        "articleTitle": string;
+        "cardTitle": string;
         "date": string;
         "description": string;
         "imageUrl": string;
@@ -18,20 +18,21 @@ export namespace Components {
         "tag": string;
     }
     interface LodCards {
-        "countquery": string;
-        "ctatext": string;
-        "ctaurl": string;
+        "countQuery": string;
+        "ctaText": string;
+        "ctaUrl": string;
         "endpoint": string;
-        "itemsperpage": string;
+        "itemsPerPage": string;
         "query": string;
     }
     interface LodTable {
-        "countquery": string;
-        "ctatext": string;
-        "ctaurl": string;
+        "countQuery": string;
+        "ctaText": string;
+        "ctaUrl": string;
         "endpoint": string;
-        "itemsperpage": string;
+        "itemsPerPage": string;
         "query": string;
+        "tableCaption": string;
     }
 }
 declare global {
@@ -63,7 +64,7 @@ declare namespace LocalJSX {
     interface LodCard {
         "address"?: string;
         "addressUrl"?: string;
-        "articleTitle"?: string;
+        "cardTitle"?: string;
         "date"?: string;
         "description"?: string;
         "imageUrl"?: string;
@@ -72,20 +73,21 @@ declare namespace LocalJSX {
         "tag"?: string;
     }
     interface LodCards {
-        "countquery"?: string;
-        "ctatext"?: string;
-        "ctaurl"?: string;
+        "countQuery"?: string;
+        "ctaText"?: string;
+        "ctaUrl"?: string;
         "endpoint"?: string;
-        "itemsperpage"?: string;
+        "itemsPerPage"?: string;
         "query"?: string;
     }
     interface LodTable {
-        "countquery"?: string;
-        "ctatext"?: string;
-        "ctaurl"?: string;
+        "countQuery"?: string;
+        "ctaText"?: string;
+        "ctaUrl"?: string;
         "endpoint"?: string;
-        "itemsperpage"?: string;
+        "itemsPerPage"?: string;
         "query"?: string;
+        "tableCaption"?: string;
     }
     interface IntrinsicElements {
         "lod-card": LodCard;

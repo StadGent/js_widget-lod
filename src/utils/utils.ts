@@ -8,8 +8,8 @@ export function isNumber(val: string | undefined | null) {
   return val && val !== "" && Number(val);
 }
 
-export function getQueryWithoutLimit(query: string) {
-  return query.replace(new RegExp(`${this.paginationString}(?=\\s*$)`), "");
+export function getQueryWithoutLimit(query: string, paginationString: string) {
+  return query.replace(new RegExp(`${paginationString}(?=\\s*$)`), "");
 }
 
 type DataObject = {

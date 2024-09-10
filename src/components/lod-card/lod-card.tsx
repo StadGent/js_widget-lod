@@ -6,7 +6,7 @@ import { Component, Prop, h } from "@stencil/core";
   shadow: false,
 })
 export class LodCard {
-  @Prop() articleTitle: string;
+  @Prop() cardTitle: string;
   @Prop() description: string;
   @Prop() address: string;
   @Prop() addressUrl: string;
@@ -37,17 +37,19 @@ export class LodCard {
       <li class="lod-card teaser teaser--wide">
         <article class="teaser-content">
           <div class="content__second">
-            <h3 class="h4">{this.articleTitle}</h3>
+            <h3 class="h4">{this.cardTitle}</h3>
 
-            <div class="tag-list-wrapper">
-              <ul class="tag-list">
-                {this.tagSplitted?.map((tag) => (
-                  <li>
-                    <span class="tag"> {tag} </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {this.tagSplitted?.length > 0 && (
+              <div class="tag-list-wrapper">
+                <ul class="tag-list">
+                  {this.tagSplitted?.map((tag) => (
+                    <li>
+                      <span class="tag"> {tag} </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div class="lod-card__description">
               {this.description && this.description !== "" && (
@@ -64,9 +66,10 @@ export class LodCard {
               )}
               {this.date && this.date !== "" && <time>{this.date}</time>}
             </div>
+
             <a href={this.readMoreUrl} class="read-more standalone-link">
               {this.readMoreTextFormatted}
-              <span class="visually-hidden"> over {this.articleTitle} </span>
+              <span class="visually-hidden"> over {this.cardTitle} </span>
             </a>
           </div>
 

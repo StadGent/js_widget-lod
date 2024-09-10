@@ -1,4 +1,9 @@
 .lod-card {
+  .content__second {
+    .read-more {
+      align-self: flex-start;
+    }
+  }
   &__description {
     display: flex;
     flex-direction: column;

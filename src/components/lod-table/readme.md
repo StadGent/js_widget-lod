@@ -7,14 +7,15 @@
 
 ## Properties
 
-| Property       | Attribute      | Description | Type     | Default     |
-| -------------- | -------------- | ----------- | -------- | ----------- |
-| `countquery`   | `countquery`   |             | `string` | `undefined` |
-| `ctatext`      | `ctatext`      |             | `string` | `undefined` |
-| `ctaurl`       | `ctaurl`       |             | `string` | `undefined` |
-| `endpoint`     | `endpoint`     |             | `string` | `undefined` |
-| `itemsperpage` | `itemsperpage` |             | `string` | `undefined` |
-| `query`        | `query`        |             | `string` | `undefined` |
+| Property       | Attribute        | Description | Type     | Default     |
+| -------------- | ---------------- | ----------- | -------- | ----------- |
+| `countQuery`   | `count-query`    |             | `string` | `undefined` |
+| `ctaText`      | `cta-text`       |             | `string` | `undefined` |
+| `ctaUrl`       | `cta-url`        |             | `string` | `undefined` |
+| `endpoint`     | `endpoint`       |             | `string` | `undefined` |
+| `itemsPerPage` | `items-per-page` |             | `string` | `undefined` |
+| `query`        | `query`          |             | `string` | `undefined` |
+| `tableCaption` | `table-caption`  |             | `string` | `undefined` |
 
 
 ----------------------------------------------

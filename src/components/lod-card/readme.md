@@ -11,7 +11,7 @@
 | -------------- | ---------------- | ----------- | -------- | ----------- |
 | `address`      | `address`        |             | `string` | `undefined` |
 | `addressUrl`   | `address-url`    |             | `string` | `undefined` |
-| `articleTitle` | `article-title`  |             | `string` | `undefined` |
+| `cardTitle`    | `card-title`     |             | `string` | `undefined` |
 | `date`         | `date`           |             | `string` | `undefined` |
 | `description`  | `description`    |             | `string` | `undefined` |
 | `imageUrl`     | `image-url`      |             | `string` | `undefined` |
