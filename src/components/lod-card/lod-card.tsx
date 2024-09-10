@@ -6,14 +6,37 @@ import { Component, Prop, h } from "@stencil/core";
   shadow: false,
 })
 export class LodCard {
+  /**
+   * The title of the card
+   */
   @Prop() cardTitle: string;
+  /**
+   * The card description
+   */
   @Prop() description: string;
+  /**
+   * The location address of the event
+   */
   @Prop() address: string;
-  @Prop() addressUrl: string;
+  /**
+   * The date of the event
+   */
   @Prop() date: string;
+  /**
+   * ; Seperated tags to show in the card
+   */
   @Prop() tag: string;
+  /**
+   * Url of the image
+   */
   @Prop() imageUrl: string;
+  /**
+   * Custom read more text
+   */
   @Prop() readMoreText: string;
+  /**
+   * Read more url
+   */
   @Prop() readMoreUrl: string;
 
   private get tagSplitted(): string[] {
@@ -37,7 +60,7 @@ export class LodCard {
       <li class="lod-card teaser teaser--wide">
         <article class="teaser-content">
           <div class="content__second">
-            <h3 class="h4">{this.cardTitle}</h3>
+            {this.cardTitle && <h3 class="h4">{this.cardTitle}</h3>}
 
             {this.tagSplitted?.length > 0 && (
               <div class="tag-list-wrapper">
@@ -67,10 +90,12 @@ export class LodCard {
               {this.date && this.date !== "" && <time>{this.date}</time>}
             </div>
 
-            <a href={this.readMoreUrl} class="read-more standalone-link">
-              {this.readMoreTextFormatted}
-              <span class="visually-hidden"> over {this.cardTitle} </span>
-            </a>
+            {this.readMoreUrl && (
+              <a href={this.readMoreUrl} class="read-more standalone-link">
+                {this.readMoreTextFormatted}
+                <span class="visually-hidden"> over {this.cardTitle} </span>
+              </a>
+            )}
           </div>
 
           <div class="content__first">
@@ -90,14 +115,16 @@ export class LodCard {
             </div>
           </div>
         </article>
-        <a
-          href="#"
-          class="teaser-overlay-link"
-          tabIndex={-1}
-          aria-hidden="true"
-        >
-          {this.readMoreText}
-        </a>
+        {this.readMoreUrl && (
+          <a
+            href={this.readMoreUrl}
+            class="teaser-overlay-link"
+            tabIndex={-1}
+            aria-hidden="true"
+          >
+            {this.readMoreTextFormatted}
+          </a>
+        )}
       </li>
     );
   }

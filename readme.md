@@ -65,3 +65,5 @@ You can also import the script as part of your `node_modules` in your applicatio
 ```tsx
 import "lod-widgets/dist/lod-widgets/lod-widgets.esm.js";
 ```
+
+# [Checkout the demo here](https://stadgent.github.io/js_widget-lod/)

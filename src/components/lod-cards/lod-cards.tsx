@@ -20,19 +20,39 @@ interface DataObject {
   shadow: false,
 })
 export class LodCards {
-  @Prop() endpoint: string;
-  @Prop() query: string;
-  @Prop() countQuery: string;
-  @Prop() itemsPerPage: string;
+  /**
+   * The SparQL Endpoint
+   */
+  @Prop() endpoint!: string;
+  /**
+   * The query
+   */
+  @Prop() query!: string;
+  /**
+   * The count query
+   */
+  @Prop() countQuery!: string;
+  /**
+   * Maximum items per page
+   */
+  @Prop() itemsPerPage: number = 10;
+  /**
+   * Custom call to action text
+   */
   @Prop() ctaText: string;
+  /**
+   * Custom call to action url
+   */
   @Prop() ctaUrl: string;
+  /**
+   * Caption for the table for screen readers
+   */
 
   @State() queryModified: string;
   @State() count: number = 0;
   @State() page: number = 1;
   @State() items: any[];
   @State() paginationString: string;
-  @State() _itemsPerPage: number = 10;
   @State() pagesResult: { page: number; result: any }[] = [];
   @State() currentPageItems: any;
   @State() isFetching: boolean = false;
@@ -40,14 +60,8 @@ export class LodCards {
 
   componentWillLoad() {
     this.queryModified = this.query;
-    if (
-      this.itemsPerPage &&
-      this.itemsPerPage !== "" &&
-      Number(this.itemsPerPage)
-    ) {
-      this._itemsPerPage = Number(this.itemsPerPage);
-    }
-    this.paginationString = `LIMIT ${this._itemsPerPage} OFFSET ${this._itemsPerPage * this.page - this._itemsPerPage}`;
+
+    this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
     this.queryModified += ` ${this.paginationString}`;
     this.executeQuery();
     this.executeCountQuery();
@@ -122,7 +136,7 @@ export class LodCards {
       this.queryModified = this.queryWithoutLimit;
       this.page -= 1;
 
-      this.paginationString = `LIMIT ${this._itemsPerPage} OFFSET ${this._itemsPerPage * this.page - this._itemsPerPage}`;
+      this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
       this.queryModified += this.paginationString;
       await this.executeQuery();
       this.visualPage -= 1;
@@ -133,7 +147,7 @@ export class LodCards {
     if (this.page < this.count) {
       this.queryModified = this.queryWithoutLimit;
       this.page += 1;
-      this.paginationString = `LIMIT ${this._itemsPerPage} OFFSET ${this._itemsPerPage * this.page - this._itemsPerPage}`;
+      this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
       this.queryModified += this.paginationString;
       await this.executeQuery();
       this.visualPage += 1;

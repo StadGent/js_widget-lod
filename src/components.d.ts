@@ -7,31 +7,93 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface LodCard {
+        /**
+          * The location address of the event
+         */
         "address": string;
-        "addressUrl": string;
+        /**
+          * The title of the card
+         */
         "cardTitle": string;
+        /**
+          * The date of the event
+         */
         "date": string;
+        /**
+          * The card description
+         */
         "description": string;
+        /**
+          * Url of the image
+         */
         "imageUrl": string;
+        /**
+          * Custom read more text
+         */
         "readMoreText": string;
+        /**
+          * Read more url
+         */
         "readMoreUrl": string;
+        /**
+          * ; Seperated tags to show in the card
+         */
         "tag": string;
     }
     interface LodCards {
+        /**
+          * The count query
+         */
         "countQuery": string;
+        /**
+          * Custom call to action text
+         */
         "ctaText": string;
+        /**
+          * Custom call to action url
+         */
         "ctaUrl": string;
+        /**
+          * The SparQL Endpoint
+         */
         "endpoint": string;
-        "itemsPerPage": string;
+        /**
+          * Maximum items per page
+         */
+        "itemsPerPage": number;
+        /**
+          * The query
+         */
         "query": string;
     }
     interface LodTable {
+        /**
+          * The count query
+         */
         "countQuery": string;
+        /**
+          * Custom call to action text
+         */
         "ctaText": string;
+        /**
+          * Custom call to action url
+         */
         "ctaUrl": string;
+        /**
+          * The SparQL Endpoint
+         */
         "endpoint": string;
-        "itemsPerPage": string;
+        /**
+          * Maximum items per page
+         */
+        "itemsPerPage": number;
+        /**
+          * The query
+         */
         "query": string;
+        /**
+          * Caption for the table for screen readers
+         */
         "tableCaption": string;
     }
 }
@@ -62,31 +124,93 @@ declare global {
 }
 declare namespace LocalJSX {
     interface LodCard {
+        /**
+          * The location address of the event
+         */
         "address"?: string;
-        "addressUrl"?: string;
+        /**
+          * The title of the card
+         */
         "cardTitle"?: string;
+        /**
+          * The date of the event
+         */
         "date"?: string;
+        /**
+          * The card description
+         */
         "description"?: string;
+        /**
+          * Url of the image
+         */
         "imageUrl"?: string;
+        /**
+          * Custom read more text
+         */
         "readMoreText"?: string;
+        /**
+          * Read more url
+         */
         "readMoreUrl"?: string;
+        /**
+          * ; Seperated tags to show in the card
+         */
         "tag"?: string;
     }
     interface LodCards {
-        "countQuery"?: string;
+        /**
+          * The count query
+         */
+        "countQuery": string;
+        /**
+          * Custom call to action text
+         */
         "ctaText"?: string;
+        /**
+          * Custom call to action url
+         */
         "ctaUrl"?: string;
-        "endpoint"?: string;
-        "itemsPerPage"?: string;
-        "query"?: string;
+        /**
+          * The SparQL Endpoint
+         */
+        "endpoint": string;
+        /**
+          * Maximum items per page
+         */
+        "itemsPerPage"?: number;
+        /**
+          * The query
+         */
+        "query": string;
     }
     interface LodTable {
-        "countQuery"?: string;
+        /**
+          * The count query
+         */
+        "countQuery": string;
+        /**
+          * Custom call to action text
+         */
         "ctaText"?: string;
+        /**
+          * Custom call to action url
+         */
         "ctaUrl"?: string;
-        "endpoint"?: string;
-        "itemsPerPage"?: string;
-        "query"?: string;
+        /**
+          * The SparQL Endpoint
+         */
+        "endpoint": string;
+        /**
+          * Maximum items per page
+         */
+        "itemsPerPage"?: number;
+        /**
+          * The query
+         */
+        "query": string;
+        /**
+          * Caption for the table for screen readers
+         */
         "tableCaption"?: string;
     }
     interface IntrinsicElements {
