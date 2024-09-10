@@ -35,67 +35,33 @@ npm test
 
 Need help? Check out the docs [here](https://stenciljs.com/docs/my-first-component).
 
-## Using the components
+## Available components
 
-There are two strategies we recommend for using web components built with Stencil.
+* LodTable 
+  * HTML: <lod-table/>
+  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-table/readme.md)
+* LodCards 
+  * HTML: <lod-cards/>
+  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-cards/readme.md)
+* LodCard 
+  * HTML: <lod-card/>
+  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-card/readme.md)
 
-The first step for all two of these strategies is to [publish to NPM](https://docs.npmjs.com/getting-started/publishing-npm-packages).
+### Using the components
 
-You can read more about these different approaches in the [Stencil docs](https://stenciljs.com/docs/publishing).
-
-### Lazy Loading
-
-If your Stencil project is built with the [`dist`](https://stenciljs.com/docs/distribution) output target, you can import a small bootstrap script that registers all components and allows you to load individual component scripts lazily.
-
-For example, given your Stencil project namespace is called `my-design-system`, to use `my-component` on any website, inject this into your HTML:
-
+You can import the components like this:
 ```html
-<script type="module" src="https://unpkg.com/my-design-system"></script>
-<!--
-To avoid unpkg.com redirects to the actual file, you can also directly import:
-https://unpkg.com/foobar-design-system@0.0.1/dist/foobar-design-system/foobar-design-system.esm.js
--->
-<my-component
-  first="Stencil"
-  last="'Don't call me a framework' JS"
-></my-component>
+<script type="module" src="https://unpkg.com/@district09/lod-widgets@1.0.0/dist/lod-widgets/lod-widgets.esm.js"></script>
+
+<lod-cards></lod-cards>
+<lod-table></lod-table>
 ```
 
-This will only load the necessary scripts needed to render `<my-component />`. Once more components of this package are used, they will automatically be loaded lazily.
+This will only load the necessary javascript for the components that are used on your page.
+This means if you don't have lod-table, it won't load the js files for lod-table and it will make your application faster :)
 
 You can also import the script as part of your `node_modules` in your applications entry file:
 
 ```tsx
-import "foobar-design-system/dist/foobar-design-system/foobar-design-system.esm.js";
+import "lod-widgets/dist/lod-widgets/lod-widgets.esm.js";
 ```
-
-Check out this [Live Demo](https://stackblitz.com/edit/vitejs-vite-y6v26a?file=src%2Fmain.tsx).
-
-### Standalone
-
-If you are using a Stencil component library with `dist-custom-elements`, we recommend importing Stencil components individually in those files where they are needed.
-
-To export Stencil components as standalone components make sure you have the [`dist-custom-elements`](https://stenciljs.com/docs/custom-elements) output target defined in your `stencil.config.ts`.
-
-For example, given you'd like to use `<my-component />` as part of a React component, you can import the component directly via:
-
-```tsx
-import "foobar-design-system/my-component";
-
-function App() {
-  return (
-    <>
-      <div>
-        <my-component
-          first="Stencil"
-          last="'Don't call me a framework' JS"
-        ></my-component>
-      </div>
-    </>
-  );
-}
-
-export default App;
-```
-
-Check out this [Live Demo](https://stackblitz.com/edit/vitejs-vite-b6zuds?file=src%2FApp.tsx).
