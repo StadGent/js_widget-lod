@@ -1,0 +1,2 @@
+function n(n,e,r){return(n||"")+(e?` ${e}`:"")+(r?` ${r}`:"")}function e(n){return n&&n!==""&&Number(n)}function r(n,e){return n.replace(new RegExp(`${e}(?=\\s*$)`),"")}function t(n){if((n===null||n===void 0?void 0:n.datatype)==="http://www.w3.org/2001/XMLSchema#dateTime"){var e=n.value;const r=new Date(e);return r.toLocaleString(["nl-BE"],{weekday:"short",year:"numeric",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})}return(n===null||n===void 0?void 0:n.value)||""}export{t as a,n as f,r as g,e as i};
+//# sourceMappingURL=p-a98ce3c7.js.map

@@ -1,0 +1,45 @@
+.sr-only {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.lod-cards {
+  display: flex;
+  flex-direction: column;
+}
+.lod-cards .pager__items {
+  justify-content: center !important;
+}
+.lod-cards .results-text {
+  margin-bottom: 20px;
+}
+.lod-cards .cta-btn {
+  align-self: flex-start;
+  font-size: 16px;
+  line-height: 24px;
+  margin-left: 30px;
+  margin-bottom: 60px;
+}
+.lod-cards .cta-btn:before {
+  content: url("./assets/share-icon.svg");
+  width: 24px;
+  height: 24px;
+  margin-left: 0;
+  border-bottom: 0;
+  position: absolute;
+  vertical-align: -50%;
+  left: -30px;
+  padding-top: 1px;
+}
+.lod-cards .filter__results {
+  margin-left: 0;
+}
+.lod-cards #previous,
+.lod-cards #next {
+  cursor: pointer;
+  display: block;
+}

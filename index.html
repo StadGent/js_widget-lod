@@ -1,0 +1,119 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <link
+      media="all"
+      rel="stylesheet"
+      href="https://stijlgids.stad.gent/v6/css/main.css"
+    />
+    <link
+      media="all"
+      rel="stylesheet"
+      href="https://stijlgids.stad.gent/v6/css/styleguide.css"
+    />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"
+    />
+    <title>Stencil Component Starter</title>
+
+    <script type="module" src="/build/lod-widgets.esm.js"></script>
+    <script nomodule src="/build/lod-widgets.js"></script>
+  </head>
+  <body class="cs--blue">
+    <lod-cards
+      items-per-page="5"
+      query="PREFIX dct: <http://purl.org/dc/terms/>
+  PREFIX schema: <http://schema.org/>
+  PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+  SELECT DISTINCT
+    ?_poi
+    (STR(?name_nl) AS ?Naam)
+    (STR(?description_nl) AS ?txt)
+    ?url
+  (SAMPLE(STR(?img)) AS ?img)
+    (GROUP_CONCAT(DISTINCT ?catname_nl; separator='; ') AS ?cat)
+    CONCAT(?address, ', ', ?postal, ' ', ?local) AS ?loc
+  (?created AS ?dat)
+  FROM <http://stad.gent/tourism/pois/>
+  FROM <http://stad.gent/tourism/terms/>
+  WHERE {
+      ?_poi a <http://schema.org/TouristAttraction>.
+      ?_poi schema:identifier ?identifier.
+      ?_poi schema:url ?url.
+      ?_poi dct:created ?created.
+      ?_poi schema:field_poi_type ?type.
+      ?_poi dct:subject ?_cat.
+      ?_poi schema:image ?img.
+      ?_poi schema:contactPoint ?_contact.
+      ?_contact schema:name ?ctcname.
+      ?_contact schema:streetAddress ?address.
+      ?_contact schema:postalCode ?postal.
+      ?_contact schema:addressLocality ?local.
+      ?_contact schema:addressCountry ?country.
+      ?_contact schema:geometry ?_location.
+      ?_location geo:asWKT ?location.
+      OPTIONAL {?_poi <http://open.vocab.org/terms/icon> ?icon }
+      OPTIONAL {?_poi dct:modified ?modified.}
+      OPTIONAL {?_poi schema:name ?name_nl. FILTER (lang(?name_nl) = 'nl')}
+      OPTIONAL {?_poi schema:name ?name_en. FILTER (lang(?name_en) = 'en')}
+      OPTIONAL {?_poi schema:name ?name_fr. FILTER (lang(?name_fr) = 'fr')}
+      OPTIONAL {?_poi schema:name ?name_de. FILTER (lang(?name_de) = 'de')}
+      OPTIONAL {?_poi schema:name ?name_es. FILTER (lang(?name_es) = 'es')}
+      OPTIONAL {?_poi schema:description ?description_nl. FILTER (lang(?description_nl) = 'nl')}
+      OPTIONAL {?_poi schema:description ?description_en. FILTER (lang(?description_en) = 'en')}
+      OPTIONAL {?_poi schema:description ?description_fr. FILTER (lang(?description_fr) = 'fr')}
+      OPTIONAL {?_poi schema:description ?description_de. FILTER (lang(?description_de) = 'de')}
+      OPTIONAL {?_poi schema:description ?description_es. FILTER (lang(?description_es) = 'es')}
+      OPTIONAL { ?_cat schema:name ?catname_nl. FILTER (lang(?catname_nl) = 'nl')}
+      OPTIONAL { ?_cat schema:name ?catname_en. FILTER (lang(?catname_en) = 'en')}
+      OPTIONAL { ?_cat schema:name ?catname_fr. FILTER (lang(?catname_fr) = 'fr')}
+      OPTIONAL { ?_cat schema:name ?catname_de. FILTER (lang(?catname_de) = 'de')}
+      OPTIONAL { ?_cat schema:name ?catname_es.  FILTER (lang(?catname_es) = 'es')}
+    }
+  ORDER BY ?name_nl"
+      count-query="PREFIX dct: <http://purl.org/dc/terms/>
+      PREFIX schema: <http://schema.org/>
+      PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+      SELECT (COUNT(DISTINCT ?_poi) AS ?count)
+      FROM <http://stad.gent/tourism/pois/>
+      FROM <http://stad.gent/tourism/terms/>
+      WHERE {
+          ?_poi a <http://schema.org/TouristAttraction>.
+          ?_poi schema:identifier ?identifier.
+          ?_poi schema:url ?url.
+          ?_poi dct:created ?created.
+          ?_poi schema:field_poi_type ?type.
+          ?_poi dct:subject ?_cat.
+          ?_poi schema:contactPoint ?_contact.
+          ?_contact schema:name ?ctcname.
+          ?_contact schema:streetAddress ?address.
+          ?_contact schema:postalCode ?postal.
+          ?_contact schema:addressLocality ?local.
+          ?_contact schema:addressCountry ?country.
+          ?_contact schema:geometry ?_location.
+          ?_location geo:asWKT ?location.
+          OPTIONAL {?_poi <http://open.vocab.org/terms/icon> ?icon }
+          OPTIONAL {?_poi dct:modified ?modified.}
+          OPTIONAL {?_poi schema:name ?name_nl. FILTER (lang(?name_nl) = 'nl')}
+          OPTIONAL {?_poi schema:name ?name_en. FILTER (lang(?name_en) = 'en')}
+          OPTIONAL {?_poi schema:name ?name_fr. FILTER (lang(?name_fr) = 'fr')}
+          OPTIONAL {?_poi schema:name ?name_de. FILTER (lang(?name_de) = 'de')}
+          OPTIONAL {?_poi schema:name ?name_es. FILTER (lang(?name_es) = 'es')}
+          OPTIONAL {?_poi schema:description ?description_nl. FILTER (lang(?description_nl) = 'nl')}
+          OPTIONAL {?_poi schema:description ?description_en. FILTER (lang(?description_en) = 'en')}
+          OPTIONAL {?_poi schema:description ?description_fr. FILTER (lang(?description_fr) = 'fr')}
+          OPTIONAL {?_poi schema:description ?description_de. FILTER (lang(?description_de) = 'de')}
+          OPTIONAL {?_poi schema:description ?description_es. FILTER (lang(?description_es) = 'es')}
+          OPTIONAL { ?_cat schema:name ?catname_nl. FILTER (lang(?catname_nl) = 'nl')}
+          OPTIONAL { ?_cat schema:name ?catname_en. FILTER (lang(?catname_en) = 'en')}
+          OPTIONAL { ?_cat schema:name ?catname_fr. FILTER (lang(?catname_fr) = 'fr')}
+          OPTIONAL { ?_cat schema:name ?catname_de. FILTER (lang(?catname_de) = 'de')}
+          OPTIONAL { ?_cat schema:name ?catname_es.  FILTER (lang(?catname_es) = 'es')}
+        }"
+      endpoint="https://stad.gent/sparql"
+      cta-text="Gepersonaliseerde CTA tekst"
+    ></lod-cards>
+  </body>
+</html>
