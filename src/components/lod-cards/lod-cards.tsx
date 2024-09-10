@@ -4,6 +4,16 @@ import {
   getQueryWithoutLimit,
 } from "../../utils/utils";
 
+interface DataItem {
+  type: string;
+  value: string;
+  datatype?: string;
+}
+
+interface DataObject {
+  [key: string]: DataItem;
+}
+
 @Component({
   tag: "lod-cards",
   styleUrl: "lod-cards.scss",
@@ -130,6 +140,15 @@ export class LodCards {
     }
   }
 
+  getTitle(data: DataObject): string | undefined {
+    for (const key in data) {
+      if (!key.startsWith("_")) {
+        return data[key].value; // Return the "value" of the first item without an underscore.
+      }
+    }
+    return undefined; // Return undefined if no valid key is found.
+  }
+
   render() {
     if (this.count !== 0 && this.currentPageItems) {
       return (
@@ -142,7 +161,7 @@ export class LodCards {
               <lod-card
                 tag={item["cat"]?.value}
                 address={item["loc"]?.value}
-                card-title={"test"}
+                card-title={this.getTitle(item)}
                 image-url={item["img"]?.value}
                 description={item["txt"]?.value}
                 read-more-url={item["url"]?.value}
@@ -204,6 +223,8 @@ export class LodCards {
           )}
         </div>
       );
+    } else if (this.count === 0 && this.currentPageItems) {
+      return <h2>No items found with this query</h2>;
     }
   }
 }
