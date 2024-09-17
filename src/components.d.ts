@@ -70,6 +70,74 @@ export namespace Components {
          */
         "query": string;
     }
+    interface LodDecisionCard {
+        /**
+          * Date of decision
+         */
+        "date": string;
+        /**
+          * Decision title
+         */
+        "decisionTitle": string;
+        /**
+          * Sparql endpoint
+         */
+        "endpoint": string;
+        /**
+          * Organ of decision
+         */
+        "organ": string;
+        /**
+          * ; Status of decision
+         */
+        "status": string;
+        /**
+          * Uri to get decision
+         */
+        "uri": string;
+        /**
+          * Decision url
+         */
+        "url": string;
+    }
+    interface LodDecisionsList {
+        /**
+          * Concepts url
+         */
+        "concepts": string;
+        /**
+          * End Date
+         */
+        "endDate": string;
+        /**
+          * Sparql endpoint
+         */
+        "endpoint": string;
+        /**
+          * Max amount of items per page
+         */
+        "limit": number;
+        /**
+          * Organs url
+         */
+        "organs": string;
+        /**
+          * Boolean to decide if pager is shown or not
+         */
+        "pagerDisabled": boolean;
+        /**
+          * Start date
+         */
+        "startDate": string;
+        /**
+          * Boolean to decide if pager is shown or not
+         */
+        "statusses": string;
+        /**
+          * Taxonomy url
+         */
+        "taxonomy": string;
+    }
     interface LodTable {
         /**
           * The count query
@@ -118,6 +186,18 @@ declare global {
         prototype: HTMLLodCardsElement;
         new (): HTMLLodCardsElement;
     };
+    interface HTMLLodDecisionCardElement extends Components.LodDecisionCard, HTMLStencilElement {
+    }
+    var HTMLLodDecisionCardElement: {
+        prototype: HTMLLodDecisionCardElement;
+        new (): HTMLLodDecisionCardElement;
+    };
+    interface HTMLLodDecisionsListElement extends Components.LodDecisionsList, HTMLStencilElement {
+    }
+    var HTMLLodDecisionsListElement: {
+        prototype: HTMLLodDecisionsListElement;
+        new (): HTMLLodDecisionsListElement;
+    };
     interface HTMLLodTableElement extends Components.LodTable, HTMLStencilElement {
     }
     var HTMLLodTableElement: {
@@ -127,6 +207,8 @@ declare global {
     interface HTMLElementTagNameMap {
         "lod-card": HTMLLodCardElement;
         "lod-cards": HTMLLodCardsElement;
+        "lod-decision-card": HTMLLodDecisionCardElement;
+        "lod-decisions-list": HTMLLodDecisionsListElement;
         "lod-table": HTMLLodTableElement;
     }
 }
@@ -195,6 +277,74 @@ declare namespace LocalJSX {
          */
         "query": string;
     }
+    interface LodDecisionCard {
+        /**
+          * Date of decision
+         */
+        "date"?: string;
+        /**
+          * Decision title
+         */
+        "decisionTitle"?: string;
+        /**
+          * Sparql endpoint
+         */
+        "endpoint"?: string;
+        /**
+          * Organ of decision
+         */
+        "organ"?: string;
+        /**
+          * ; Status of decision
+         */
+        "status"?: string;
+        /**
+          * Uri to get decision
+         */
+        "uri"?: string;
+        /**
+          * Decision url
+         */
+        "url"?: string;
+    }
+    interface LodDecisionsList {
+        /**
+          * Concepts url
+         */
+        "concepts"?: string;
+        /**
+          * End Date
+         */
+        "endDate"?: string;
+        /**
+          * Sparql endpoint
+         */
+        "endpoint": string;
+        /**
+          * Max amount of items per page
+         */
+        "limit"?: number;
+        /**
+          * Organs url
+         */
+        "organs"?: string;
+        /**
+          * Boolean to decide if pager is shown or not
+         */
+        "pagerDisabled"?: boolean;
+        /**
+          * Start date
+         */
+        "startDate"?: string;
+        /**
+          * Boolean to decide if pager is shown or not
+         */
+        "statusses"?: string;
+        /**
+          * Taxonomy url
+         */
+        "taxonomy"?: string;
+    }
     interface LodTable {
         /**
           * The count query
@@ -232,6 +382,8 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "lod-card": LodCard;
         "lod-cards": LodCards;
+        "lod-decision-card": LodDecisionCard;
+        "lod-decisions-list": LodDecisionsList;
         "lod-table": LodTable;
     }
 }
@@ -241,6 +393,8 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "lod-card": LocalJSX.LodCard & JSXBase.HTMLAttributes<HTMLLodCardElement>;
             "lod-cards": LocalJSX.LodCards & JSXBase.HTMLAttributes<HTMLLodCardsElement>;
+            "lod-decision-card": LocalJSX.LodDecisionCard & JSXBase.HTMLAttributes<HTMLLodDecisionCardElement>;
+            "lod-decisions-list": LocalJSX.LodDecisionsList & JSXBase.HTMLAttributes<HTMLLodDecisionsListElement>;
             "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;
         }
     }
