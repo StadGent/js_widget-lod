@@ -21,7 +21,7 @@ export class LodTable {
   /**
    * The count query
    */
-  @Prop() countQuery!: string;
+  @Prop() countQuery: string;
   /**
    * Maximum items per page
    */
@@ -38,6 +38,10 @@ export class LodTable {
    * Caption for the table for screen readers
    */
   @Prop() tableCaption: string;
+  /**
+   * Wether to hide the pager or not
+   */
+  @Prop() pagerDisabled: boolean = false;
 
   @State() queryModified: string;
   @State() count: number = 0;
@@ -49,6 +53,7 @@ export class LodTable {
   @State() currentPageItems: any;
   @State() isFetching: boolean = false;
   @State() visualPage: number = 1;
+  @State() errorFetching: boolean = false;
 
   componentWillLoad() {
     this.queryModified = this.query;
@@ -56,7 +61,9 @@ export class LodTable {
     this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
     this.queryModified += ` ${this.paginationString}`;
     this.executeQuery();
-    this.executeCountQuery();
+    if (!this.pagerDisabled) {
+      this.executeCountQuery();
+    }
   }
 
   formatHeader(input: string) {
@@ -68,6 +75,12 @@ export class LodTable {
       formattedString.charAt(0).toUpperCase() + formattedString.slice(1);
 
     return formattedString;
+  }
+
+  get readMoreUrl() {
+    const url = new URL(this.endpoint);
+    url.searchParams.set("query", this.query);
+    return url;
   }
 
   get queryUrl() {
@@ -95,6 +108,7 @@ export class LodTable {
     } else {
       console.log("Error when getting count data.");
       console.log(this.queryModified);
+      this.errorFetching = true;
     }
   }
 
@@ -128,6 +142,7 @@ export class LodTable {
       } else {
         console.log("Error when getting data.");
         console.log(this.queryModified);
+        this.errorFetching = true;
       }
     } else {
       this.currentPageItems = this.pagesResult.find(
@@ -163,7 +178,10 @@ export class LodTable {
   }
 
   render() {
-    if (this.count !== 0 && this.currentPageItems) {
+    if (
+      (this.count !== 0 && this.currentPageItems) ||
+      (this.currentPageItems && this.pagerDisabled)
+    ) {
       return (
         <div class="lod-table">
           <div class="responsive-table">
@@ -223,12 +241,12 @@ export class LodTable {
             href={
               this.ctaUrl && this.ctaUrl !== ""
                 ? this.ctaUrl
-                : `${this.queryUrl.toString()}`
+                : `${this.readMoreUrl.toString()}`
             }
           >
             {this.ctaText ?? "Bekijk de data via ons SPARQL-endpoint"}
           </a>
-          {this.count !== 0 && this.currentPageItems && (
+          {!this.pagerDisabled && this.count !== 0 && this.currentPageItems && (
             <nav class="pager" aria-labelledby="pagination_1-55553">
               <h2 id="pagination_1-55553" class="visually-hidden">
                 Pagination
@@ -272,7 +290,10 @@ export class LodTable {
           )}
         </div>
       );
-    } else if (this.count === 0 && this.currentPageItems) {
+    } else if (
+      (this.count === 0 && this.currentPageItems && !this.pagerDisabled) ||
+      this.errorFetching
+    ) {
       return <h2>No items found with this query</h2>;
     }
   }

@@ -62,6 +62,10 @@ export namespace Components {
          */
         "itemsPerPage": number;
         /**
+          * Wether to hide the pager or not
+         */
+        "pagerDisabled": boolean;
+        /**
           * The query
          */
         "query": string;
@@ -87,6 +91,10 @@ export namespace Components {
           * Maximum items per page
          */
         "itemsPerPage": number;
+        /**
+          * Wether to hide the pager or not
+         */
+        "pagerDisabled": boolean;
         /**
           * The query
          */
@@ -179,6 +187,10 @@ declare namespace LocalJSX {
          */
         "itemsPerPage"?: number;
         /**
+          * Wether to hide the pager or not
+         */
+        "pagerDisabled"?: boolean;
+        /**
           * The query
          */
         "query": string;
@@ -187,7 +199,7 @@ declare namespace LocalJSX {
         /**
           * The count query
          */
-        "countQuery": string;
+        "countQuery"?: string;
         /**
           * Custom call to action text
          */
@@ -204,6 +216,10 @@ declare namespace LocalJSX {
           * Maximum items per page
          */
         "itemsPerPage"?: number;
+        /**
+          * Wether to hide the pager or not
+         */
+        "pagerDisabled"?: boolean;
         /**
           * The query
          */
