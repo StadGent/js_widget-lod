@@ -23,7 +23,7 @@
   </head>
   <body class="cs--blue">
     <lod-cards
-      pager-disabled="true"
+      pager-disabled="false"
       items-per-page="5"
       query="PREFIX dct: <http://purl.org/dc/terms/>
   PREFIX schema: <http://schema.org/>
@@ -118,7 +118,7 @@
     ></lod-cards>
 
     <lod-table
-      pager-disabled="true"
+      pager-disabled="false"
       items-per-page="5"
       query="PREFIX dct: <http://purl.org/dc/terms/>
       PREFIX schema: <http://schema.org/>
@@ -129,7 +129,7 @@
         (STR(?description_nl) AS ?Beschrijving)
         (GROUP_CONCAT(DISTINCT ?catname_nl; separator='; ') AS ?Categorie)
         CONCAT(?address, ', ', ?postal, ' ', ?local) AS ?Adres
-      (STR(?created) AS ?Datum)
+      (?created) AS ?Datum
       FROM <http://stad.gent/tourism/pois/>
       FROM <http://stad.gent/tourism/terms/>
       WHERE {
