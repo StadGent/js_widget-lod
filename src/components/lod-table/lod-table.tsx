@@ -42,6 +42,10 @@ export class LodTable {
    * Wether to hide the pager or not
    */
   @Prop() pagerDisabled: boolean = false;
+  /**
+   * Wether to hide the pager or not
+   */
+  @Prop() ctaDisabled: boolean = false;
 
   @State() queryModified: string;
   @State() count: number = 0;
@@ -236,16 +240,19 @@ export class LodTable {
               </div>
             )}
           </div>
-          <a
-            class="cta-btn"
-            href={
-              this.ctaUrl && this.ctaUrl !== ""
-                ? this.ctaUrl
-                : `${this.readMoreUrl.toString()}`
-            }
-          >
-            {this.ctaText ?? "Bekijk de data via ons SPARQL-endpoint"}
-          </a>
+          {!this.ctaDisabled && (
+            <a
+              class="cta-btn"
+              href={
+                this.ctaUrl && this.ctaUrl !== ""
+                  ? this.ctaUrl
+                  : `${this.readMoreUrl.toString()}`
+              }
+            >
+              {this.ctaText ?? "Bekijk de data via ons SPARQL-endpoint"}
+            </a>
+          )}
+
           {!this.pagerDisabled && this.count !== 0 && this.currentPageItems && (
             <nav class="pager" aria-labelledby="pagination_1-55553">
               <h2 id="pagination_1-55553" class="visually-hidden">

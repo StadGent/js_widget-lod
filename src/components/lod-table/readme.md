@@ -10,6 +10,7 @@
 | Property                | Attribute        | Description                              | Type      | Default     |
 | ----------------------- | ---------------- | ---------------------------------------- | --------- | ----------- |
 | `countQuery`            | `count-query`    | The count query                          | `string`  | `undefined` |
+| `ctaDisabled`           | `cta-disabled`   | Wether to hide the pager or not          | `boolean` | `false`     |
 | `ctaText`               | `cta-text`       | Custom call to action text               | `string`  | `undefined` |
 | `ctaUrl`                | `cta-url`        | Custom call to action url                | `string`  | `undefined` |
 | `endpoint` _(required)_ | `endpoint`       | The SparQL Endpoint                      | `string`  | `undefined` |

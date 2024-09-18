@@ -46,6 +46,10 @@ export namespace Components {
          */
         "countQuery": string;
         /**
+          * Wether to hide the call to action button or not
+         */
+        "ctaDisabled": boolean;
+        /**
           * Custom call to action text
          */
         "ctaText": string;
@@ -75,6 +79,10 @@ export namespace Components {
           * The count query
          */
         "countQuery": string;
+        /**
+          * Wether to hide the pager or not
+         */
+        "ctaDisabled": boolean;
         /**
           * Custom call to action text
          */
@@ -171,6 +179,10 @@ declare namespace LocalJSX {
          */
         "countQuery": string;
         /**
+          * Wether to hide the call to action button or not
+         */
+        "ctaDisabled"?: boolean;
+        /**
           * Custom call to action text
          */
         "ctaText"?: string;
@@ -200,6 +212,10 @@ declare namespace LocalJSX {
           * The count query
          */
         "countQuery"?: string;
+        /**
+          * Wether to hide the pager or not
+         */
+        "ctaDisabled"?: boolean;
         /**
           * Custom call to action text
          */
