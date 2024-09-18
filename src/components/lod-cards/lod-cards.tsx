@@ -25,11 +25,11 @@ export class LodCards {
    */
   @Prop() endpoint!: string;
   /**
-   * The query
+   * The query to use for data fetching
    */
   @Prop() query!: string;
   /**
-   * The count query
+   * The count query to use for total number of items
    */
   @Prop() countQuery!: string;
   /**
@@ -52,6 +52,10 @@ export class LodCards {
    * Wether to hide the call to action button or not
    */
   @Prop() ctaDisabled: boolean = false;
+  /**
+   * Custom read more text for the cards
+   */
+  @Prop() readMoreText: string;
 
   @State() queryModified: string;
   @State() count: number = 0;
@@ -201,6 +205,7 @@ export class LodCards {
                 image-url={item["img"]?.value}
                 description={item["txt"]?.value}
                 read-more-url={item["url"]?.value}
+                read-more-text={this.readMoreText}
                 date={getFormattedObjectValue(item["dat"])}
               />
             ))}

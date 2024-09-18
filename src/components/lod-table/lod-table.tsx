@@ -15,7 +15,7 @@ export class LodTable {
    */
   @Prop() endpoint!: string;
   /**
-   * The query
+   * The query to use for data fetching
    */
   @Prop() query!: string;
   /**
@@ -43,7 +43,7 @@ export class LodTable {
    */
   @Prop() pagerDisabled: boolean = false;
   /**
-   * Wether to hide the pager or not
+   * Wether to hide call to action button or not
    */
   @Prop() ctaDisabled: boolean = false;
 
