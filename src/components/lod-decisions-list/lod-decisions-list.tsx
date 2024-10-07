@@ -1,117 +1,99 @@
 import { Component, Prop, State, h } from "@stencil/core";
 
+interface DataItem {
+  type: string;
+  value: string;
+  datatype?: string;
+}
+
+interface DataObject {
+  [key: string]: DataItem;
+}
+
 @Component({
   tag: "lod-decisions-list",
   styleUrl: "lod-decisions-list.scss",
   shadow: false,
 })
-export class LodDecisionList {
+export class LodDecisionsList {
   /**
-   * Sparql endpoint
+   * The SparQL Endpoint
    */
   @Prop() endpoint!: string;
   /**
-   * Max amount of items per page
+   * The query
    */
-  @Prop() limit: number = 10;
+  @Prop() itemsPerPage: number = 10;
   /**
-   * Boolean to decide if pager is shown or not
-   */
-  @Prop() statusses: string;
-  /**
-   * Start date
-   */
-  @Prop() startDate: string;
-  /**
-   * End Date
-   */
-  @Prop() endDate: string;
-  /**
-   * Boolean to decide if pager is shown or not
-   */
-  @Prop() pagerDisabled: boolean = false;
-  /**
-   * Taxonomy url
+   * Taxonomy
    */
   @Prop() taxonomy: string;
   /**
-   * Concepts url
+   * Concepts
    */
   @Prop() concepts: string;
   /**
-   * Organs url
+   * Governing bodies (bestuursorganen)
    */
-  @Prop() organs: string;
+  @Prop() governingBodies: string;
+  /**
+   * Statusses
+   */
+  @Prop() statusses: string;
+  /**
+   * Start date of the decisions
+   */
+  @Prop() startDate: string;
+  /**
+   * End date of the decisions
+   */
+  @Prop() endDate: string;
+  /**
+   * Governing Units (bestuurseenheden)
+   */
+  @Prop() governingUnits: string;
+  /**
+   * Wether to hide the pager or not
+   */
+  @Prop() pagerDisabled: boolean = false;
 
-  @State() offset: number = 0;
-
-  @State() maxCount: number = 1000;
-
+  @State() queryModified: string;
+  @State() count: number = 0;
+  @State() page: number = 1;
+  @State() items: any[];
+  @State() paginationString: string;
+  @State() pagesResult: { page: number; result: any }[] = [];
+  @State() currentPageItems: any;
+  @State() isFetching: boolean = false;
+  @State() visualPage: number = 1;
+  @State() errorFetching: boolean = false;
   @State() selectQuery: string;
-
-  @State() pager: string;
-
   @State() countQuery: string;
 
-  @State() decisions: any[];
-
-  @State() currentPage = Math.floor(this.offset / this.limit) + 1;
-
-  @State() totalPages = Math.ceil(this.maxCount / this.limit);
-
-  componentWillLoad() {}
-
-  async executeQuery(query) {
-    const endpoint = this.endpoint + "?query=" + encodeURIComponent(query);
-    const response = await fetch(endpoint, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Accept: "application/sparql-results+json",
-      },
-    });
-
-    if (response.ok) {
-      const json = await response.json();
-      return json;
-    } else {
-      console.log("Error when getting data.");
-      console.log(query);
+  componentWillLoad() {
+    this.executeQuery();
+    if (!this.pagerDisabled) {
+      this.executeCountQuery();
     }
   }
 
-  async getBesluiten() {
-    let query = this.constructQuery();
-    if (this.pager) {
-      let count = await this.executeQuery(this.countQuery);
-      this.maxCount = count.results.bindings[0]["count"].value;
-      console.log(this.maxCount);
-    }
-
-    let json = await this.executeQuery(this.selectQuery);
-    if (json) {
-      this.decisions = json.results.bindings;
-    }
-  }
-
-  constructQuery() {
-    const statussen = this.statusses;
-    const bestuurseenheden = this.organs;
-    const bestuursorganen = this.organs;
-    const taxonomy =
-      this.taxonomy || "http://stad.gent/id/concepts/decision_making_themes";
-    const concepts = this.concepts;
+  get constructQuery() {
     let filterparams = "";
-    if (statussen) {
-      const statussenArray = statussen.split(",");
+    if (this.statusses && this.statusses.length > 0) {
+      const statussenArray = this.statusses.split(",");
+      // NOTE: adding query part here, status is not optional when filtering on status
+      filterparams += `?besluit prov:wasGeneratedBy/besluit:heeftStemming/besluit:gevolg ?status. \n`;
       filterparams +=
         "VALUES ?status { " +
         statussenArray.map((status) => `"${status.trim()}"@nl`).join(" ") +
         " }";
     } else {
-      filterparams += `BIND(COALESCE(?status, "Ontwerp") AS ?status)`;
+      // TODO: adding query part here, status is ONLY optional when not filtering on status
+      filterparams += `OPTIONAL { ?besluit prov:wasGeneratedBy/besluit:heeftStemming/besluit:gevolg ?status }`;
+      filterparams += `BIND(COALESCE(?status, "Onbekend"@nl) AS ?status)`;
     }
-    if (bestuurseenheden) {
-      const bestuurseenhedenArray = bestuurseenheden.split(" ");
+    if (this.governingUnits && this.governingUnits.length > 0) {
+      const bestuurseenhedenArray = this.governingUnits.split(" ");
       filterparams +=
         "VALUES ?bestuureenheidURI { " +
         bestuurseenhedenArray
@@ -119,8 +101,8 @@ export class LodDecisionList {
           .join(" ") +
         " }";
     }
-    if (bestuursorganen) {
-      const bestuursorganenArray = bestuursorganen.split(" ");
+    if (this.governingBodies && this.governingBodies.length > 0) {
+      const bestuursorganenArray = this.governingBodies.split(" ");
       filterparams +=
         "VALUES ?bestuursorgaanURI { " +
         bestuursorganenArray
@@ -130,13 +112,16 @@ export class LodDecisionList {
     }
 
     // Date filter.
-
-    if (this.startDate && this.endDate) {
+    if (
+      this.startDate &&
+      this.endDate &&
+      this.startDate.length > 0 &&
+      this.endDate.length > 0
+    ) {
       filterparams += `FILTER(?zitting_datum >= "${this.startDate}"^^xsd:date && ?zitting_datum <= "${this.endDate}"^^xsd:date)`;
-      console.log(filterparams);
-    } else if (this.startDate) {
+    } else if (this.startDate && this.startDate.length > 0) {
       filterparams += `FILTER(?zitting_datum >= "${this.startDate}"^^xsd:date)`;
-    } else if (this.endDate) {
+    } else if (this.endDate && this.endDate.length > 0) {
       filterparams += `FILTER(?zitting_datum <= "${this.endDate}"^^xsd:date)`;
     }
 
@@ -148,8 +133,8 @@ export class LodDecisionList {
         besluit:isGehoudenDoor/mandaat:isTijdspecialisatieVan ?bestuursorgaanURI .`;
     let queryBestuurseenheid = `?bestuursorgaanURI besluit:bestuurt ?bestuureenheidURI.`;
     let queryThema = "";
-    if (concepts) {
-      const conceptsArray = concepts.split(" ");
+    if (this.concepts && this.concepts.length > 0) {
+      const conceptsArray = this.concepts.split(" ");
       queryThema =
         `
         ?besluit ext:hasAnnotation ?annotation .
@@ -157,7 +142,7 @@ export class LodDecisionList {
                              ext:creationDate ?date ;
                              ext:hasLabel ?label .
         ?label ext:isTaxonomy ?concept .
-        VALUES ?thema { <${taxonomy}> }
+        VALUES ?thema { <${this.taxonomy}> }
         VALUES ?concept { ` +
         conceptsArray.map((concept) => `<${concept.trim()}>`).join(" ") +
         ` }
@@ -170,12 +155,8 @@ export class LodDecisionList {
     // @TODO: remove OPTIONAL {} when eenheden are available.
     let queryOptional = `OPTIONAL {${queryBestuurseenheid}}`;
 
-    // @TODO: remove OPTIONAL {} when statusses are available.
-    queryOptional += `OPTIONAL { ?besluit prov:wasGeneratedBy/besluit:heeftStemming/besluit:gevolg ?status }`;
-
     // @TODO: remove with query below after Bestuursorgaan has been moved to Zitting iso BehandelingVanAgendapunt
-    const endpoint = this.endpoint;
-    if (endpoint.includes("probe")) {
+    if (this.endpoint.includes("probe")) {
       queryBestuursorgaan = `
         prov:wasGeneratedBy ?behandelingVanAgendapunt .
         ?behandelingVanAgendapunt dct:subject ?agendapunt .
@@ -186,8 +167,8 @@ export class LodDecisionList {
     }
 
     let orderbyClause = "ORDER BY DESC(?zitting_datum)";
-    let limitClause = `LIMIT ${this.limit}`;
-    let offsetClause = `OFFSET ${this.offset}`;
+    let limitClause = `LIMIT ${this.itemsPerPage}`;
+    let offsetClause = `OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
 
     this.selectQuery = this.getQuery(
       "DISTINCT ?besluit ?title ?agendapunt ?zitting_datum ?orgaan ?url ?status",
@@ -212,11 +193,11 @@ export class LodDecisionList {
   }
 
   getQuery(
-    fields,
-    queryBestuursorgaan,
-    queryThema,
-    filterparams,
-    optionalQuery,
+    fields: string,
+    queryBestuursorgaan: string,
+    queryThema: string,
+    filterparams: string,
+    optionalQuery: string,
     orderbyClause = "",
     limitClause = "",
     offsetClause = "",
@@ -250,132 +231,195 @@ export class LodDecisionList {
     `;
   }
 
-  pageUp() {
-    this.offset += this.limit;
-    console.log(this.offset);
-    this.getBesluiten();
+  get queryUrl() {
+    const url = new URL(this.endpoint);
+    url.searchParams.set("query", this.constructQuery);
+    return url;
   }
 
-  pageDown() {
-    if (this.offset >= this.limit) {
-      this.offset -= this.limit;
-      console.log(this.offset);
-      this.getBesluiten();
+  async executeCountQuery() {
+    const url = new URL(this.endpoint);
+    this.constructQuery;
+    url.searchParams.set("query", this.countQuery);
+
+    this.isFetching = true;
+    const response = await fetch(url.toString(), {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/sparql-results+json",
+      },
+    });
+
+    if (response.ok) {
+      const result: any = await response.json();
+      this.count = Number(result.results.bindings[0].count.value);
+      this.isFetching = false;
+    } else {
+      console.log("Error when getting count data.");
+      console.log(this.queryModified);
+      this.errorFetching = true;
     }
   }
 
-  getPager() {
-    let previous = "";
-    let next = "";
-    let currentPage = Math.floor(this.offset / this.limit) + 1;
-    let totalPages = Math.ceil(this.maxCount / this.limit);
+  async executeQuery() {
+    // Check if we have the result cached locally
+    if (!this.pagesResult.find((res) => res.page === this.page)) {
+      const response = await fetch(this.queryUrl.toString(), {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Accept: "application/sparql-results+json",
+        },
+      });
 
-    if (this.offset >= this.limit) {
-      previous = `
-        <li class="previous" id="js-pager-previous"><a href="#" class="standalone-link back">
-            Vorige
-            <span class="visually-hidden">pagina</span></a></li>
-      `;
+      if (response.ok) {
+        const result: any = await response.json();
+
+        const data = result.results.bindings;
+
+        this.pagesResult.push({
+          page: this.page,
+          result: data,
+        });
+
+        this.currentPageItems = data;
+      } else {
+        console.log("Error when getting data.");
+        console.log(this.queryModified);
+        this.errorFetching = true;
+      }
+    } else {
+      this.currentPageItems = this.pagesResult.find(
+        (res) => res.page === this.page,
+      ).result;
     }
+  }
 
-    if (this.offset < this.maxCount - this.limit) {
-      next = `
-        <li class="next" id="js-pager-next"><a href="#" class="standalone-link">
-            Volgende
-            <span class="visually-hidden">pagina</span></a></li>
-      `;
+  get queryWithoutLimit() {
+    return "";
+    // return getQueryWithoutLimit(this.queryModified, this.paginationString);
+  }
+
+  async decrementPage() {
+    if (this.page > 1) {
+      this.queryModified = this.queryWithoutLimit;
+      this.page -= 1;
+
+      this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
+      this.queryModified += this.paginationString;
+      await this.executeQuery();
+      this.visualPage -= 1;
     }
+  }
 
-    return `
-    <nav class="pager" aria-labelledby="pagination">
-      <h2 id="pagination" class="visually-hidden">Paginatie</h2>
-      <ul class="pager__items">
-        ${previous}
-        <li class="current-page">Pagina ${currentPage} van ${totalPages}</li>
-        ${next}
-      </ul>
-    </nav>
-    `;
+  async incrementPage() {
+    if (this.page < this.count) {
+      this.queryModified = this.queryWithoutLimit;
+      this.page += 1;
+      this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
+      this.queryModified += this.paginationString;
+      await this.executeQuery();
+      this.visualPage += 1;
+    }
+  }
+
+  checkIfIsSlotted(ref: HTMLSlotElement) {
+    console.log(ref);
+  }
+
+  getTitle(data: DataObject): string | undefined {
+    for (const key in data) {
+      if (!key.startsWith("_")) {
+        return data[key].value; // Return the "value" of the first item without an underscore.
+      }
+    }
+    return undefined; // Return undefined if no valid key is found.
   }
 
   render() {
-    if (this.decisions && this.decisions.length > 0) {
+    if (
+      (this.count !== 0 && this.currentPageItems) ||
+      (this.pagerDisabled && this.currentPageItems)
+    ) {
       return (
-        <div id="template-besluiten-lijst">
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Fira+Sans:400,600,700"
-          />
-          <link
-            rel="stylesheet"
-            href="https://stijlgids.stad.gent/v6/css/styleguide.css"
-          />
-          <link
-            rel="stylesheet"
-            href="https://stijlgids.stad.gent/v6/css/main.css"
-          />
-          <link
-            rel="stylesheet"
-            href="https://stadgent.github.io/js_widget-besluiten/besluiten-lijst/besluiten-lijst.css"
-          />
-
-          <div class="resolutions-list cs--blue">
-            <section class="highlight">
-              <div class="highlight__inner">
-                <slot name="title" class="h3">
-                  Recente besluiten
-                </slot>
-
-                <div class="resolutions-list__items js-resolutions-items">
-                  {this.decisions.map((decision) => {
-                    <lod-decision-card
-                      decisionTitle={decision.title.value}
-                      organ={decision.orgaan.value}
-                      date={decision.zitting_datum.value}
-                      url={decision.url.value}
-                      status={decision.status?.value || ""}
-                    ></lod-decision-card>;
-                  })}
-                </div>
-
-                <div class="pager">
-                  <nav class="pager" aria-labelledby="pagination">
-                    <h2 id="pagination" class="visually-hidden">
-                      Paginatie
-                    </h2>
-                    <ul class="pager__items">
-                      <li class="previous" id="js-pager-previous">
-                        <a href="#" class="standalone-link back">
-                          Vorige
-                          <span class="visually-hidden">pagina</span>
-                        </a>
-                      </li>
-                      <li class="current-page">
-                        Pagina ${currentPage} van ${totalPages}
-                      </li>
-                      <li class="next" id="js-pager-next">
-                        <a href="#" class="standalone-link">
-                          Volgende
-                          <span class="visually-hidden">pagina</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </nav>
-                </div>
-
-                <slot name="raadpleegomgeving">
-                  <a
-                    href="https://ebesluitvorming.gent.be/"
-                    class="button button-primary"
-                  >
-                    Alle besluiten van Stad Gent
-                  </a>
-                </slot>
+        <div class="decisions-list cs--blue">
+          <div class="highlight">
+            <div class="highlight__inner">
+              <slot name="title">test</slot>
+              <div class="decisions-list__items">
+                <ul class="filter__results">
+                  {this.currentPageItems?.map((item) => (
+                    <li>
+                      <lod-decision-card
+                        decision-title={item.title.value}
+                        organ={item.orgaan.value}
+                        date={item.zitting_datum.value}
+                        url={item.url.value}
+                        status={item.status?.value}
+                      ></lod-decision-card>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </section>
+            </div>
           </div>
+
+          {this.count !== 0 && this.currentPageItems && (
+            <nav class="pager" aria-labelledby="pagination_1-55553">
+              <h2 id="pagination_1-55553" class="visually-hidden">
+                Pagination
+              </h2>
+
+              <ul class="pager__items">
+                <li
+                  onClick={() =>
+                    this.visualPage === this.page ? this.decrementPage() : null
+                  }
+                  style={{ display: this.visualPage === 1 ? "none" : "block" }}
+                  id="previous"
+                  class="previous"
+                >
+                  <a class="standalone-link back">
+                    Vorige
+                    <span class="visually-hidden">pagina</span>
+                  </a>
+                </li>
+                <li class="current-page">
+                  {`Pagina ${this.visualPage} van ${Math.ceil(this.count / this.itemsPerPage)}`}
+                </li>
+
+                <li
+                  onClick={() =>
+                    this.visualPage === this.page ? this.incrementPage() : null
+                  }
+                  style={{
+                    display: this.visualPage == this.count ? "none" : "block",
+                  }}
+                  id="next"
+                  class="next"
+                >
+                  <a class="standalone-link">
+                    Volgende
+                    <span class="visually-hidden">pagina</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          )}
+          <slot name="cta">
+            <a
+              href="https://ebesluitvorming.gent.be/"
+              class="button button-primary"
+            >
+              Alle besluiten van Stad Gent
+            </a>
+          </slot>
         </div>
       );
+    } else if (
+      (this.count === 0 && this.currentPageItems && !this.pagerDisabled) ||
+      this.errorFetching
+    ) {
+      return <h2>No items found with this query</h2>;
     }
   }
 }

@@ -31,6 +31,17 @@
     <script nomodule src="build/lod-widgets.js"></script>
   </head>
   <body class="cs--blue">
+    <lod-decisions-list
+    endpoint="https://probe.stad.gent/sparql"
+    itemsPerPage="5"
+    pagerDisabled="false"
+    taxonomy="http://stad.gent/id/concepts/decision_making_themes"
+    concepts="http://stad.gent/id/concepts/decision_making_themes/concept_36"
+    governingBodies="http://data.lblod.info/id/bestuursorganen/c126b20bc1a94de293b7fceaf998c82e9a7a1d56ba34cbf9992aa4bf01ae2b01"
+  >
+  <span slot="title" class="h3">Test adfd</span>
+    </lod-decisions-list>
+  </lod-decision-card>
     <lod-decision-card
       decision-title="Voorbeeld besluit (manueel)"
       organ="Gemeenteraad"

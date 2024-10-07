@@ -102,39 +102,43 @@ export namespace Components {
     }
     interface LodDecisionsList {
         /**
-          * Concepts url
+          * Concepts
          */
         "concepts": string;
         /**
-          * End Date
+          * End date of the decisions
          */
         "endDate": string;
         /**
-          * Sparql endpoint
+          * The SparQL Endpoint
          */
         "endpoint": string;
         /**
-          * Max amount of items per page
+          * Governing bodies (bestuursorganen)
          */
-        "limit": number;
+        "governingBodies": string;
         /**
-          * Organs url
+          * Governing Units (bestuurseenheden)
          */
-        "organs": string;
+        "governingUnits": string;
         /**
-          * Boolean to decide if pager is shown or not
+          * The query
+         */
+        "itemsPerPage": number;
+        /**
+          * Wether to hide the pager or not
          */
         "pagerDisabled": boolean;
         /**
-          * Start date
+          * Start date of the decisions
          */
         "startDate": string;
         /**
-          * Boolean to decide if pager is shown or not
+          * Statusses
          */
         "statusses": string;
         /**
-          * Taxonomy url
+          * Taxonomy
          */
         "taxonomy": string;
     }
@@ -309,39 +313,43 @@ declare namespace LocalJSX {
     }
     interface LodDecisionsList {
         /**
-          * Concepts url
+          * Concepts
          */
         "concepts"?: string;
         /**
-          * End Date
+          * End date of the decisions
          */
         "endDate"?: string;
         /**
-          * Sparql endpoint
+          * The SparQL Endpoint
          */
         "endpoint": string;
         /**
-          * Max amount of items per page
+          * Governing bodies (bestuursorganen)
          */
-        "limit"?: number;
+        "governingBodies"?: string;
         /**
-          * Organs url
+          * Governing Units (bestuurseenheden)
          */
-        "organs"?: string;
+        "governingUnits"?: string;
         /**
-          * Boolean to decide if pager is shown or not
+          * The query
+         */
+        "itemsPerPage"?: number;
+        /**
+          * Wether to hide the pager or not
          */
         "pagerDisabled"?: boolean;
         /**
-          * Start date
+          * Start date of the decisions
          */
         "startDate"?: string;
         /**
-          * Boolean to decide if pager is shown or not
+          * Statusses
          */
         "statusses"?: string;
         /**
-          * Taxonomy url
+          * Taxonomy
          */
         "taxonomy"?: string;
     }

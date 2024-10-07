@@ -18,6 +18,19 @@
 | `url`           | `url`            | Decision url         | `string` | `undefined` |
 
 
+## Dependencies
+
+### Used by
+
+ - [lod-decisions-list](../lod-decisions-list)
+
+### Graph
+```mermaid
+graph TD;
+  lod-decisions-list --> lod-decision-card
+  style lod-decision-card fill:#f9f,stroke:#333,stroke-width:4px
+```
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

@@ -144,22 +144,22 @@ export class LodDecisionCard {
             rel="stylesheet"
             href="https://stadgent.github.io/js_widget-besluiten/besluiten-detail/besluiten-detail.css"
           ></link>
-          <div class="resolutions-detail">
-            <div class="resolutions-detail__title">
-              <a href={this.url} class="resolutions-detail__link">
+          <div class="decision-detail">
+            <div class="decision-detail__title">
+              <a href={this.url} class="decision-detail__link">
                 {this.decisionTitle}
               </a>
             </div>
-            <dl class="resolutions-detail__list">
+            <dl class="decision-detail__list">
               <dt>Orgaan: </dt>
               <dd>{this.organ}</dd>
               <dt>Datum van de zitting: </dt>
               <dd>{this.formatDate(this.date)}</dd>
             </dl>
             <span
-              class={`resolutions-detail__status resolutions-detail__status--${this.statusGreen ? "true" : this.statusRed ? "false" : "void"}`}
+              class={`decision-detail__status decision-detail__status--${this.statusGreen ? "true" : this.statusRed ? "false" : "void"}`}
             >
-              {this.status}
+              {this.status || "Geen besluit"}
             </span>
           </div>
           <a
