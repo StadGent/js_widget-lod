@@ -244,7 +244,7 @@ export class LodCards {
                   </a>
                 </li>
                 <li class="current-page">
-                  Pagina {this.visualPage} van {this.count}
+                  {`Pagina ${this.visualPage} van ${Math.ceil(this.count / this.itemsPerPage)}`}
                 </li>
 
                 <li
