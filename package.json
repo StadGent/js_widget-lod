@@ -21,6 +21,18 @@
       "import": "./dist/components/lod-decision-card.js",
       "types": "./dist/components/lod-decision-card.ts"
     },
+    "./lod-decisions-list": {
+      "import": "./dist/components/lod-decisions-list.js",
+      "types": "./dist/components/lod-decisions-list.ts"
+    },
+    "./lod-regulations-list": {
+      "import": "./dist/components/lod-regulations-list.js",
+      "types": "./dist/components/lod-regulations-list.ts"
+    },
+    "./lod-regulation-card": {
+      "import": "./dist/components/lod-regulation-card.js",
+      "types": "./dist/components/lod-regulation-card.ts"
+    },
     "./lod-table": {
       "import": "./dist/components/lod-table.js",
       "types": "./dist/components/lod-table.d.ts"

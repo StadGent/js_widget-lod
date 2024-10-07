@@ -32,32 +32,12 @@
   </head>
   <body class="cs--blue">
     <lod-decisions-list
-    endpoint="https://probe.stad.gent/sparql"
-    itemsPerPage="5"
-    pagerDisabled="false"
     taxonomy="http://stad.gent/id/concepts/decision_making_themes"
     concepts="http://stad.gent/id/concepts/decision_making_themes/concept_36"
-    governingBodies="http://data.lblod.info/id/bestuursorganen/c126b20bc1a94de293b7fceaf998c82e9a7a1d56ba34cbf9992aa4bf01ae2b01"
-  >
-  <span slot="title" class="h3">Test adfd</span>
-    </lod-decisions-list>
-  </lod-decision-card>
-    <lod-decision-card
-      decision-title="Voorbeeld besluit (manueel)"
-      organ="Gemeenteraad"
-      date="2022-10-06"
-      url="https://ebesluitvorming.gent.be/zittingen/22.0117.2331.2297/agendapunten/22.0823.8239.1746"
-      status="Goedgekeurd"
+      endpoint="https://probe.stad.gent/sparql"
+      governing-bodies="http://data.lblod.info/id/bestuursorganen/c126b20bc1a94de293b7fceaf998c82e9a7a1d56ba34cbf9992aa4bf01ae2b01"
+      itemsPerPage="5"
     >
-    </lod-decision-card>
-
-    <lod-decision-card
-      decision-title="Voorbeeld geweigerd besluit (manueel)"
-      organ="Gemeenteraad"
-      date="2022-10-06"
-      url="https://ebesluitvorming.gent.be/zittingen/22.0117.2331.2297/agendapunten/22.0823.8239.1746"
-      status="Geweigerd"
-    >
-    </lod-decision-card>
+    </lod-regulations-list>
   </body>
 </html>

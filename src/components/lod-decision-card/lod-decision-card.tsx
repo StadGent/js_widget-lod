@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch, h } from "@stencil/core";
+import { Component, Fragment, Prop, State, Watch, h } from "@stencil/core";
 
 @Component({
   tag: "lod-decision-card",
@@ -14,6 +14,10 @@ export class LodDecisionCard {
    * Sparql endpoint
    */
   @Prop() endpoint: string;
+  /**
+   * Decision type
+   */
+  @Prop() type: string;
   /**
    * Organ of decision
    */
@@ -34,6 +38,8 @@ export class LodDecisionCard {
    * Uri to get decision
    */
   @Prop() uri: string;
+
+  @Prop() decisionType: "regulation" | "decision";
 
   @State() uriResult: any;
 
@@ -153,8 +159,23 @@ export class LodDecisionCard {
             <dl class="decision-detail__list">
               <dt>Orgaan: </dt>
               <dd>{this.organ}</dd>
-              <dt>Datum van de zitting: </dt>
-              <dd>{this.formatDate(this.date)}</dd>
+              {this.date && (
+                <Fragment>
+                  <dt>
+                    {this.decisionType === "decision"
+                      ? "Datum van de zitting: "
+                      : "Datum van bekendmaking: "}
+                  </dt>
+                  <dd>{this.formatDate(this.date)}</dd>
+                </Fragment>
+              )}
+
+              {this.type && (
+                <Fragment>
+                  <dt>Type: </dt>
+                  <dd>{this.type}</dd>
+                </Fragment>
+              )}
             </dl>
             <span
               class={`decision-detail__status decision-detail__status--${this.statusGreen ? "true" : this.statusRed ? "false" : "void"}`}

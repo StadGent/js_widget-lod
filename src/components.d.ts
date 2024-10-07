@@ -79,6 +79,7 @@ export namespace Components {
           * Decision title
          */
         "decisionTitle": string;
+        "decisionType": "regulation" | "decision";
         /**
           * Sparql endpoint
          */
@@ -91,6 +92,10 @@ export namespace Components {
           * ; Status of decision
          */
         "status": string;
+        /**
+          * Decision type
+         */
+        "type": string;
         /**
           * Uri to get decision
          */
@@ -141,6 +146,52 @@ export namespace Components {
           * Taxonomy
          */
         "taxonomy": string;
+    }
+    interface LodRegulationsList {
+        /**
+          * Concepts
+         */
+        "concepts": string;
+        /**
+          * End date of the decisions
+         */
+        "endDate": string;
+        /**
+          * The SparQL Endpoint
+         */
+        "endpoint": string;
+        /**
+          * Governing bodies (bestuursorganen)
+         */
+        "governingBodies": string;
+        /**
+          * Governing Units (bestuurseenheden)
+         */
+        "governingUnits": string;
+        /**
+          * The query
+         */
+        "itemsPerPage": number;
+        /**
+          * Wether to hide the pager or not
+         */
+        "pagerDisabled": boolean;
+        /**
+          * Start date of the decisions
+         */
+        "startDate": string;
+        /**
+          * Statusses
+         */
+        "statusses": string;
+        /**
+          * Taxonomy
+         */
+        "taxonomy": string;
+        /**
+          * Types
+         */
+        "types": string;
     }
     interface LodTable {
         /**
@@ -202,6 +253,12 @@ declare global {
         prototype: HTMLLodDecisionsListElement;
         new (): HTMLLodDecisionsListElement;
     };
+    interface HTMLLodRegulationsListElement extends Components.LodRegulationsList, HTMLStencilElement {
+    }
+    var HTMLLodRegulationsListElement: {
+        prototype: HTMLLodRegulationsListElement;
+        new (): HTMLLodRegulationsListElement;
+    };
     interface HTMLLodTableElement extends Components.LodTable, HTMLStencilElement {
     }
     var HTMLLodTableElement: {
@@ -213,6 +270,7 @@ declare global {
         "lod-cards": HTMLLodCardsElement;
         "lod-decision-card": HTMLLodDecisionCardElement;
         "lod-decisions-list": HTMLLodDecisionsListElement;
+        "lod-regulations-list": HTMLLodRegulationsListElement;
         "lod-table": HTMLLodTableElement;
     }
 }
@@ -290,6 +348,7 @@ declare namespace LocalJSX {
           * Decision title
          */
         "decisionTitle"?: string;
+        "decisionType"?: "regulation" | "decision";
         /**
           * Sparql endpoint
          */
@@ -302,6 +361,10 @@ declare namespace LocalJSX {
           * ; Status of decision
          */
         "status"?: string;
+        /**
+          * Decision type
+         */
+        "type"?: string;
         /**
           * Uri to get decision
          */
@@ -353,6 +416,52 @@ declare namespace LocalJSX {
          */
         "taxonomy"?: string;
     }
+    interface LodRegulationsList {
+        /**
+          * Concepts
+         */
+        "concepts"?: string;
+        /**
+          * End date of the decisions
+         */
+        "endDate"?: string;
+        /**
+          * The SparQL Endpoint
+         */
+        "endpoint": string;
+        /**
+          * Governing bodies (bestuursorganen)
+         */
+        "governingBodies"?: string;
+        /**
+          * Governing Units (bestuurseenheden)
+         */
+        "governingUnits"?: string;
+        /**
+          * The query
+         */
+        "itemsPerPage"?: number;
+        /**
+          * Wether to hide the pager or not
+         */
+        "pagerDisabled"?: boolean;
+        /**
+          * Start date of the decisions
+         */
+        "startDate"?: string;
+        /**
+          * Statusses
+         */
+        "statusses"?: string;
+        /**
+          * Taxonomy
+         */
+        "taxonomy"?: string;
+        /**
+          * Types
+         */
+        "types"?: string;
+    }
     interface LodTable {
         /**
           * The count query
@@ -392,6 +501,7 @@ declare namespace LocalJSX {
         "lod-cards": LodCards;
         "lod-decision-card": LodDecisionCard;
         "lod-decisions-list": LodDecisionsList;
+        "lod-regulations-list": LodRegulationsList;
         "lod-table": LodTable;
     }
 }
@@ -403,6 +513,7 @@ declare module "@stencil/core" {
             "lod-cards": LocalJSX.LodCards & JSXBase.HTMLAttributes<HTMLLodCardsElement>;
             "lod-decision-card": LocalJSX.LodDecisionCard & JSXBase.HTMLAttributes<HTMLLodDecisionCardElement>;
             "lod-decisions-list": LocalJSX.LodDecisionsList & JSXBase.HTMLAttributes<HTMLLodDecisionsListElement>;
+            "lod-regulations-list": LocalJSX.LodRegulationsList & JSXBase.HTMLAttributes<HTMLLodRegulationsListElement>;
             "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;
         }
     }
