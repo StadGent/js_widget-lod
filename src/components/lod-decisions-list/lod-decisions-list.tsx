@@ -69,27 +69,27 @@ export class LodDecisionsList {
 
   get constructQuery() {
     let filterparams = "";
-    if (this.statusses && this.statusses.length > 0) {
-      const statussenArray = this.statusses.split(",");
+    if (this.statusses) {
+      const statussesArray = this.statusses.split(",");
       // NOTE: adding query part here, status is not optional when filtering on status
       filterparams += `?besluit prov:wasGeneratedBy/besluit:heeftStemming/besluit:gevolg ?status. \n`;
       filterparams +=
         "VALUES ?status { " +
-        statussenArray.map((status) => `"${status.trim()}"@nl`).join(" ") +
+        statussesArray.map((status) => `"${status.trim()}"@nl`).join(" ") +
         " }";
     } else {
       // TODO: adding query part here, status is ONLY optional when not filtering on status
       filterparams += `OPTIONAL { ?besluit prov:wasGeneratedBy/besluit:heeftStemming/besluit:gevolg ?status }`;
       filterparams += `BIND(COALESCE(?status, "Onbekend"@nl) AS ?status)`;
     }
-    if (this.governingUnits && this.governingUnits.length > 0) {
-      const governingUnitesArray = this.governingUnits.split(" ");
+    if (this.governingUnits) {
+      const governingUnitsArray = this.governingUnits.split(" ");
       filterparams +=
         "VALUES ?bestuureenheidURI { " +
-        governingUnitesArray.map((unit) => `<${unit.trim()}>`).join(" ") +
+        governingUnitsArray.map((unit) => `<${unit.trim()}>`).join(" ") +
         " }";
     }
-    if (this.governingBodies && this.governingBodies.length > 0) {
+    if (this.governingBodies) {
       const governingBodiesArray = this.governingBodies.split(" ");
       filterparams +=
         "VALUES ?bestuursorgaanURI { " +
@@ -98,16 +98,12 @@ export class LodDecisionsList {
     }
 
     // Date filter.
-    if (
-      this.startDate &&
-      this.endDate &&
-      this.startDate.length > 0 &&
-      this.endDate.length > 0
-    ) {
+
+    if (this.startDate && this.endDate) {
       filterparams += `FILTER(?zitting_datum >= "${this.startDate}"^^xsd:date && ?zitting_datum <= "${this.endDate}"^^xsd:date)`;
-    } else if (this.startDate && this.startDate.length > 0) {
+    } else if (this.startDate) {
       filterparams += `FILTER(?zitting_datum >= "${this.startDate}"^^xsd:date)`;
-    } else if (this.endDate && this.endDate.length > 0) {
+    } else if (this.endDate) {
       filterparams += `FILTER(?zitting_datum <= "${this.endDate}"^^xsd:date)`;
     }
 
@@ -119,7 +115,7 @@ export class LodDecisionsList {
         besluit:isGehoudenDoor/mandaat:isTijdspecialisatieVan ?bestuursorgaanURI .`;
     let queryGoverningUnit = `?bestuursorgaanURI besluit:bestuurt ?bestuureenheidURI.`;
     let queryThema = "";
-    if (this.concepts && this.concepts.length > 0) {
+    if (this.concepts) {
       const conceptsArray = this.concepts.split(" ");
       queryThema =
         `
@@ -142,6 +138,7 @@ export class LodDecisionsList {
     let queryOptional = `OPTIONAL {${queryGoverningUnit}}`;
 
     // @TODO: remove with query below after Bestuursorgaan has been moved to Zitting iso BehandelingVanAgendapunt
+
     if (this.endpoint.includes("probe")) {
       queryGoverningBody = `
         prov:wasGeneratedBy ?behandelingVanAgendapunt .

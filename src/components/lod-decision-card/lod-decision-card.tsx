@@ -43,16 +43,49 @@ export class LodDecisionCard {
 
   @State() uriResult: any;
 
+  @State() statusColor: boolean | undefined;
+
+  @State() statusValue: string;
+
   @Watch("uriResult")
   watchPropHandler(newBesluit: any) {
     this.decisionTitle = newBesluit.title.value;
     this.organ = "@todo";
     this.date = this.formatDate(newBesluit.date.value);
     this.url = newBesluit.url.value;
-    this.status = newBesluit.status.value || "";
+    this.setStatus(newBesluit.status.value);
+  }
+
+  private setStatus(status: string) {
+    this.statusValue = status;
+    switch (status) {
+      case "Aanvaard tot de zitting als hoogdringend agendapunt":
+      case "Goedgekeurd":
+      case "Behandeld":
+        this.statusColor = true;
+        break;
+      case "Afgekeurd":
+      case "Afgevoerd":
+      case "Geweigerd":
+      case "Ingetrokken":
+        this.statusColor = false;
+        break;
+      case "Gedeeltelijk ingetrokken":
+      case "Verdaagd":
+        this.statusColor = undefined;
+        break;
+      case "":
+        this.statusColor = undefined;
+        this.statusValue = "Onbekend";
+        break;
+      default:
+        this.statusColor = undefined;
+        break;
+    }
   }
 
   componentWillLoad() {
+    this.setStatus(this.status);
     if (this.uri && this.uri !== "") {
       this.getBesluit;
     }
@@ -178,9 +211,9 @@ export class LodDecisionCard {
               )}
             </dl>
             <span
-              class={`decision-detail__status decision-detail__status--${this.statusGreen ? "true" : this.statusRed ? "false" : "void"}`}
+              class={`resolutions-detail__status resolutions-detail__status--${this.statusColor}`}
             >
-              {this.status || "Geen besluit"}
+              {this.statusValue}
             </span>
           </div>
           <a
