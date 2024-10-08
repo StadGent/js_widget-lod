@@ -1,0 +1,104 @@
+.decisions-list {
+  text-align: left;
+
+  [hidden] {
+    display: none !important;
+  }
+
+  [slot="title"],
+  [name="title"] {
+    display: block;
+    max-width: 100%;
+    margin: 0 0 30px 0;
+    padding: 0 20px;
+    align-items: flex-end;
+    text-align: center;
+  }
+
+  [slot="title"]::before,
+  [name="title"]::before {
+    content: "";
+    display: block;
+    align-self: center;
+    width: 65px;
+    height: 58px;
+    margin: 0 auto 30px auto;
+    background-size: contain;
+  }
+
+  [slot="title"]::before,
+  [name="title"]::before {
+    background-image: url("https://stadgent.github.io/js_widget-besluiten/besluiten-lijst/hammer_new.svg");
+  }
+
+  .highlight {
+    &__inner {
+      margin: 0 !important;
+      padding: 0 !important;
+      background-color: transparent !important;
+
+      &:after {
+        display: none !important;
+      }
+    }
+  }
+
+  .button,
+  .button {
+    align-self: start;
+    margin: 0 20px 60px 20px;
+  }
+
+  &__items {
+    margin: 0;
+    margin-block: 0 !important;
+    padding: 0;
+    list-style: none;
+
+    ul {
+      list-style: none;
+      margin: 0;
+
+      li {
+        list-style: none;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    slot[name="title"] h2 {
+      align-items: flex-end;
+      flex-direction: unset;
+    }
+
+    [slot="title"],
+    [name="title"] {
+      margin: 0 0 15px 0;
+      padding: 0 20px 0 0;
+      text-align: left;
+    }
+
+    [slot="title"]::before,
+    [name="title"]::before {
+      content: "";
+      display: inline-block;
+      margin: 0 15px 0 0;
+    }
+
+    .button {
+      margin: 0 0 60px 0;
+    }
+  }
+
+  .pager {
+    &__items {
+      justify-content: center;
+    }
+
+    #previous,
+    #next {
+      cursor: pointer;
+      display: block;
+    }
+  }
+}
