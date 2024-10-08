@@ -42,9 +42,13 @@ export namespace Components {
     }
     interface LodCards {
         /**
-          * The count query
+          * The count query to use for total number of items
          */
         "countQuery": string;
+        /**
+          * Wether to hide the call to action button or not
+         */
+        "ctaDisabled": boolean;
         /**
           * Custom call to action text
          */
@@ -66,9 +70,13 @@ export namespace Components {
          */
         "pagerDisabled": boolean;
         /**
-          * The query
+          * The query to use for data fetching
          */
         "query": string;
+        /**
+          * Custom read more text for the cards
+         */
+        "readMoreText": string;
     }
     interface LodDecisionCard {
         /**
@@ -199,6 +207,10 @@ export namespace Components {
          */
         "countQuery": string;
         /**
+          * Wether to hide call to action button or not
+         */
+        "ctaDisabled": boolean;
+        /**
           * Custom call to action text
          */
         "ctaText": string;
@@ -219,7 +231,7 @@ export namespace Components {
          */
         "pagerDisabled": boolean;
         /**
-          * The query
+          * The query to use for data fetching
          */
         "query": string;
         /**
@@ -311,9 +323,13 @@ declare namespace LocalJSX {
     }
     interface LodCards {
         /**
-          * The count query
+          * The count query to use for total number of items
          */
         "countQuery": string;
+        /**
+          * Wether to hide the call to action button or not
+         */
+        "ctaDisabled"?: boolean;
         /**
           * Custom call to action text
          */
@@ -335,9 +351,13 @@ declare namespace LocalJSX {
          */
         "pagerDisabled"?: boolean;
         /**
-          * The query
+          * The query to use for data fetching
          */
         "query": string;
+        /**
+          * Custom read more text for the cards
+         */
+        "readMoreText"?: string;
     }
     interface LodDecisionCard {
         /**
@@ -468,6 +488,10 @@ declare namespace LocalJSX {
          */
         "countQuery"?: string;
         /**
+          * Wether to hide call to action button or not
+         */
+        "ctaDisabled"?: boolean;
+        /**
           * Custom call to action text
          */
         "ctaText"?: string;
@@ -488,7 +512,7 @@ declare namespace LocalJSX {
          */
         "pagerDisabled"?: boolean;
         /**
-          * The query
+          * The query to use for data fetching
          */
         "query": string;
         /**

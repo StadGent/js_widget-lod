@@ -25,11 +25,11 @@ export class LodCards {
    */
   @Prop() endpoint!: string;
   /**
-   * The query
+   * The query to use for data fetching
    */
   @Prop() query!: string;
   /**
-   * The count query
+   * The count query to use for total number of items
    */
   @Prop() countQuery!: string;
   /**
@@ -48,6 +48,14 @@ export class LodCards {
    * Wether to hide the pager or not
    */
   @Prop() pagerDisabled: boolean = false;
+  /**
+   * Wether to hide the call to action button or not
+   */
+  @Prop() ctaDisabled: boolean = false;
+  /**
+   * Custom read more text for the cards
+   */
+  @Prop() readMoreText: string;
 
   @State() queryModified: string;
   @State() count: number = 0;
@@ -197,20 +205,24 @@ export class LodCards {
                 image-url={item["img"]?.value}
                 description={item["txt"]?.value}
                 read-more-url={item["url"]?.value}
+                read-more-text={this.readMoreText}
                 date={getFormattedObjectValue(item["dat"])}
               />
             ))}
           </ul>
-          <a
-            class="cta-btn"
-            href={
-              this.ctaUrl && this.ctaUrl !== ""
-                ? this.ctaUrl
-                : `${this.readMoreUrl.toString()}`
-            }
-          >
-            {this.ctaText ?? "Bekijk de data via ons SPARQL-endpoint"}
-          </a>
+          {!this.ctaDisabled && (
+            <a
+              class="cta-btn"
+              href={
+                this.ctaUrl && this.ctaUrl !== ""
+                  ? this.ctaUrl
+                  : `${this.readMoreUrl.toString()}`
+              }
+            >
+              {this.ctaText ?? "Bekijk de data via ons SPARQL-endpoint"}
+            </a>
+          )}
+
           {this.count !== 0 && this.currentPageItems && (
             <nav class="pager" aria-labelledby="pagination_1-55553">
               <h2 id="pagination_1-55553" class="visually-hidden">
@@ -232,7 +244,7 @@ export class LodCards {
                   </a>
                 </li>
                 <li class="current-page">
-                  Pagina {this.visualPage} van {this.count}
+                  {`Pagina ${this.visualPage} van ${Math.ceil(this.count / this.itemsPerPage)}`}
                 </li>
 
                 <li
