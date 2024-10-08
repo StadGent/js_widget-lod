@@ -1,15 +1,5 @@
 import { Component, Prop, State, h } from "@stencil/core";
 
-interface DataItem {
-  type: string;
-  value: string;
-  datatype?: string;
-}
-
-interface DataObject {
-  [key: string]: DataItem;
-}
-
 @Component({
   tag: "lod-regulations-list",
   styleUrl: "lod-regulations-list.scss",
@@ -169,23 +159,19 @@ export class LodRegulationsList {
     // Bestuurseenheden filter.
 
     if (this.governingUnits) {
-      const bestuurseenhedenArray = this.governingUnits.split(" ");
+      const governingUnitesArray = this.governingUnits.split(" ");
       filterparams +=
         "VALUES ?bestuureenheidURI { " +
-        bestuurseenhedenArray
-          .map((bestuurseenheid) => `<${bestuurseenheid.trim()}>`)
-          .join(" ") +
+        governingUnitesArray.map((unit) => `<${unit.trim()}>`).join(" ") +
         " }";
     }
 
     // Bestuursorganen filter.
     if (this.governingBodies) {
-      const bestuursorganenArray = this.governingBodies.split(" ");
+      const governingBodiesArray = this.governingBodies.split(" ");
       filterparams +=
         "VALUES ?bestuursorgaanURI { " +
-        bestuursorganenArray
-          .map((bestuursorgaan) => `<${bestuursorgaan.trim()}>`)
-          .join(" ") +
+        governingBodiesArray.map((body) => `<${body.trim()}>`).join(" ") +
         " }";
     }
 
@@ -198,7 +184,7 @@ export class LodRegulationsList {
       filterparams += `FILTER(?zitting_datum <= "${this.endDate}"^^xsd:date)`;
     }
 
-    let queryBestuursorgaan = `
+    let queryGoverningBody = `
         prov:wasGeneratedBy/dct:subject ?agendapunt .
 
       ?zitting besluit:behandelt ?agendapunt ;
@@ -207,7 +193,7 @@ export class LodRegulationsList {
     // TODO: remove with query below after Bestuursorgaan has been moved to Zitting iso BehandelingVanAgendapunt
 
     if (this.endpoint.includes("probe")) {
-      queryBestuursorgaan = `
+      queryGoverningBody = `
         prov:wasGeneratedBy ?behandelingVanAgendapunt .
         ?behandelingVanAgendapunt dct:subject ?agendapunt .
         ?agendapunt ^besluit:behandelt ?zitting .
@@ -233,7 +219,7 @@ export class LodRegulationsList {
           eli:date_publication ?publicatie_datum ;
           eli:title_short ?title ;
           prov:wasDerivedFrom ?url ;
-          ${queryBestuursorgaan}
+          ${queryGoverningBody}
         ?bestuursorgaanURI skos:prefLabel ?orgaan .
         OPTIONAL { ?bestuursorgaanURI besluit:bestuurt ?bestuureenheidURI . }
         OPTIONAL { ?besluit prov:wasGeneratedBy/besluit:heeftStemming/besluit:gevolg ?status }
@@ -267,7 +253,7 @@ export class LodRegulationsList {
           eli:title_short ?title ;
           prov:wasDerivedFrom ?url ;
           prov:wasGeneratedBy/besluit:heeftStemming/besluit:gevolg ?status ;
-          ${queryBestuursorgaan}
+          ${queryGoverningBody}
         ?bestuursorgaanURI skos:prefLabel ?orgaan .
         OPTIONAL { ?bestuursorgaanURI besluit:bestuurt ?bestuureenheidURI . }
 
@@ -279,45 +265,6 @@ export class LodRegulationsList {
       }`;
 
     return this.selectQuery;
-  }
-
-  getQuery(
-    fields: string,
-    queryBestuursorgaan: string,
-    queryThema: string,
-    filterparams: string,
-    optionalQuery: string,
-    orderbyClause = "",
-    limitClause = "",
-    offsetClause = "",
-  ) {
-    return `
-      PREFIX dct: <http://purl.org/dc/terms/>
-      PREFIX prov: <http://www.w3.org/ns/prov#>
-      PREFIX eli: <http://data.europa.eu/eli/ontology#>
-      PREFIX besluit: <http://data.vlaanderen.be/ns/besluit#>
-      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      PREFIX mandaat: <http://data.vlaanderen.be/ns/mandaat#>
-      PREFIX ext: <http://mu.semte.ch/vocabularies/ext/>
-
-      SELECT
-        ${fields}
-      WHERE {
-        ?besluit a besluit:Besluit ;
-          eli:title_short ?title ;
-          prov:wasDerivedFrom ?url ;
-        ${queryBestuursorgaan}
-
-        ?bestuursorgaanURI skos:prefLabel ?orgaanLabel .
-        ${queryThema}
-        ${optionalQuery}
-        ${filterparams}
-        BIND(CONCAT(UCASE(SUBSTR(?orgaanLabel, 1, 1)), SUBSTR(?orgaanLabel, 2)) AS ?orgaan)
-      }
-      ${orderbyClause}
-      ${limitClause}
-      ${offsetClause}
-    `;
   }
 
   get queryUrl() {
@@ -395,15 +342,6 @@ export class LodRegulationsList {
       await this.executeQuery();
       this.visualPage += 1;
     }
-  }
-
-  getTitle(data: DataObject): string | undefined {
-    for (const key in data) {
-      if (!key.startsWith("_")) {
-        return data[key].value; // Return the "value" of the first item without an underscore.
-      }
-    }
-    return undefined; // Return undefined if no valid key is found.
   }
 
   render() {

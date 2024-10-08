@@ -1,15 +1,5 @@
 import { Component, Prop, State, h } from "@stencil/core";
 
-interface DataItem {
-  type: string;
-  value: string;
-  datatype?: string;
-}
-
-interface DataObject {
-  [key: string]: DataItem;
-}
-
 @Component({
   tag: "lod-decisions-list",
   styleUrl: "lod-decisions-list.scss",
@@ -93,21 +83,17 @@ export class LodDecisionsList {
       filterparams += `BIND(COALESCE(?status, "Onbekend"@nl) AS ?status)`;
     }
     if (this.governingUnits && this.governingUnits.length > 0) {
-      const bestuurseenhedenArray = this.governingUnits.split(" ");
+      const governingUnitesArray = this.governingUnits.split(" ");
       filterparams +=
         "VALUES ?bestuureenheidURI { " +
-        bestuurseenhedenArray
-          .map((bestuurseenheid) => `<${bestuurseenheid.trim()}>`)
-          .join(" ") +
+        governingUnitesArray.map((unit) => `<${unit.trim()}>`).join(" ") +
         " }";
     }
     if (this.governingBodies && this.governingBodies.length > 0) {
-      const bestuursorganenArray = this.governingBodies.split(" ");
+      const governingBodiesArray = this.governingBodies.split(" ");
       filterparams +=
         "VALUES ?bestuursorgaanURI { " +
-        bestuursorganenArray
-          .map((bestuursorgaan) => `<${bestuursorgaan.trim()}>`)
-          .join(" ") +
+        governingBodiesArray.map((body) => `<${body.trim()}>`).join(" ") +
         " }";
     }
 
@@ -125,13 +111,13 @@ export class LodDecisionsList {
       filterparams += `FILTER(?zitting_datum <= "${this.endDate}"^^xsd:date)`;
     }
 
-    let queryBestuursorgaan = `
+    let queryGoverningBody = `
         prov:wasGeneratedBy/dct:subject ?agendapunt .
 
       ?zitting besluit:behandelt ?agendapunt ;
         besluit:geplandeStart ?zitting_datum ;
         besluit:isGehoudenDoor/mandaat:isTijdspecialisatieVan ?bestuursorgaanURI .`;
-    let queryBestuurseenheid = `?bestuursorgaanURI besluit:bestuurt ?bestuureenheidURI.`;
+    let queryGoverningUnit = `?bestuursorgaanURI besluit:bestuurt ?bestuureenheidURI.`;
     let queryThema = "";
     if (this.concepts && this.concepts.length > 0) {
       const conceptsArray = this.concepts.split(" ");
@@ -153,11 +139,11 @@ export class LodDecisionsList {
     }
 
     // @TODO: remove OPTIONAL {} when eenheden are available.
-    let queryOptional = `OPTIONAL {${queryBestuurseenheid}}`;
+    let queryOptional = `OPTIONAL {${queryGoverningUnit}}`;
 
     // @TODO: remove with query below after Bestuursorgaan has been moved to Zitting iso BehandelingVanAgendapunt
     if (this.endpoint.includes("probe")) {
-      queryBestuursorgaan = `
+      queryGoverningBody = `
         prov:wasGeneratedBy ?behandelingVanAgendapunt .
         ?behandelingVanAgendapunt dct:subject ?agendapunt .
         ?agendapunt ^besluit:behandelt ?zitting .
@@ -172,7 +158,7 @@ export class LodDecisionsList {
 
     this.selectQuery = this.getQuery(
       "DISTINCT ?besluit ?title ?agendapunt ?zitting_datum ?orgaan ?url ?status",
-      queryBestuursorgaan,
+      queryGoverningBody,
       queryThema,
       filterparams,
       queryOptional,
@@ -183,7 +169,7 @@ export class LodDecisionsList {
 
     this.countQuery = this.getQuery(
       "(COUNT(DISTINCT(?besluit)) AS ?count)",
-      queryBestuursorgaan,
+      queryGoverningBody,
       queryThema,
       filterparams,
       queryOptional,
@@ -194,7 +180,7 @@ export class LodDecisionsList {
 
   getQuery(
     fields: string,
-    queryBestuursorgaan: string,
+    queryGoverningBody: string,
     queryThema: string,
     filterparams: string,
     optionalQuery: string,
@@ -217,7 +203,7 @@ export class LodDecisionsList {
         ?besluit a besluit:Besluit ;
           eli:title_short ?title ;
           prov:wasDerivedFrom ?url ;
-        ${queryBestuursorgaan}
+        ${queryGoverningBody}
 
         ?bestuursorgaanURI skos:prefLabel ?orgaanLabel .
         ${queryThema}
@@ -306,15 +292,6 @@ export class LodDecisionsList {
       await this.executeQuery();
       this.visualPage += 1;
     }
-  }
-
-  getTitle(data: DataObject): string | undefined {
-    for (const key in data) {
-      if (!key.startsWith("_")) {
-        return data[key].value; // Return the "value" of the first item without an underscore.
-      }
-    }
-    return undefined; // Return undefined if no valid key is found.
   }
 
   render() {

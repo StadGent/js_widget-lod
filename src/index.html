@@ -32,13 +32,23 @@
   </head>
   <body class="cs--blue">
     <lod-decisions-list
-    taxonomy="http://stad.gent/id/concepts/decision_making_themes"
-    concepts="http://stad.gent/id/concepts/decision_making_themes/concept_36"
       endpoint="https://probe.stad.gent/sparql"
+      taxonomy="http://stad.gent/id/concepts/decision_making_themes"
+      concepts="http://stad.gent/id/concepts/decision_making_themes/concept_36"
       governing-bodies="http://data.lblod.info/id/bestuursorganen/c126b20bc1a94de293b7fceaf998c82e9a7a1d56ba34cbf9992aa4bf01ae2b01"
-      itemsPerPage="5"
     >
+      <span class="h3" slot="title"
+        >Alle besluiten gemeenteraad en burgemeester voor het thema
+        "Wegenregister" (probe)</span
+      >
+    </lod-decisions-list>
+    <lod-regulations-list
+      endpoint="https://probe.stad.gent/sparql"
+      items-per-page="5"
+    >
+      <span class="h3" slot="title"> Meest recente reglementen Stad Gent </span>
     </lod-regulations-list>
+
     <lod-cards
       pager-disabled="false"
       items-per-page="5"
