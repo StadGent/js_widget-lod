@@ -1,4 +1,4 @@
-# lod-decisions-list
+# lod-regulations-list
 
 
 
@@ -19,6 +19,7 @@
 | `startDate`             | `start-date`       | Start date of the decisions        | `string`  | `undefined` |
 | `statusses`             | `statusses`        | Statusses                          | `string`  | `undefined` |
 | `taxonomy`              | `taxonomy`         | Taxonomy                           | `string`  | `undefined` |
+| `types`                 | `types`            | Types                              | `string`  | `undefined` |
 
 
 ## Dependencies
@@ -30,8 +31,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  lod-decisions-list --> lod-decision-card
-  style lod-decisions-list fill:#f9f,stroke:#333,stroke-width:4px
+  lod-regulations-list --> lod-decision-card
+  style lod-regulations-list fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

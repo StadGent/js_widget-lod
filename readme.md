@@ -46,6 +46,16 @@ Need help? Check out the docs [here](https://stenciljs.com/docs/my-first-compone
 * LodCard 
   * HTML: <lod-card/>
   * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-card/readme.md)
+* LodDecisionsList
+  * HTML: <lod-decisions-list/>
+  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-decisions-list/readme.md)
+* LodRegulationsList
+  * HTML: <lod-regulations-list/>
+  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-regulations-list/readme.md)
+* LodDecisionCard
+  * HTML: <lod-decision-card/>
+  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-decision-card/readme.md)
+
 
 ### Using the components
 
