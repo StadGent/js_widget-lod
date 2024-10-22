@@ -18,6 +18,7 @@ type DataObject = {
 };
 
 export function getFormattedObjectValue(object: DataObject) {
+  console.log(object);
   if (object?.datatype === "http://www.w3.org/2001/XMLSchema#dateTime") {
     var dateString = object.value;
 

@@ -240,7 +240,7 @@ export namespace Components {
          */
         "pagerDisabled": boolean;
         /**
-          * The query to use for data fetching
+          * The query to use for data fetching. Fields starting with _ will be ignored. Fields starting with _title_[headername] will be set as the text for fields that contain urls. For example: Besluit is a url and it's value is https://test.com , if we want to show a text instead of the url we add a field named _title_besluit and give it a text value for example 'Click me' and that value will be set as the text in the <a> tag.  Fields that contain xsd:date will be shown as di 31/12/2024 Columntitles will be show in the order of the query
          */
         "query": string;
         /**
@@ -537,7 +537,7 @@ declare namespace LocalJSX {
          */
         "pagerDisabled"?: boolean;
         /**
-          * The query to use for data fetching
+          * The query to use for data fetching. Fields starting with _ will be ignored. Fields starting with _title_[headername] will be set as the text for fields that contain urls. For example: Besluit is a url and it's value is https://test.com , if we want to show a text instead of the url we add a field named _title_besluit and give it a text value for example 'Click me' and that value will be set as the text in the <a> tag.  Fields that contain xsd:date will be shown as di 31/12/2024 Columntitles will be show in the order of the query
          */
         "query": string;
         /**
