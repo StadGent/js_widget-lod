@@ -283,7 +283,7 @@ export class LodOpeningHours {
                 <h3>
                   <button
                     aria-controls="accordion-opening-hours--2"
-                    aria-expanded={(!this.allHoursOpened).toString()}
+                    aria-expanded={this.allHoursOpened.toString()}
                     onClick={() => {
                       this.allHoursOpened = !this.allHoursOpened;
                     }}
