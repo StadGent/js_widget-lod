@@ -155,6 +155,15 @@ export namespace Components {
          */
         "taxonomy": string;
     }
+    interface LodOpeningHours {
+        "channelId": string | boolean;
+        "endpoint": string;
+        "endpointKey": string;
+        "hoursTitle": string;
+        "language": "en" | "nl";
+        "serviceId": string;
+        "showAllHours": boolean;
+    }
     interface LodRegulationsList {
         /**
           * Concepts
@@ -265,6 +274,12 @@ declare global {
         prototype: HTMLLodDecisionsListElement;
         new (): HTMLLodDecisionsListElement;
     };
+    interface HTMLLodOpeningHoursElement extends Components.LodOpeningHours, HTMLStencilElement {
+    }
+    var HTMLLodOpeningHoursElement: {
+        prototype: HTMLLodOpeningHoursElement;
+        new (): HTMLLodOpeningHoursElement;
+    };
     interface HTMLLodRegulationsListElement extends Components.LodRegulationsList, HTMLStencilElement {
     }
     var HTMLLodRegulationsListElement: {
@@ -282,6 +297,7 @@ declare global {
         "lod-cards": HTMLLodCardsElement;
         "lod-decision-card": HTMLLodDecisionCardElement;
         "lod-decisions-list": HTMLLodDecisionsListElement;
+        "lod-opening-hours": HTMLLodOpeningHoursElement;
         "lod-regulations-list": HTMLLodRegulationsListElement;
         "lod-table": HTMLLodTableElement;
     }
@@ -436,6 +452,15 @@ declare namespace LocalJSX {
          */
         "taxonomy"?: string;
     }
+    interface LodOpeningHours {
+        "channelId"?: string | boolean;
+        "endpoint"?: string;
+        "endpointKey"?: string;
+        "hoursTitle"?: string;
+        "language"?: "en" | "nl";
+        "serviceId": string;
+        "showAllHours"?: boolean;
+    }
     interface LodRegulationsList {
         /**
           * Concepts
@@ -525,6 +550,7 @@ declare namespace LocalJSX {
         "lod-cards": LodCards;
         "lod-decision-card": LodDecisionCard;
         "lod-decisions-list": LodDecisionsList;
+        "lod-opening-hours": LodOpeningHours;
         "lod-regulations-list": LodRegulationsList;
         "lod-table": LodTable;
     }
@@ -537,6 +563,7 @@ declare module "@stencil/core" {
             "lod-cards": LocalJSX.LodCards & JSXBase.HTMLAttributes<HTMLLodCardsElement>;
             "lod-decision-card": LocalJSX.LodDecisionCard & JSXBase.HTMLAttributes<HTMLLodDecisionCardElement>;
             "lod-decisions-list": LocalJSX.LodDecisionsList & JSXBase.HTMLAttributes<HTMLLodDecisionsListElement>;
+            "lod-opening-hours": LocalJSX.LodOpeningHours & JSXBase.HTMLAttributes<HTMLLodOpeningHoursElement>;
             "lod-regulations-list": LocalJSX.LodRegulationsList & JSXBase.HTMLAttributes<HTMLLodRegulationsListElement>;
             "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;
         }

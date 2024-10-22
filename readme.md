@@ -37,31 +37,37 @@ Need help? Check out the docs [here](https://stenciljs.com/docs/my-first-compone
 
 ## Available components
 
-* LodTable 
-  * HTML: <lod-table/>
-  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-table/readme.md)
-* LodCards 
-  * HTML: <lod-cards/>
-  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-cards/readme.md)
-* LodCard 
-  * HTML: <lod-card/>
-  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-card/readme.md)
-* LodDecisionsList
-  * HTML: <lod-decisions-list/>
-  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-decisions-list/readme.md)
-* LodRegulationsList
-  * HTML: <lod-regulations-list/>
-  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-regulations-list/readme.md)
-* LodDecisionCard
-  * HTML: <lod-decision-card/>
-  * [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-decision-card/readme.md)
-
+- LodTable
+  - HTML: <lod-table/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-table/readme.md)
+- LodCards
+  - HTML: <lod-cards/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-cards/readme.md)
+- LodCard
+  - HTML: <lod-card/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-card/readme.md)
+- LodDecisionsList
+  - HTML: <lod-decisions-list/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-decisions-list/readme.md)
+- LodRegulationsList
+  - HTML: <lod-regulations-list/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-regulations-list/readme.md)
+- LodDecisionCard
+  - HTML: <lod-decision-card/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-decision-card/readme.md)
+- OpeningHours
+  - HTML: <lod-opening-hours/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-opening-hours/readme.md)
 
 ### Using the components
 
 You can import the components like this:
+
 ```html
-<script type="module" src="https://unpkg.com/@district09/lod-widgets/dist/lod-widgets/lod-widgets.esm.js"></script>
+<script
+  type="module"
+  src="https://unpkg.com/@district09/lod-widgets/dist/lod-widgets/lod-widgets.esm.js"
+></script>
 
 <lod-cards></lod-cards>
 <lod-table></lod-table>
