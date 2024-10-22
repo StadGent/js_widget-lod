@@ -55,7 +55,7 @@ Need help? Check out the docs [here](https://stenciljs.com/docs/my-first-compone
 - LodDecisionCard
   - HTML: <lod-decision-card/>
   - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-decision-card/readme.md)
-- OpeningHours
+- LodOpeningHours
   - HTML: <lod-opening-hours/>
   - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-opening-hours/readme.md)
 
