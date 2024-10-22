@@ -4,6 +4,8 @@
 
 This is the District09 LOD component library.
 
+NPM Link: https://www.npmjs.com/package/@district09/lod-widgets
+
 # Why does this use Stencil and what is it?
 
 Stencil is a compiler for building fast web apps using Web Components.
@@ -61,7 +63,13 @@ Need help? Check out the docs [here](https://stenciljs.com/docs/my-first-compone
 
 ### Using the components
 
-You can import the components like this:
+You can install the components with npm and just use import
+
+```
+npm i @district09/lod-widgets
+```
+
+Or you can also import the components via a script tag:
 
 ```html
 <script

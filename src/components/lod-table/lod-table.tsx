@@ -15,7 +15,14 @@ export class LodTable {
    */
   @Prop() endpoint!: string;
   /**
-   * The query to use for data fetching
+   * The query to use for data fetching.
+   * Fields starting with _ will be ignored.
+   * Fields starting with _title_[headername] will be set as the text for fields that contain urls. For example:
+   * Besluit is a url and it's value is https://test.com , if we want to show a text instead of the url we add a field named
+   * _title_besluit and give it a text value for example 'Click me' and that value will be set as the text in the <a> tag.
+   *
+   * Fields that contain xsd:date will be shown as di 31/12/2024
+   * Columntitles will be show in the order of the query
    */
   @Prop() query!: string;
   /**
@@ -181,6 +188,15 @@ export class LodTable {
     }
   }
 
+  private isValidURL(url: string) {
+    try {
+      new URL(url);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   render() {
     if (
       (this.count !== 0 && this.currentPageItems) ||
@@ -201,7 +217,19 @@ export class LodTable {
                   <tr>
                     {this.headers &&
                       this.headers.map((header) => (
-                        <td>{getFormattedObjectValue(item?.[header])}</td>
+                        <td>
+                          {this.isValidURL(
+                            getFormattedObjectValue(item?.[header]),
+                          ) ? (
+                            <a href={getFormattedObjectValue(item?.[header])}>
+                              {getFormattedObjectValue(
+                                item?.[`_title_${header}`],
+                              ) || getFormattedObjectValue(item?.[header])}
+                            </a>
+                          ) : (
+                            getFormattedObjectValue(item?.[header])
+                          )}
+                        </td>
                       ))}
                   </tr>
                 ))}
