@@ -57,52 +57,53 @@ export class LodCard {
     return readMoreText && readMoreText !== "" ? readMoreText : "Lees meer";
   }
 
-  render() {
-    return (
-      <li class="lod-card teaser teaser--wide">
-        <article class="teaser-content">
-          <div class="content__second">
-            {this.cardTitle && <h3 class="h4">{this.cardTitle}</h3>}
+render() {
+  return (
+    <li class="lod-card teaser teaser--wide">
+      <article class="teaser-content">
+        <div class="content__second">
+          {this.cardTitle && <h3 class="h4">{this.cardTitle}</h3>}
 
-            {this.tagSplitted?.length > 0 && (
-              <div class="tag-list-wrapper">
-                <ul class="tag-list">
-                  {this.tagSplitted?.map((tag) => (
-                    <li>
-                      <span class="tag"> {tag} </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          {this.tagSplitted?.length > 0 && (
+            <div class="tag-list-wrapper">
+              <ul class="tag-list">
+                {this.tagSplitted?.map((tag) => (
+                  <li>
+                    <span class="tag"> {tag} </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div class="lod-card__description">
+            {this.description && this.description !== "" && (
+              <p>{this.description}</p>
             )}
 
-            <div class="lod-card__description">
-              {this.description && this.description !== "" && (
-                <p>{this.description}</p>
-              )}
-
-              {this.address && this.address !== "" && (
-                <a
-                  target="_blank"
-                  href={`https://maps.google.com/maps?q=${this.address}`}
-                >
-                  {this.address}
-                </a>
-              )}
-              {this.date && this.date !== "" && <time>{this.date}</time>}
-            </div>
-
-            {this.readMoreUrl && (
-              <a href={this.readMoreUrl} class="read-more standalone-link">
-                {this.readMoreTextFormatted}
-                <span class="visually-hidden"> over {this.cardTitle} </span>
+            {this.address && this.address !== "" && (
+              <a
+                target="_blank"
+                href={`https://maps.google.com/maps?q=${this.address}`}
+              >
+                {this.address}
               </a>
             )}
+            {this.date && this.date !== "" && <time>{this.date}</time>}
           </div>
 
-          <div class="content__first">
-            <div class="tags-label-wrapper"></div>
+          {this.readMoreUrl && (
+            <a href={this.readMoreUrl} class="read-more standalone-link">
+              {this.readMoreTextFormatted}
+              <span class="visually-hidden"> over {this.cardTitle} </span>
+            </a>
+          )}
+        </div>
 
+        <div class="content__first">
+          <div class="tags-label-wrapper"></div>
+
+          {this.imageUrlFormatted && (
             <div class="figure-wrapper">
               <figure>
                 <div class="image-wrapper" data-ratio="1:1">
@@ -115,19 +116,21 @@ export class LodCard {
                 </div>
               </figure>
             </div>
-          </div>
-        </article>
-        {this.readMoreUrl && (
-          <a
-            href={this.readMoreUrl}
-            class="teaser-overlay-link"
-            tabIndex={-1}
-            aria-hidden="true"
-          >
-            {this.readMoreTextFormatted}
-          </a>
-        )}
-      </li>
-    );
-  }
+          )}
+        </div>
+      </article>
+      {this.readMoreUrl && (
+        <a
+          href={this.readMoreUrl}
+          class="teaser-overlay-link"
+          tabIndex={-1}
+          aria-hidden="true"
+        >
+          {this.readMoreTextFormatted}
+        </a>
+      )}
+    </li>
+  );
+}
+
 }
