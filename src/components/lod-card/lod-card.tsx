@@ -47,7 +47,7 @@ export class LodCard {
     const imageUrl = this.imageUrl;
     return imageUrl && imageUrl !== ""
       ? imageUrl
-      : "https://via.placeholder.com/570x570&text=8:5+(570x570)";
+      : null;
   }
 
   private get readMoreTextFormatted() {
