@@ -75,5 +75,5 @@
     "puppeteer": "^24.6.1",
     "@digipolis-gent/opening-hours-widget": "^0.2.0"
   },
-  "license": "MIT"
+  "license": "EUPL"
 }
