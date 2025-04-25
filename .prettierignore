@@ -62,3 +62,5 @@ test/docs-json/docs.json
 # third party scripts
 src/mock-doc/third-party/jquery.ts
 test/wdio/slot-ng-if/assets/
+
+*.md

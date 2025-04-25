@@ -3,7 +3,7 @@ name: Deploy Webcomponents Demo to GitHub Pages
 on:
   push:
     branches:
-      - main  # Replace with the branch you want to trigger the workflow
+      - main # Replace with the branch you want to trigger the workflow
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install dependencies
         run: npm ci
@@ -40,8 +40,8 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload webcomponents directory
-          path: 'www'
-  
+          path: "www"
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1

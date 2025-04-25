@@ -61,20 +61,19 @@
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "prettier-fix": "prettier . --write"
   },
   "devDependencies": {
-    "@stencil/core": "^4.7.0",
-    "@stencil/sass": "^3.0.12",
-    "@types/jest": "^29.5.6",
-    "@types/node": "^16.18.11",
+    "@stencil/core": "^4.29.3",
+    "@stencil/sass": "^3.2.1",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.14.1",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
-    "prettier": "3.3.3",
-    "puppeteer": "^21.9.0"
-  },
-  "license": "MIT",
-  "dependencies": {
+    "prettier": "^3.5.3",
+    "puppeteer": "^24.6.1",
     "@digipolis-gent/opening-hours-widget": "^0.2.0"
-  }
+  },
+  "license": "EUPL"
 }
