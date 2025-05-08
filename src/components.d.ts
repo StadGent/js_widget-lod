@@ -6,6 +6,24 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface LodAddress {
+        /**
+          * Show a link to JSON-LD for SEO.
+         */
+        "includeLd": boolean;
+        /**
+          * Show a map or a link to a map.
+         */
+        "mode": 'link' | 'map' | 'none';
+        /**
+          * The name of the address.
+         */
+        "name": string;
+        /**
+          * The unique uri of the address.
+         */
+        "uri": string;
+    }
     interface LodCard {
         /**
           * The location address of the event
@@ -155,6 +173,8 @@ export namespace Components {
          */
         "taxonomy": string;
     }
+    interface LodMap {
+    }
     interface LodOpeningHours {
         "channelId": string | boolean;
         "endpoint": string;
@@ -250,6 +270,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLLodAddressElement extends Components.LodAddress, HTMLStencilElement {
+    }
+    var HTMLLodAddressElement: {
+        prototype: HTMLLodAddressElement;
+        new (): HTMLLodAddressElement;
+    };
     interface HTMLLodCardElement extends Components.LodCard, HTMLStencilElement {
     }
     var HTMLLodCardElement: {
@@ -274,6 +300,12 @@ declare global {
         prototype: HTMLLodDecisionsListElement;
         new (): HTMLLodDecisionsListElement;
     };
+    interface HTMLLodMapElement extends Components.LodMap, HTMLStencilElement {
+    }
+    var HTMLLodMapElement: {
+        prototype: HTMLLodMapElement;
+        new (): HTMLLodMapElement;
+    };
     interface HTMLLodOpeningHoursElement extends Components.LodOpeningHours, HTMLStencilElement {
     }
     var HTMLLodOpeningHoursElement: {
@@ -293,16 +325,36 @@ declare global {
         new (): HTMLLodTableElement;
     };
     interface HTMLElementTagNameMap {
+        "lod-address": HTMLLodAddressElement;
         "lod-card": HTMLLodCardElement;
         "lod-cards": HTMLLodCardsElement;
         "lod-decision-card": HTMLLodDecisionCardElement;
         "lod-decisions-list": HTMLLodDecisionsListElement;
+        "lod-map": HTMLLodMapElement;
         "lod-opening-hours": HTMLLodOpeningHoursElement;
         "lod-regulations-list": HTMLLodRegulationsListElement;
         "lod-table": HTMLLodTableElement;
     }
 }
 declare namespace LocalJSX {
+    interface LodAddress {
+        /**
+          * Show a link to JSON-LD for SEO.
+         */
+        "includeLd"?: boolean;
+        /**
+          * Show a map or a link to a map.
+         */
+        "mode"?: 'link' | 'map' | 'none';
+        /**
+          * The name of the address.
+         */
+        "name"?: string;
+        /**
+          * The unique uri of the address.
+         */
+        "uri"?: string;
+    }
     interface LodCard {
         /**
           * The location address of the event
@@ -452,6 +504,8 @@ declare namespace LocalJSX {
          */
         "taxonomy"?: string;
     }
+    interface LodMap {
+    }
     interface LodOpeningHours {
         "channelId"?: string | boolean;
         "endpoint"?: string;
@@ -546,10 +600,12 @@ declare namespace LocalJSX {
         "tableCaption"?: string;
     }
     interface IntrinsicElements {
+        "lod-address": LodAddress;
         "lod-card": LodCard;
         "lod-cards": LodCards;
         "lod-decision-card": LodDecisionCard;
         "lod-decisions-list": LodDecisionsList;
+        "lod-map": LodMap;
         "lod-opening-hours": LodOpeningHours;
         "lod-regulations-list": LodRegulationsList;
         "lod-table": LodTable;
@@ -559,10 +615,12 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "lod-address": LocalJSX.LodAddress & JSXBase.HTMLAttributes<HTMLLodAddressElement>;
             "lod-card": LocalJSX.LodCard & JSXBase.HTMLAttributes<HTMLLodCardElement>;
             "lod-cards": LocalJSX.LodCards & JSXBase.HTMLAttributes<HTMLLodCardsElement>;
             "lod-decision-card": LocalJSX.LodDecisionCard & JSXBase.HTMLAttributes<HTMLLodDecisionCardElement>;
             "lod-decisions-list": LocalJSX.LodDecisionsList & JSXBase.HTMLAttributes<HTMLLodDecisionsListElement>;
+            "lod-map": LocalJSX.LodMap & JSXBase.HTMLAttributes<HTMLLodMapElement>;
             "lod-opening-hours": LocalJSX.LodOpeningHours & JSXBase.HTMLAttributes<HTMLLodOpeningHoursElement>;
             "lod-regulations-list": LocalJSX.LodRegulationsList & JSXBase.HTMLAttributes<HTMLLodRegulationsListElement>;
             "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;

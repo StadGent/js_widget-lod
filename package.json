@@ -13,6 +13,10 @@
       "import": "./dist/lod-widgets/lod-widgets.esm.js",
       "require": "./dist/lod-widgets/lod-widgets.cjs.js"
     },
+    "./lod-address": {
+      "import": "./dist/components/lod-address.js",
+      "types": "./dist/components/lod-address.ts"
+    },
     "./lod-cards": {
       "import": "./dist/components/lod-cards.js",
       "types": "./dist/components/lod-cards.ts"
@@ -75,5 +79,6 @@
     "puppeteer": "^24.6.1",
     "@digipolis-gent/opening-hours-widget": "^0.2.0"
   },
-  "license": "EUPL"
+  "license": "EUPL",
+  "packageManager": "npm@11.3.0+sha512.96eb611483f49c55f7fa74df61b588de9e213f80a256728e6798ddc67176c7b07e4a1cfc7de8922422cbce02543714367037536955221fa451b0c4fefaf20c66"
 }
