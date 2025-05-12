@@ -6,3 +6,37 @@
   height: 1px;
   overflow: hidden;
 }
+
+.checkbox-filter-dynamic {
+  .modal-preview,
+  .accordion-preview,
+  .checkbox-accordion {
+    .checkbox:last-child {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .checkbox-accordion {
+    .accordion--content {
+      // Adjust for checkbox focus outline.
+      margin: -4px -4px 0;
+      padding: 4px 4px 0;
+
+      transition: max-height 0.5s ease-in-out;
+      overflow: hidden;
+    }
+  }
+}
+
+.checkbox-filter__modal {
+  .tag-list-wrapper {
+    min-height: 2.2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .tag-list {
+    .tag {
+      margin: 0;
+    }
+  }
+}
