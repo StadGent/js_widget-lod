@@ -18,7 +18,6 @@ type DataObject = {
 };
 
 export function getFormattedObjectValue(object: DataObject) {
-  console.log(object);
   if (object?.datatype === "http://www.w3.org/2001/XMLSchema#dateTime") {
     var dateString = object.value;
 
@@ -34,4 +33,16 @@ export function getFormattedObjectValue(object: DataObject) {
   }
 
   return object?.value || "";
+}
+
+export function toKebabCase(input: string): string {
+  return input
+    .toLowerCase() // Step 1: Lowercase
+    .replace(/[^a-z0-9\s]/g, "") // Step 2: Remove special characters (except space)
+    .trim() // Step 3: Trim leading/trailing spaces
+    .replace(/\s+/g, "-"); // Step 4: Replace spaces with hyphens
+}
+
+export function capitalizeFirstLetter(val: string) {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }

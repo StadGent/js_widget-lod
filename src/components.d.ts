@@ -164,6 +164,8 @@ export namespace Components {
         "serviceId": string;
         "showAllHours": boolean;
     }
+    interface LodPaginator {
+    }
     interface LodProcessingRegister {
     }
     interface LodRegulationsList {
@@ -211,6 +213,8 @@ export namespace Components {
           * Types
          */
         "types": string;
+    }
+    interface LodSidebar {
     }
     interface LodTable {
         /**
@@ -282,6 +286,12 @@ declare global {
         prototype: HTMLLodOpeningHoursElement;
         new (): HTMLLodOpeningHoursElement;
     };
+    interface HTMLLodPaginatorElement extends Components.LodPaginator, HTMLStencilElement {
+    }
+    var HTMLLodPaginatorElement: {
+        prototype: HTMLLodPaginatorElement;
+        new (): HTMLLodPaginatorElement;
+    };
     interface HTMLLodProcessingRegisterElement extends Components.LodProcessingRegister, HTMLStencilElement {
     }
     var HTMLLodProcessingRegisterElement: {
@@ -293,6 +303,12 @@ declare global {
     var HTMLLodRegulationsListElement: {
         prototype: HTMLLodRegulationsListElement;
         new (): HTMLLodRegulationsListElement;
+    };
+    interface HTMLLodSidebarElement extends Components.LodSidebar, HTMLStencilElement {
+    }
+    var HTMLLodSidebarElement: {
+        prototype: HTMLLodSidebarElement;
+        new (): HTMLLodSidebarElement;
     };
     interface HTMLLodTableElement extends Components.LodTable, HTMLStencilElement {
     }
@@ -306,8 +322,10 @@ declare global {
         "lod-decision-card": HTMLLodDecisionCardElement;
         "lod-decisions-list": HTMLLodDecisionsListElement;
         "lod-opening-hours": HTMLLodOpeningHoursElement;
+        "lod-paginator": HTMLLodPaginatorElement;
         "lod-processing-register": HTMLLodProcessingRegisterElement;
         "lod-regulations-list": HTMLLodRegulationsListElement;
+        "lod-sidebar": HTMLLodSidebarElement;
         "lod-table": HTMLLodTableElement;
     }
 }
@@ -470,6 +488,8 @@ declare namespace LocalJSX {
         "serviceId": string;
         "showAllHours"?: boolean;
     }
+    interface LodPaginator {
+    }
     interface LodProcessingRegister {
     }
     interface LodRegulationsList {
@@ -518,6 +538,8 @@ declare namespace LocalJSX {
          */
         "types"?: string;
     }
+    interface LodSidebar {
+    }
     interface LodTable {
         /**
           * The count query
@@ -562,8 +584,10 @@ declare namespace LocalJSX {
         "lod-decision-card": LodDecisionCard;
         "lod-decisions-list": LodDecisionsList;
         "lod-opening-hours": LodOpeningHours;
+        "lod-paginator": LodPaginator;
         "lod-processing-register": LodProcessingRegister;
         "lod-regulations-list": LodRegulationsList;
+        "lod-sidebar": LodSidebar;
         "lod-table": LodTable;
     }
 }
@@ -576,8 +600,10 @@ declare module "@stencil/core" {
             "lod-decision-card": LocalJSX.LodDecisionCard & JSXBase.HTMLAttributes<HTMLLodDecisionCardElement>;
             "lod-decisions-list": LocalJSX.LodDecisionsList & JSXBase.HTMLAttributes<HTMLLodDecisionsListElement>;
             "lod-opening-hours": LocalJSX.LodOpeningHours & JSXBase.HTMLAttributes<HTMLLodOpeningHoursElement>;
+            "lod-paginator": LocalJSX.LodPaginator & JSXBase.HTMLAttributes<HTMLLodPaginatorElement>;
             "lod-processing-register": LocalJSX.LodProcessingRegister & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterElement>;
             "lod-regulations-list": LocalJSX.LodRegulationsList & JSXBase.HTMLAttributes<HTMLLodRegulationsListElement>;
+            "lod-sidebar": LocalJSX.LodSidebar & JSXBase.HTMLAttributes<HTMLLodSidebarElement>;
             "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;
         }
     }
