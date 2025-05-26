@@ -1,7 +1,12 @@
 import { Component, h, Fragment } from "@stencil/core";
 import Modal from "@digipolis-gent/modal";
 import "../../assets/accordion.js";
-import state, { toggleChecked, updateData } from "./store";
+import state, {
+  toggleChecked,
+  updateData,
+  updateModalSearchFilter,
+  updateSearchInput,
+} from "./store";
 import { capitalizeFirstLetter, toKebabCase } from "../../utils/utils.js";
 
 @Component({
@@ -22,6 +27,15 @@ export class LodSideBar {
         window.Accordion(accordion as HTMLElement),
       );
       state.modalsMade = true;
+
+      document
+        .querySelector("#lod-processing-register-name")
+        .addEventListener("keydown", (event: any) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            updateData(true);
+          }
+        });
     }
   }
 
@@ -53,15 +67,19 @@ export class LodSideBar {
           <div class="modal-content">
             <h3 id="filter-title">Zoek verwerking</h3>
             <div class="form-item  stacked">
-              <label htmlFor="default-name_id">Naam</label>
+              <label htmlFor="lod-processing-register-name">Naam</label>
 
               <div class="form-columns">
                 <div class="form-item-column">
                   <input
                     type="text"
-                    id="default-name_id"
-                    name="default-name_name"
+                    id="lod-processing-register-name"
                     class="text"
+                    value={state.searchInput}
+                    onInput={(event) => {
+                      event.preventDefault();
+                      updateSearchInput(event);
+                    }}
                   />
                 </div>
                 <div class="form-item-column"></div>
@@ -247,6 +265,10 @@ export class LodSideBar {
                                     id={`checkboxes__filter_id_${index}`}
                                     class="checkbox-filter__filter"
                                     aria-label="Filter the list below"
+                                    value={state.modalFilters[facet.name]}
+                                    onInput={(event) =>
+                                      updateModalSearchFilter(event, facet.name)
+                                    }
                                   />
 
                                   <div
@@ -255,7 +277,15 @@ export class LodSideBar {
                                     class="checkbox-filter__result-wrapper"
                                   >
                                     <span class="checkbox-filter__result">
-                                      {facet.facets.length}
+                                      {
+                                        facet.facets.filter((facetChild) =>
+                                          facetChild.name
+                                            .toLowerCase()
+                                            .includes(
+                                              state.modalFilters[facet.name],
+                                            ),
+                                        ).length
+                                      }
                                     </span>{" "}
                                     filter(s) gevonden
                                   </div>
@@ -275,35 +305,43 @@ export class LodSideBar {
                                   <div class="form-item">
                                     <div class="form-columns">
                                       <div class="form-item-column">
-                                        {facet.facets.map((facetChild) => (
-                                          <div
-                                            key={`checkbox-modal-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
-                                            class="checkbox"
-                                          >
-                                            <input
-                                              type="checkbox"
-                                              id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
-                                              name="checkboxes-dynamic"
-                                              value={`${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
+                                        {facet.facets
+                                          .filter((facetChild) =>
+                                            facetChild.name
+                                              .toLowerCase()
+                                              .includes(
+                                                state.modalFilters[facet.name],
+                                              ),
+                                          )
+                                          .map((facetChild) => (
+                                            <div
+                                              key={`checkbox-modal-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                               class="checkbox"
-                                              checked={this.isFacetChecked(
-                                                facet.name,
-                                                facetChild.name,
-                                              )}
-                                              onInput={() => {
-                                                toggleChecked(
+                                            >
+                                              <input
+                                                type="checkbox"
+                                                id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
+                                                name="checkboxes-dynamic"
+                                                value={`${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
+                                                class="checkbox"
+                                                checked={this.isFacetChecked(
                                                   facet.name,
                                                   facetChild.name,
-                                                );
-                                              }}
-                                            />
-                                            <label
-                                              htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
-                                            >
-                                              {facetChild.name}
-                                            </label>
-                                          </div>
-                                        ))}
+                                                )}
+                                                onInput={() => {
+                                                  toggleChecked(
+                                                    facet.name,
+                                                    facetChild.name,
+                                                  );
+                                                }}
+                                              />
+                                              <label
+                                                htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
+                                              >
+                                                {facetChild.name}
+                                              </label>
+                                            </div>
+                                          ))}
                                       </div>
 
                                       <div class="form-item-column"></div>

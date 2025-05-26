@@ -109,7 +109,6 @@ export class LodCards {
       this.isFetching = false;
     } else {
       console.log("Error when getting count data.");
-      console.log(this.queryModified);
       this.errorFetching = true;
     }
   }
@@ -136,8 +135,6 @@ export class LodCards {
 
         this.currentPageItems = data;
       } else {
-        console.log("Error when getting data.");
-        console.log(this.queryModified);
         this.errorFetching = true;
       }
     } else {

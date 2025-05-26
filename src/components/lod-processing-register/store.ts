@@ -33,6 +33,9 @@ const { state, onChange } = createStore({
   disjunctiveFacets: undefined as FacetFilter[] | undefined,
   totalPages: undefined as number | undefined,
   currentPage: undefined as number | undefined,
+  searchInput: "",
+  searchInputFiltered: "",
+  modalFilters: {} as { [key: string]: string },
 });
 
 onChange("facetFilters", (updatedFacets) => {
@@ -52,13 +55,19 @@ onChange("queryData", (updatedQueryData) => {
   state.totalPages = Math.ceil(updatedQueryData.total_count / 10);
 });
 
-onChange("currentPage", (updatedPage) => {
-  const url = new URL(window.location.href);
-  url.searchParams.set("page", updatedPage.toString());
-  window.history.replaceState({}, "", url.toString());
-});
+export const updateSearchInput = (event: any) => {
+  state.searchInput = event.target.value;
+};
+
+export const updateModalSearchFilter = (event: any, facetName: string) => {
+  state.modalFilters = {
+    ...state.modalFilters,
+    [facetName]: event.target.value.toLowerCase(),
+  };
+};
 
 export const updateData = async (newFilters?: boolean) => {
+  state.searchInputFiltered = state.searchInput;
   if (newFilters) {
     state.currentPage = 1;
   }
@@ -90,12 +99,22 @@ export const updateData = async (newFilters?: boolean) => {
     "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/records";
 
   // Add API key
+
+  if (state.searchInputFiltered.trim().length > 1) {
+    params.set("where", `name like '%${state.searchInputFiltered}%'`);
+  }
+
+  params.set("offset", `${(state.currentPage - 1) * 10}`);
+  params.set("limit", `10`);
+
+  const newUrl = `${window.location.pathname}?${params.toString()}`;
+  window.history.replaceState(null, "", newUrl);
+
   params.set(
     "apikey",
     "c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204",
   );
-  params.set("offset", `${(state.currentPage - 1) * 10}`);
-  params.set("limit", `10`);
+
   const url = `${baseUrl}?${params.toString()}`;
 
   const response = await fetch(url);

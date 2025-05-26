@@ -50,8 +50,6 @@ export class LodCard {
 
   private get readMoreTextFormatted() {
     const readMoreText = this.readMoreText;
-    console.log(readMoreText);
-    console.log(this.readMoreText);
     return readMoreText && readMoreText !== "" ? readMoreText : "Lees meer";
   }
 

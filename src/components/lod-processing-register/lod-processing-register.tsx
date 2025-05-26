@@ -1,5 +1,6 @@
 import { Component, h, Fragment } from "@stencil/core";
 import state, { toggleChecked } from "./store";
+import { updateData } from "./store";
 
 declare global {
   interface Window {
@@ -20,13 +21,24 @@ export class LodProcessingRegister {
   getInitialData = async () => {
     const params = new URLSearchParams(window.location.search);
 
-    const pageParam = params.get("page");
+    let offsetString = params.get("offset");
     let page = 1;
-    if (pageParam && pageParam.length > 0) {
-      page = Number(pageParam) >= 1 ? Number(pageParam) : 1;
+
+    let baseUrl = "";
+    if (offsetString && offsetString.length > 0) {
+      const nameFilter = params
+        .get("where")
+        ?.match(/name\s+like\s+'%(.+)%'/)?.[1];
+      if (nameFilter && nameFilter.length > 0) {
+        state.searchInput = nameFilter;
+        state.searchInputFiltered = nameFilter;
+      }
+      page = Number(offsetString) / 10 + 1;
+      baseUrl = `https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/records?${window.location.search}&apikey=c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204`;
+    } else {
+      baseUrl = `https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/records?limit=10&offset=${(page - 1) * 10}&apikey=c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204`;
     }
 
-    const baseUrl = `https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/records?limit=10&offset=${(page - 1) * 10}&apikey=c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204`;
     const response = await fetch(baseUrl);
     state.queryData = await response.json();
 
@@ -35,6 +47,7 @@ export class LodProcessingRegister {
   };
 
   getBaseFacets = async () => {
+    const params = new URLSearchParams(window.location.search);
     const baseFacets =
       "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/facets?facet=processor&facet=personaldata&facet=grantees&facet=type&facet=formal_framework&facet=audience&apikey=c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204";
     const response = await fetch(baseFacets);
@@ -44,16 +57,27 @@ export class LodProcessingRegister {
       facets: facetGroup.facets.filter((f) => f.name !== ""),
     }));
 
+    data.facets.forEach((facet) => {
+      state.modalFilters[facet.name] = "";
+    });
+
     state.facetFilters = data.facets.map((facet) => ({
       name: facet.name,
-      facets: facet.facets.map((facet) => ({
-        name: facet.name,
-        checked: false,
-      })),
+      facets: facet.facets.map((facetChild) => {
+        return {
+          name: facetChild.name,
+          checked: params
+            .getAll("refine")
+            .includes(`${facet.name}:${facetChild.name}`),
+        };
+      }),
     }));
   };
 
   deleteAllFilters = () => {
+    state.searchInput = "";
+    state.searchInputFiltered = "";
+    state.currentPage = 1;
     state.facetFilters = state.facetFilters.map((facet) => ({
       name: facet.name,
       facets: facet.facets.map((facet) => ({
@@ -61,6 +85,7 @@ export class LodProcessingRegister {
         checked: false,
       })),
     }));
+    updateData(true);
   };
 
   render() {
@@ -120,42 +145,64 @@ export class LodProcessingRegister {
               tabindex="-1"
             />
             <section class="content result-section" id="result">
-              {state.disjunctiveFacets &&
-                state.disjunctiveFacets.length > 0 && (
-                  <div class="selected-filters">
-                    <div class="filter-page-label">Je filterde op:</div>
-                    <div class="tag-list-wrapper">
-                      <ul class="tag-list">
-                        {state.disjunctiveFacets?.map((facet) => (
-                          <>
-                            {facet.facets.map((facetChild) => (
-                              <li
-                                onClick={() =>
-                                  toggleChecked(facet.name, facetChild.name)
-                                }
-                              >
-                                <span class="tag filter ">
-                                  {facetChild.name}
-                                  <button>
-                                    <span class="visually-hidden">
-                                      Verwijder filter {facetChild.name}
-                                    </span>
-                                  </button>
+              {((state.disjunctiveFacets &&
+                state.disjunctiveFacets.length > 0) ||
+                (state.searchInputFiltered &&
+                  state.searchInputFiltered.trim().length > 0)) && (
+                <div class="selected-filters">
+                  <div class="filter-page-label">Je filterde op:</div>
+                  <div class="tag-list-wrapper">
+                    <ul class="tag-list">
+                      {state.searchInputFiltered &&
+                        state.searchInputFiltered.trim().length > 0 && (
+                          <li
+                            onClick={() => {
+                              state.searchInputFiltered = "";
+                              state.searchInput = "";
+                              updateData();
+                            }}
+                          >
+                            <span class="tag filter ">
+                              {state.searchInputFiltered}
+                              <button>
+                                <span class="visually-hidden">
+                                  Verwijder filter {state.searchInputFiltered}
                                 </span>
-                              </li>
-                            ))}
-                          </>
-                        ))}
+                              </button>
+                            </span>
+                          </li>
+                        )}
+                      {state.disjunctiveFacets?.map((facet) => (
+                        <>
+                          {facet.facets.map((facetChild) => (
+                            <li
+                              onClick={() => {
+                                toggleChecked(facet.name, facetChild.name);
+                                updateData();
+                              }}
+                            >
+                              <span class="tag filter ">
+                                {facetChild.name}
+                                <button>
+                                  <span class="visually-hidden">
+                                    Verwijder filter {facetChild.name}
+                                  </span>
+                                </button>
+                              </span>
+                            </li>
+                          ))}
+                        </>
+                      ))}
 
-                        <li>
-                          <a onClick={this.deleteAllFilters} href="#">
-                            Verwijder alle filters{" "}
-                          </a>
-                        </li>
-                      </ul>
-                    </div>
+                      <li>
+                        <a onClick={this.deleteAllFilters} href="#">
+                          Verwijder alle filters{" "}
+                        </a>
+                      </li>
+                    </ul>
                   </div>
-                )}
+                </div>
+              )}
 
               <div class="filter__result-count">
                 <div class="filter-page-label">

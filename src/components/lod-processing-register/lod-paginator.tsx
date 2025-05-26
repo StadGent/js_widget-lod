@@ -36,7 +36,7 @@ export class LodPaginator {
               <span class="visually-hidden">Page</span>1
             </a>
           </li>
-          {state.currentPage < 4 && (
+          {state.currentPage < 4 && state.totalPages > 2 && (
             <>
               {[...Array(3)].map((_, i) => (
                 <li

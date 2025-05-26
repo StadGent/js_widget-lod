@@ -103,7 +103,6 @@ export class LodDecisionCard {
     if (response.ok) {
       const json = await response.json();
       if (json.results.bindings && json.results.bindings.length > 0) {
-        //console.log(JSON.stringify(json.results.bindings));
         this.uriResult = json.results.bindings[0];
       } else {
         console.log("Error when getting data.");
