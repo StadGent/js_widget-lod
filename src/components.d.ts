@@ -182,6 +182,8 @@ export namespace Components {
         "serviceId": string;
         "showAllHours": boolean;
     }
+    interface LodProcessingRegister {
+    }
     interface LodRegulationsList {
         /**
           * Concepts
@@ -304,6 +306,12 @@ declare global {
         prototype: HTMLLodOpeningHoursElement;
         new (): HTMLLodOpeningHoursElement;
     };
+    interface HTMLLodProcessingRegisterElement extends Components.LodProcessingRegister, HTMLStencilElement {
+    }
+    var HTMLLodProcessingRegisterElement: {
+        prototype: HTMLLodProcessingRegisterElement;
+        new (): HTMLLodProcessingRegisterElement;
+    };
     interface HTMLLodRegulationsListElement extends Components.LodRegulationsList, HTMLStencilElement {
     }
     var HTMLLodRegulationsListElement: {
@@ -323,6 +331,7 @@ declare global {
         "lod-decision-card": HTMLLodDecisionCardElement;
         "lod-decisions-list": HTMLLodDecisionsListElement;
         "lod-opening-hours": HTMLLodOpeningHoursElement;
+        "lod-processing-register": HTMLLodProcessingRegisterElement;
         "lod-regulations-list": HTMLLodRegulationsListElement;
         "lod-table": HTMLLodTableElement;
     }
@@ -504,6 +513,8 @@ declare namespace LocalJSX {
         "serviceId": string;
         "showAllHours"?: boolean;
     }
+    interface LodProcessingRegister {
+    }
     interface LodRegulationsList {
         /**
           * Concepts
@@ -595,6 +606,7 @@ declare namespace LocalJSX {
         "lod-decision-card": LodDecisionCard;
         "lod-decisions-list": LodDecisionsList;
         "lod-opening-hours": LodOpeningHours;
+        "lod-processing-register": LodProcessingRegister;
         "lod-regulations-list": LodRegulationsList;
         "lod-table": LodTable;
     }
@@ -609,6 +621,7 @@ declare module "@stencil/core" {
             "lod-decision-card": LocalJSX.LodDecisionCard & JSXBase.HTMLAttributes<HTMLLodDecisionCardElement>;
             "lod-decisions-list": LocalJSX.LodDecisionsList & JSXBase.HTMLAttributes<HTMLLodDecisionsListElement>;
             "lod-opening-hours": LocalJSX.LodOpeningHours & JSXBase.HTMLAttributes<HTMLLodOpeningHoursElement>;
+            "lod-processing-register": LocalJSX.LodProcessingRegister & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterElement>;
             "lod-regulations-list": LocalJSX.LodRegulationsList & JSXBase.HTMLAttributes<HTMLLodRegulationsListElement>;
             "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;
         }
