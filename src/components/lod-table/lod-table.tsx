@@ -152,7 +152,6 @@ export class LodTable {
         this.currentPageItems = data;
       } else {
         console.log("Error when getting data.");
-        console.log(this.queryModified);
         this.errorFetching = true;
       }
     } else {

@@ -1,3 +1,5 @@
+import { type Facet } from "../components/lod-processing-register/store";
+import { isString } from "../utils/utils";
 import { fetchJson } from "./apiClient";
 
 const openDataPortalUrl =
@@ -8,9 +10,43 @@ export async function getProcessingRegisterDetail(id: string) {
   return fetchJson(`/api/users/${id}`);
 }
 
-export async function getBaseFacets() {
-  const baseUrl = `${openDataPortalUrl}/facets?facet=processor&facet=personaldata&facet=grantees&facet=type&facet=formal_framework&facet=audience&apikey=${publicApiKey}`;
-  return fetchJson(baseUrl);
+export async function getBaseFacets(
+  name?: string,
+  disjunctiveFacets?: Facet[],
+  checkedFacets?: Facet[],
+) {
+  const baseUrl = `${openDataPortalUrl}/facets?facet=processor&facet=personaldata&facet=grantees&facet=type&facet=formal_framework&facet=audience`;
+  const url = new URL(baseUrl);
+
+  const params = new URLSearchParams();
+
+  // Add complex facet (with nested name and disjunctive)
+
+  disjunctiveFacets?.forEach((facet) =>
+    params.append("facet", `facet(name="${facet.name}",disjunctive=true)`),
+  );
+
+  if (isString(name)) {
+    params.set("where", `name like '%${name}%'`);
+  }
+
+  // Add additional facet parameters
+  const additionalFacets = checkedFacets?.filter(
+    (facet) => !(facet.facets.length > 0),
+  );
+  additionalFacets?.forEach((facet) => {
+    params.append("facet", facet.name);
+  });
+
+  disjunctiveFacets?.forEach((facet) =>
+    facet.facets.forEach((childFacet) =>
+      params.append("refine", `${facet.name}:${childFacet.name}`),
+    ),
+  );
+
+  params.set("apikey", publicApiKey);
+
+  return fetchJson(`${url.toString()}&${params.toString()}`);
 }
 
 export async function getPersonalDataProcessingList(
@@ -25,7 +61,7 @@ export async function getPersonalDataProcessingList(param: string | number) {
   if (typeof param === "number") {
     baseUrl = `${openDataPortalUrl}/records?limit=10&offset=${param}&apikey=${publicApiKey}`;
   } else {
-    baseUrl = `${openDataPortalUrl}/records${param}&apikey=${publicApiKey}`;
+    baseUrl = `${openDataPortalUrl}/records${param.startsWith("?") ? "" : "?"}${param}&apikey=${publicApiKey}`;
   }
   return fetchJson(baseUrl);
 }

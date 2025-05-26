@@ -19,6 +19,7 @@ const t = useTranslations("nl");
 export class LodSideBar {
   componentDidUpdate() {
     if (state.baseFacets?.length > 0 && !state.modalsMade) {
+      console.log(state.baseFacets);
       const modals = document.querySelectorAll(
         ".modal:not(.has-custom-binding)",
       );
@@ -90,7 +91,7 @@ export class LodSideBar {
             </div>
 
             {state.baseFacets?.map((facet, index) => (
-              <>
+              <div key={facet.name}>
                 {facet?.facets?.length <= 6 && (
                   <fieldset key={`filter-${facet.name}`} class="form-item ">
                     <legend>
@@ -101,21 +102,19 @@ export class LodSideBar {
                     <div class="form-item">
                       <div class="form-columns">
                         <div class="form-item-column">
-                          {facet.facets.map((childFacet) => (
+                          {facet.facets.map((facetChild) => (
                             <div class="checkbox">
                               <input
                                 type="checkbox"
-                                id={`input-${toKebabCase(facet.name)}-${toKebabCase(childFacet.name)}`}
+                                id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                 name="checkboxes-dynamic"
-                                value={`${toKebabCase(facet.name)}-${toKebabCase(childFacet.name)}`}
+                                value={`${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                 class="checkbox"
                               />
                               <label
-                                htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(childFacet.name)}`}
+                                htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                               >
-                                {capitalizeFirstLetter(
-                                  t(childFacet.name.toLowerCase()),
-                                )}
+                                {`${capitalizeFirstLetter(facetChild.name)} (${facetChild.count})`}
                               </label>
                             </div>
                           ))}
@@ -178,7 +177,7 @@ export class LodSideBar {
                                   <label
                                     htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                   >
-                                    {facetChild.name}
+                                    {`${capitalizeFirstLetter(facetChild.name)} (${facetChild.count})`}
                                   </label>
                                 </div>
                               ))}
@@ -210,7 +209,6 @@ export class LodSideBar {
                         {capitalizeFirstLetter(t(facet.name.toLowerCase()))}
                       </span>
                     </legend>
-
                     <div class="form-item">
                       <div class="form-columns">
                         <div class="form-item-column">
@@ -237,8 +235,7 @@ export class LodSideBar {
                                 <label
                                   htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}-preview`}
                                 >
-                                  {facetChild.name || "No filter name"} (
-                                  {facetChild.count})
+                                  {`${capitalizeFirstLetter(facetChild.name)} (${facetChild.count})`}
                                 </label>
                               </div>
                             ))}
@@ -347,7 +344,7 @@ export class LodSideBar {
                                               <label
                                                 htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                               >
-                                                {facetChild.name}
+                                                {`${facetChild.name} (${facetChild.count})`}
                                               </label>
                                             </div>
                                           ))}
@@ -391,7 +388,7 @@ export class LodSideBar {
                     </div>
                   </fieldset>
                 )}
-              </>
+              </div>
             ))}
           </div>
           <div class="modal-actions">

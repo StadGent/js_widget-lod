@@ -1,15 +1,22 @@
 import { createStore } from "@stencil/store";
-import { getPersonalDataProcessingList } from "../../services/queries";
+import {
+  getBaseFacets,
+  getPersonalDataProcessingList,
+} from "../../services/queries";
+import { debounce } from "../../i18n/utils";
+import { isString } from "../../utils/utils";
 
 export interface Facet {
   name: string;
-  count: number;
-  facets: Facet[];
+  count?: number;
+  checked?: boolean;
+  facets: FacetChild[];
 }
 
-export interface FacetFilter {
+export interface FacetChild {
   name: string;
-  facets: { name: string; checked: boolean }[];
+  count: number;
+  checked: boolean;
 }
 
 export interface FacetData {
@@ -29,10 +36,11 @@ export interface QueryData {
 const { state, onChange } = createStore({
   queryData: undefined as QueryData | undefined,
   baseFacets: undefined as Facet[] | undefined,
-  facetFilters: [] as FacetFilter[],
+  facetFilters: [] as Facet[],
   modalsMade: false,
-  checkedFacets: undefined as FacetFilter[] | undefined,
-  disjunctiveFacets: undefined as FacetFilter[] | undefined,
+  checkedFacets: undefined as Facet[] | undefined,
+  disjunctiveFacets: undefined as Facet[] | undefined,
+  appliedFilters: undefined as Facet[] | undefined,
   totalPages: undefined as number | undefined,
   currentPage: undefined as number | undefined,
   searchInput: "",
@@ -57,8 +65,75 @@ onChange("queryData", (updatedQueryData) => {
   state.totalPages = Math.ceil(updatedQueryData.total_count / 10);
 });
 
+const updateFacetCount = debounce(() => {
+  setNewFacetCounts();
+}, 400); // Wait 400ms after user stops typing
+
 export const updateSearchInput = (event: any) => {
   state.searchInput = event.target.value;
+  updateFacetCount();
+};
+
+export const setNewFacetCounts = async () => {
+  const data = await getBaseFacets(
+    state.searchInput,
+    state.disjunctiveFacets,
+    state.checkedFacets,
+  );
+
+  const updatedFacets = state.facetFilters.map((existingGroup) => {
+    const updatedGroup = data.facets.find((f) => f.name === existingGroup.name);
+
+    if (!updatedGroup) return existingGroup;
+
+    return {
+      ...existingGroup,
+      facets: existingGroup.facets
+        .filter((child) => isString(child.name))
+        .map((facetChild) => {
+          const updatedChild = updatedGroup.facets.find(
+            (f) => f.name === facetChild.name,
+          );
+
+          return {
+            ...facetChild,
+            count: updatedChild ? updatedChild.count : 0,
+          };
+        }),
+    };
+  });
+
+  state.baseFacets = updatedFacets;
+};
+
+export const setBaseFacets = async () => {
+  const params = new URLSearchParams(window.location.search);
+  const data = await getBaseFacets();
+
+  state.baseFacets = data.facets.map((facetGroup) => ({
+    ...facetGroup,
+    facets: facetGroup.facets.filter((f) => f.name !== ""),
+  }));
+
+  data.facets.forEach((facet) => {
+    state.modalFilters[facet.name] = "";
+  });
+
+  state.facetFilters = data.facets.map((facet) => ({
+    name: facet.name,
+    facets: facet.facets.map((facetChild) => {
+      return {
+        name: facetChild.name,
+        count: facetChild.count,
+        checked: params
+          .getAll("refine")
+          .includes(`${facet.name}:${facetChild.name}`),
+      };
+    }),
+  }));
+
+  await setNewFacetCounts();
+  state.appliedFilters = state.disjunctiveFacets;
 };
 
 export const updateModalSearchFilter = (event: any, facetName: string) => {
@@ -113,6 +188,8 @@ export const updateData = async (newFilters?: boolean) => {
   state.queryData = await getPersonalDataProcessingList(params.toString());
 
   document.getElementById("lod-processing-register").scrollIntoView();
+  state.appliedFilters = state.disjunctiveFacets;
+  updateFacetCount();
 };
 
 export const toggleChecked = (facet: string, facetChild: string) => {
@@ -128,6 +205,7 @@ export const toggleChecked = (facet: string, facetChild: string) => {
       ),
     };
   });
+  setNewFacetCounts();
 };
 
 export const updatePage = (page: number) => {

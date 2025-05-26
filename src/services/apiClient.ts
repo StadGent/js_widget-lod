@@ -5,7 +5,6 @@ export async function fetchJson<T = any>(
   options?: RequestInit,
 ): Promise<T> {
   if (cache.has(url)) {
-    console.log("Using cached response for:", url);
     return cache.get(url);
   }
 

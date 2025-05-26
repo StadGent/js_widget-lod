@@ -1,10 +1,7 @@
 import { Component, h, Fragment } from "@stencil/core";
-import state, { toggleChecked } from "./store";
+import state, { setBaseFacets, toggleChecked } from "./store";
 import { updateData } from "./store";
-import {
-  getBaseFacets,
-  getPersonalDataProcessingList,
-} from "../../services/queries";
+import { getPersonalDataProcessingList } from "../../services/queries";
 
 declare global {
   interface Window {
@@ -19,7 +16,7 @@ declare global {
 export class LodProcessingRegister {
   async componentWillLoad() {
     this.getInitialData();
-    this.setBaseFacets();
+    setBaseFacets();
   }
 
   getInitialData = async () => {
@@ -48,32 +45,6 @@ export class LodProcessingRegister {
     state.currentPage = page;
   };
 
-  setBaseFacets = async () => {
-    const params = new URLSearchParams(window.location.search);
-    const data = await getBaseFacets();
-
-    state.baseFacets = data.facets.map((facetGroup) => ({
-      ...facetGroup,
-      facets: facetGroup.facets.filter((f) => f.name !== ""),
-    }));
-
-    data.facets.forEach((facet) => {
-      state.modalFilters[facet.name] = "";
-    });
-
-    state.facetFilters = data.facets.map((facet) => ({
-      name: facet.name,
-      facets: facet.facets.map((facetChild) => {
-        return {
-          name: facetChild.name,
-          checked: params
-            .getAll("refine")
-            .includes(`${facet.name}:${facetChild.name}`),
-        };
-      }),
-    }));
-  };
-
   deleteAllFilters = () => {
     state.searchInput = "";
     state.searchInputFiltered = "";
@@ -82,6 +53,7 @@ export class LodProcessingRegister {
       name: facet.name,
       facets: facet.facets.map((facet) => ({
         name: facet.name,
+        count: facet.count,
         checked: false,
       })),
     }));
@@ -145,8 +117,7 @@ export class LodProcessingRegister {
               tabindex="-1"
             />
             <section class="content result-section" id="result">
-              {((state.disjunctiveFacets &&
-                state.disjunctiveFacets.length > 0) ||
+              {((state.appliedFilters && state.appliedFilters.length > 0) ||
                 (state.searchInputFiltered &&
                   state.searchInputFiltered.trim().length > 0)) && (
                 <div class="selected-filters">

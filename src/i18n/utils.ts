@@ -5,3 +5,14 @@ export function useTranslations(lang: keyof typeof ui) {
     return ui[lang][key] || ui[defaultLang][key] || key;
   };
 }
+
+export function debounce<T extends (...args: any[]) => void>(
+  func: T,
+  wait: number,
+) {
+  let timeout: ReturnType<typeof setTimeout>;
+  return function (...args: Parameters<T>) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}
