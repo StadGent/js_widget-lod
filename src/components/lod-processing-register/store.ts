@@ -1,7 +1,9 @@
 import { createStore } from "@stencil/store";
+import { getPersonalDataProcessingList } from "../../services/queries";
 
 export interface Facet {
   name: string;
+  count: number;
   facets: Facet[];
 }
 
@@ -93,13 +95,6 @@ export const updateData = async (newFilters?: boolean) => {
     ),
   );
 
-  // Add refine filters for processors
-
-  const baseUrl =
-    "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/records";
-
-  // Add API key
-
   if (state.searchInputFiltered.trim().length > 1) {
     params.set("where", `name like '%${state.searchInputFiltered}%'`);
   }
@@ -115,10 +110,7 @@ export const updateData = async (newFilters?: boolean) => {
     "c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204",
   );
 
-  const url = `${baseUrl}?${params.toString()}`;
-
-  const response = await fetch(url);
-  state.queryData = await response.json();
+  state.queryData = await getPersonalDataProcessingList(params.toString());
 
   document.getElementById("lod-processing-register").scrollIntoView();
 };

@@ -168,6 +168,9 @@ export namespace Components {
     }
     interface LodProcessingRegister {
     }
+    interface LodProcessingRegisterDetail {
+        "processingId": string;
+    }
     interface LodRegulationsList {
         /**
           * Concepts
@@ -298,6 +301,12 @@ declare global {
         prototype: HTMLLodProcessingRegisterElement;
         new (): HTMLLodProcessingRegisterElement;
     };
+    interface HTMLLodProcessingRegisterDetailElement extends Components.LodProcessingRegisterDetail, HTMLStencilElement {
+    }
+    var HTMLLodProcessingRegisterDetailElement: {
+        prototype: HTMLLodProcessingRegisterDetailElement;
+        new (): HTMLLodProcessingRegisterDetailElement;
+    };
     interface HTMLLodRegulationsListElement extends Components.LodRegulationsList, HTMLStencilElement {
     }
     var HTMLLodRegulationsListElement: {
@@ -324,6 +333,7 @@ declare global {
         "lod-opening-hours": HTMLLodOpeningHoursElement;
         "lod-paginator": HTMLLodPaginatorElement;
         "lod-processing-register": HTMLLodProcessingRegisterElement;
+        "lod-processing-register-detail": HTMLLodProcessingRegisterDetailElement;
         "lod-regulations-list": HTMLLodRegulationsListElement;
         "lod-sidebar": HTMLLodSidebarElement;
         "lod-table": HTMLLodTableElement;
@@ -492,6 +502,9 @@ declare namespace LocalJSX {
     }
     interface LodProcessingRegister {
     }
+    interface LodProcessingRegisterDetail {
+        "processingId"?: string;
+    }
     interface LodRegulationsList {
         /**
           * Concepts
@@ -586,6 +599,7 @@ declare namespace LocalJSX {
         "lod-opening-hours": LodOpeningHours;
         "lod-paginator": LodPaginator;
         "lod-processing-register": LodProcessingRegister;
+        "lod-processing-register-detail": LodProcessingRegisterDetail;
         "lod-regulations-list": LodRegulationsList;
         "lod-sidebar": LodSidebar;
         "lod-table": LodTable;
@@ -602,6 +616,7 @@ declare module "@stencil/core" {
             "lod-opening-hours": LocalJSX.LodOpeningHours & JSXBase.HTMLAttributes<HTMLLodOpeningHoursElement>;
             "lod-paginator": LocalJSX.LodPaginator & JSXBase.HTMLAttributes<HTMLLodPaginatorElement>;
             "lod-processing-register": LocalJSX.LodProcessingRegister & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterElement>;
+            "lod-processing-register-detail": LocalJSX.LodProcessingRegisterDetail & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterDetailElement>;
             "lod-regulations-list": LocalJSX.LodRegulationsList & JSXBase.HTMLAttributes<HTMLLodRegulationsListElement>;
             "lod-sidebar": LocalJSX.LodSidebar & JSXBase.HTMLAttributes<HTMLLodSidebarElement>;
             "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;

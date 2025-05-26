@@ -8,6 +8,9 @@ import state, {
   updateSearchInput,
 } from "./store";
 import { capitalizeFirstLetter, toKebabCase } from "../../utils/utils.js";
+import { useTranslations } from "../../i18n/utils.js";
+
+const t = useTranslations("nl");
 
 @Component({
   tag: "lod-sidebar",
@@ -92,7 +95,7 @@ export class LodSideBar {
                   <fieldset key={`filter-${facet.name}`} class="form-item ">
                     <legend>
                       <span class="legend-title">
-                        {capitalizeFirstLetter(facet.name)}
+                        {capitalizeFirstLetter(t(facet.name.toLowerCase()))}
                       </span>
                     </legend>
                     <div class="form-item">
@@ -110,7 +113,9 @@ export class LodSideBar {
                               <label
                                 htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(childFacet.name)}`}
                               >
-                                {capitalizeFirstLetter(childFacet.name)}
+                                {capitalizeFirstLetter(
+                                  t(childFacet.name.toLowerCase()),
+                                )}
                               </label>
                             </div>
                           ))}
@@ -128,7 +133,7 @@ export class LodSideBar {
                   >
                     <legend>
                       <span class="legend-title">
-                        {capitalizeFirstLetter(facet.name)}
+                        {capitalizeFirstLetter(t(facet.name.toLowerCase()))}
                       </span>
                     </legend>
 
@@ -147,7 +152,9 @@ export class LodSideBar {
                                 <label
                                   htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                 >
-                                  {capitalizeFirstLetter(facetChild.name)}
+                                  {capitalizeFirstLetter(
+                                    t(facetChild.name).toLowerCase(),
+                                  )}
                                 </label>
                               </div>
                             ))}
@@ -200,7 +207,7 @@ export class LodSideBar {
                   >
                     <legend>
                       <span class="legend-title">
-                        {capitalizeFirstLetter(facet.name)}
+                        {capitalizeFirstLetter(t(facet.name.toLowerCase()))}
                       </span>
                     </legend>
 
@@ -230,7 +237,8 @@ export class LodSideBar {
                                 <label
                                   htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}-preview`}
                                 >
-                                  {facetChild.name || "No filter name"}
+                                  {facetChild.name || "No filter name"} (
+                                  {facetChild.count})
                                 </label>
                               </div>
                             ))}
@@ -298,8 +306,9 @@ export class LodSideBar {
                                 <fieldset class="form-item">
                                   <legend>
                                     <span class="legend-title">
-                                      {capitalizeFirstLetter(facet.name) ||
-                                        "No filter name"}
+                                      {capitalizeFirstLetter(
+                                        t(facet.name.toLowerCase()),
+                                      ) || "No filter name"}
                                     </span>
                                   </legend>
                                   <div class="form-item">

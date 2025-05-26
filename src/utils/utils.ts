@@ -46,3 +46,7 @@ export function toKebabCase(input: string): string {
 export function capitalizeFirstLetter(val: string) {
   return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
+
+export function isString(string: string | undefined | null) {
+  return string !== undefined && string !== null && string.length > 0;
+}

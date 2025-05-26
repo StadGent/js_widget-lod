@@ -1,6 +1,10 @@
 import { Component, h, Fragment } from "@stencil/core";
 import state, { toggleChecked } from "./store";
 import { updateData } from "./store";
+import {
+  getBaseFacets,
+  getPersonalDataProcessingList,
+} from "../../services/queries";
 
 declare global {
   interface Window {
@@ -15,7 +19,7 @@ declare global {
 export class LodProcessingRegister {
   async componentWillLoad() {
     this.getInitialData();
-    this.getBaseFacets();
+    this.setBaseFacets();
   }
 
   getInitialData = async () => {
@@ -24,7 +28,6 @@ export class LodProcessingRegister {
     let offsetString = params.get("offset");
     let page = 1;
 
-    let baseUrl = "";
     if (offsetString && offsetString.length > 0) {
       const nameFilter = params
         .get("where")
@@ -34,24 +37,21 @@ export class LodProcessingRegister {
         state.searchInputFiltered = nameFilter;
       }
       page = Number(offsetString) / 10 + 1;
-      baseUrl = `https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/records?${window.location.search}&apikey=c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204`;
+      state.queryData = await getPersonalDataProcessingList(
+        window.location.search,
+      );
     } else {
-      baseUrl = `https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/records?limit=10&offset=${(page - 1) * 10}&apikey=c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204`;
+      state.queryData = await getPersonalDataProcessingList((page - 1) * 10);
     }
-
-    const response = await fetch(baseUrl);
-    state.queryData = await response.json();
 
     state.totalPages = Math.ceil(state.queryData.total_count / 10);
     state.currentPage = page;
   };
 
-  getBaseFacets = async () => {
+  setBaseFacets = async () => {
     const params = new URLSearchParams(window.location.search);
-    const baseFacets =
-      "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent/facets?facet=processor&facet=personaldata&facet=grantees&facet=type&facet=formal_framework&facet=audience&apikey=c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204";
-    const response = await fetch(baseFacets);
-    const data = await response.json();
+    const data = await getBaseFacets();
+
     state.baseFacets = data.facets.map((facetGroup) => ({
       ...facetGroup,
       facets: facetGroup.facets.filter((f) => f.name !== ""),
