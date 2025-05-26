@@ -31,11 +31,21 @@
     <script nomodule src="build/lod-widgets.js"></script>
   </head>
   <body class="cs--blue">
-    <!-- <lod-processing-register-detail
-      processing-id="5b14bdf1-7004-ee11-8f6e-000d3aaae043"
-    /> -->
-    <lod-processing-register />
-    <!-- <lod-opening-hours
+  <lod-processing-register-detail processing-id="5b14bdf1-7004-ee11-8f6e-000d3aaae043" />
+  <lod-processing-register />
+    <lod-address
+      name="Stad Gent"
+      uri="https://data.vlaanderen.be/id/adres/1475186"
+      mode="map"
+      include-ld="true"
+    ></lod-address>
+    <lod-address
+      name="OCMW Gent"
+      uri="https://data.vlaanderen.be/id/adres/2947785"
+      mode="link"
+      include-ld="true"
+    ></lod-address>
+    <lod-opening-hours
       service-id="10672"
       show-all-hours="true"
       channel-id="3106"
@@ -323,6 +333,6 @@
       "
       endpoint="https://stad.gent/sparql"
       cta-text="Gepersonaliseerde CTA tekst"
-    ></lod-table> -->
+    ></lod-table>
   </body>
 </html>

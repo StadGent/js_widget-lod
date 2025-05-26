@@ -6,6 +6,24 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface LodAddress {
+        /**
+          * Show a link to JSON-LD for SEO.
+         */
+        "includeLd": boolean;
+        /**
+          * Show a map or a link to a map.
+         */
+        "mode": 'link' | 'map' | 'none';
+        /**
+          * The name of the address.
+         */
+        "name": string;
+        /**
+          * The unique uri of the address.
+         */
+        "uri": string;
+    }
     interface LodCard {
         /**
           * The location address of the event
@@ -259,6 +277,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLLodAddressElement extends Components.LodAddress, HTMLStencilElement {
+    }
+    var HTMLLodAddressElement: {
+        prototype: HTMLLodAddressElement;
+        new (): HTMLLodAddressElement;
+    };
     interface HTMLLodCardElement extends Components.LodCard, HTMLStencilElement {
     }
     var HTMLLodCardElement: {
@@ -326,6 +350,7 @@ declare global {
         new (): HTMLLodTableElement;
     };
     interface HTMLElementTagNameMap {
+        "lod-address": HTMLLodAddressElement;
         "lod-card": HTMLLodCardElement;
         "lod-cards": HTMLLodCardsElement;
         "lod-decision-card": HTMLLodDecisionCardElement;
@@ -340,6 +365,24 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface LodAddress {
+        /**
+          * Show a link to JSON-LD for SEO.
+         */
+        "includeLd"?: boolean;
+        /**
+          * Show a map or a link to a map.
+         */
+        "mode"?: 'link' | 'map' | 'none';
+        /**
+          * The name of the address.
+         */
+        "name"?: string;
+        /**
+          * The unique uri of the address.
+         */
+        "uri"?: string;
+    }
     interface LodCard {
         /**
           * The location address of the event
@@ -592,6 +635,7 @@ declare namespace LocalJSX {
         "tableCaption"?: string;
     }
     interface IntrinsicElements {
+        "lod-address": LodAddress;
         "lod-card": LodCard;
         "lod-cards": LodCards;
         "lod-decision-card": LodDecisionCard;
@@ -609,6 +653,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "lod-address": LocalJSX.LodAddress & JSXBase.HTMLAttributes<HTMLLodAddressElement>;
             "lod-card": LocalJSX.LodCard & JSXBase.HTMLAttributes<HTMLLodCardElement>;
             "lod-cards": LocalJSX.LodCards & JSXBase.HTMLAttributes<HTMLLodCardsElement>;
             "lod-decision-card": LocalJSX.LodDecisionCard & JSXBase.HTMLAttributes<HTMLLodDecisionCardElement>;

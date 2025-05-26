@@ -13,6 +13,10 @@
       "import": "./dist/lod-widgets/lod-widgets.esm.js",
       "require": "./dist/lod-widgets/lod-widgets.cjs.js"
     },
+    "./lod-address": {
+      "import": "./dist/components/lod-address.js",
+      "types": "./dist/components/lod-address.ts"
+    },
     "./lod-cards": {
       "import": "./dist/components/lod-cards.js",
       "types": "./dist/components/lod-cards.ts"

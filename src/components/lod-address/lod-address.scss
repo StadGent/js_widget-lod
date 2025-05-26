@@ -1,0 +1,20 @@
+.lod-address {
+
+  :host {
+    display: block;
+  }
+  
+  .address-card {
+    padding: 0.5rem;
+  }
+  
+  .line {
+    margin: 0;
+  }
+  
+  .map-link {
+    color: #c00;
+    text-decoration: underline;
+    font-weight: 500;
+  }
+}

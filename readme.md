@@ -39,6 +39,9 @@ Need help? Check out the docs [here](https://stenciljs.com/docs/my-first-compone
 
 ## Available components
 
+- LodAddress
+  - HTML: <lod-address/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-address/readme.md)
 - LodTable
   - HTML: <lod-table/>
   - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-table/readme.md)
