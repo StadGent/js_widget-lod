@@ -1,6 +1,6 @@
 {
   "name": "@district09/lod-widgets",
-  "version": "1.3.6",
+  "version": "1.3.7",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -12,6 +12,10 @@
     ".": {
       "import": "./dist/lod-widgets/lod-widgets.esm.js",
       "require": "./dist/lod-widgets/lod-widgets.cjs.js"
+    },
+    "./lod-address": {
+      "import": "./dist/components/lod-address.js",
+      "types": "./dist/components/lod-address.ts"
     },
     "./lod-cards": {
       "import": "./dist/components/lod-cards.js",
