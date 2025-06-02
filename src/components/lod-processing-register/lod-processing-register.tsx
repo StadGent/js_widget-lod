@@ -12,6 +12,7 @@ declare global {
 @Component({
   tag: "lod-processing-register",
   shadow: false,
+  styleUrl: "lod-processing-register.scss",
 })
 export class LodProcessingRegister {
   async componentWillLoad() {
@@ -108,7 +109,11 @@ export class LodProcessingRegister {
             </div>
           </div> */}
           <div class="sidebar-layout filter">
-            <lod-sidebar
+            {!state.modalsMade && (
+              <lod-processing-register-sidebar-skeleton class="sidebar filter-section modal--fixed-height " />
+            )}
+
+            <lod-processing-register-sidebar
               id="filter"
               class="modal sidebar filter-section modal--fixed-height"
               role="dialog"
@@ -116,6 +121,7 @@ export class LodProcessingRegister {
               aria-labelledby="filter-title"
               tabindex="-1"
             />
+
             <section class="content result-section" id="result">
               {((state.appliedFilters && state.appliedFilters.length > 0) ||
                 (state.searchInputFiltered &&
@@ -176,9 +182,11 @@ export class LodProcessingRegister {
               )}
 
               <div class="filter__result-count">
-                <div class="filter-page-label">
-                  We vonden {state.queryData?.total_count} resultaten
-                </div>
+                {state?.queryData?.total_count && (
+                  <div class="filter-page-label">
+                    We vonden {state.queryData?.total_count} resultaten
+                  </div>
+                )}
                 <button
                   type="button"
                   class="button button-secondary icon-filter result__show-filters modal-trigger"
@@ -189,52 +197,150 @@ export class LodProcessingRegister {
                 </button>
               </div>
 
-              <ul class="filter__results">
-                {state?.queryData?.results?.map((item) => (
-                  <li key={`result-${item.name}`} class="teaser teaser--wide">
-                    <article class="teaser-content">
-                      <div class="content__second">
-                        <h3 class="h4">{item.name}</h3>
+              {state.isLoading ? (
+                <div class="skeleton-container">
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                  <div>
+                    <div class="skeleton skeleton-h3-long"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-medium"></div>
+                    <div class="skeleton skeleton-h3"></div>
+                    <div class="skeleton skeleton-h3-short"></div>
+                  </div>
+                </div>
+              ) : state.queryData ? (
+                <ul class="filter__results">
+                  {state?.queryData?.results?.map((item) => (
+                    <li key={`result-${item.name}`} class="teaser teaser--wide">
+                      <article class="teaser-content">
+                        <div class="content__second">
+                          <h3 class="h4">{item.name}</h3>
 
-                        <dl>
-                          {item?.type && item?.type.length > 0 && (
-                            <div>
-                              <dt>Categorie</dt> <dd>{item.type}</dd>
-                            </div>
-                          )}
-
-                          {item?.processor && item?.processor.length > 0 && (
-                            <div>
-                              <dt>Verwerkende dienst</dt>{" "}
-                              <dd>{item.processor}</dd>
-                            </div>
-                          )}
-                          {item?.formal_framework &&
-                            item?.formal_framework.length > 0 && (
+                          <dl>
+                            {item?.type && item?.type.length > 0 && (
                               <div>
-                                <dt>Rechtmatigheid</dt>{" "}
-                                <dd>{item.formal_framework}</dd>
+                                <dt>Categorie</dt> <dd>{item.type}</dd>
                               </div>
                             )}
-                        </dl>
 
-                        <a href="#" class="read-more standalone-link">
-                          Lees meer{" "}
-                          <span class="visually-hidden">over {item.name}</span>
-                        </a>
-                      </div>
-                    </article>
-                    <a
-                      href="#"
-                      class="teaser-overlay-link"
-                      tabindex="-1"
-                      aria-hidden="true"
-                    >
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+                            {item?.processor && item?.processor.length > 0 && (
+                              <div>
+                                <dt>Verwerkende dienst</dt>{" "}
+                                <dd>{item.processor}</dd>
+                              </div>
+                            )}
+                            {item?.formal_framework &&
+                              item?.formal_framework.length > 0 && (
+                                <div>
+                                  <dt>Rechtmatigheid</dt>{" "}
+                                  <dd>{item.formal_framework}</dd>
+                                </div>
+                              )}
+                          </dl>
+
+                          <a href="#" class="read-more standalone-link">
+                            Lees meer{" "}
+                            <span class="visually-hidden">
+                              over {item.name}
+                            </span>
+                          </a>
+                        </div>
+                      </article>
+                      <a
+                        href="#"
+                        class="teaser-overlay-link"
+                        tabindex="-1"
+                        aria-hidden="true"
+                      >
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
               <lod-paginator />
             </section>
           </div>

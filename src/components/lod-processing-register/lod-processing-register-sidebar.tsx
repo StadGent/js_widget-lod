@@ -6,20 +6,23 @@ import state, {
   updateData,
   updateModalSearchFilter,
   updateSearchInput,
-} from "./store";
+} from "./store.js";
 import { capitalizeFirstLetter, toKebabCase } from "../../utils/utils.js";
 import { useTranslations } from "../../i18n/utils.js";
 
 const t = useTranslations("nl");
 
 @Component({
-  tag: "lod-sidebar",
+  tag: "lod-processing-register-sidebar",
   shadow: false,
 })
-export class LodSideBar {
+export class LodProcessingRegisterSideBar {
   componentDidUpdate() {
-    if (state.baseFacets?.length > 0 && !state.modalsMade) {
-      console.log(state.baseFacets);
+    if (
+      state?.baseFacets !== undefined &&
+      state.baseFacets?.length > 0 &&
+      !state.modalsMade
+    ) {
       const modals = document.querySelectorAll(
         ".modal:not(.has-custom-binding)",
       );
