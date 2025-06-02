@@ -197,7 +197,7 @@ export class LodProcessingRegister {
                 </button>
               </div>
 
-              {state.isLoading ? (
+              {!state.queryData ? (
                 <div class="skeleton-container">
                   <div>
                     <div class="skeleton skeleton-h3-long"></div>
@@ -290,7 +290,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
                 </div>
-              ) : state.queryData ? (
+              ) : (
                 <ul class="filter__results">
                   {state?.queryData?.results?.map((item) => (
                     <li key={`result-${item.name}`} class="teaser teaser--wide">
