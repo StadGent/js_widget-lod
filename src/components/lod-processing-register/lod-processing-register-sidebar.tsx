@@ -127,6 +127,13 @@ export class LodProcessingRegisterSideBar {
                                 name="checkboxes-dynamic"
                                 value={`${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                 class="checkbox"
+                                checked={this.isFacetChecked(
+                                  facet.name,
+                                  facetChild.name,
+                                )}
+                                onInput={() => {
+                                  toggleChecked(facet.name, facetChild.name);
+                                }}
                               />
                               <label
                                 htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
@@ -164,6 +171,13 @@ export class LodProcessingRegisterSideBar {
                                   id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                   name="checkboxes-dynamic"
                                   class="checkbox"
+                                  checked={this.isFacetChecked(
+                                    facet.name,
+                                    facetChild.name,
+                                  )}
+                                  onInput={() => {
+                                    toggleChecked(facet.name, facetChild.name);
+                                  }}
                                 />
                                 <label
                                   htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
@@ -190,6 +204,16 @@ export class LodProcessingRegisterSideBar {
                                     id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                     name="checkboxes-dynamic"
                                     class="checkbox"
+                                    checked={this.isFacetChecked(
+                                      facet.name,
+                                      facetChild.name,
+                                    )}
+                                    onInput={() => {
+                                      toggleChecked(
+                                        facet.name,
+                                        facetChild.name,
+                                      );
+                                    }}
                                   />
                                   <label
                                     htmlFor={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}

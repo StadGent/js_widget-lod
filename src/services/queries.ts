@@ -46,6 +46,9 @@ export async function getBaseFacets(
 
   params.set("apikey", publicApiKey);
 
+  // Remove audience from facets
+  const data = await fetchJson(`${url.toString()}&${params.toString()}`);
+  data.facets = data.facets.filter((facet) => facet.name !== "audience");
   return fetchJson(`${url.toString()}&${params.toString()}`);
 }
 
