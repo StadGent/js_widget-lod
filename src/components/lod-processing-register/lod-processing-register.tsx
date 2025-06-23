@@ -1,4 +1,4 @@
-import { Component, h, Fragment } from "@stencil/core";
+import { Component, h, Fragment, Prop } from "@stencil/core";
 import state, { setBaseFacets, toggleChecked } from "./store";
 import { updateData } from "./store";
 import { getPersonalDataProcessingList } from "../../services/queries";
@@ -15,7 +15,13 @@ declare global {
   styleUrl: "lod-processing-register.scss",
 })
 export class LodProcessingRegister {
+  @Prop() itemsPerPage: number;
+
   async componentWillLoad() {
+    if (this.itemsPerPage) {
+      state.itemsPerPage = this.itemsPerPage;
+      console.log(this.itemsPerPage);
+    }
     this.getInitialData();
     setBaseFacets();
 
@@ -38,15 +44,19 @@ export class LodProcessingRegister {
         state.searchInput = nameFilter;
         state.searchInputFiltered = nameFilter;
       }
-      page = Number(offsetString) / 10 + 1;
+      page = Number(offsetString) / state.itemsPerPage + 1;
       state.queryData = await getPersonalDataProcessingList(
         window.location.search,
       );
     } else {
-      state.queryData = await getPersonalDataProcessingList((page - 1) * 10);
+      state.queryData = await getPersonalDataProcessingList(
+        (page - 1) * state.itemsPerPage,
+      );
     }
 
-    state.totalPages = Math.ceil(state.queryData.total_count / 10);
+    state.totalPages = Math.ceil(
+      state.queryData.total_count / state.itemsPerPage,
+    );
     state.currentPage = page;
   };
 

@@ -1,6 +1,7 @@
 import { type Facet } from "../components/lod-processing-register/store";
 import { isString } from "../utils/utils";
 import { fetchJson } from "./apiClient";
+import state from "../components/lod-processing-register/store";
 
 const openDataPortalUrl =
   "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent";
@@ -62,7 +63,7 @@ export async function getPersonalDataProcessingList(
 export async function getPersonalDataProcessingList(param: string | number) {
   let baseUrl = "";
   if (typeof param === "number") {
-    baseUrl = `${openDataPortalUrl}/records?limit=10&offset=${param}&apikey=${publicApiKey}`;
+    baseUrl = `${openDataPortalUrl}/records?limit=${state.itemsPerPage}&offset=${param}&apikey=${publicApiKey}`;
   } else {
     baseUrl = `${openDataPortalUrl}/records${param.startsWith("?") ? "" : "?"}${param}&apikey=${publicApiKey}`;
   }

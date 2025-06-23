@@ -16,6 +16,8 @@ export class LodPaginator {
         <h2 id="pagination_1-2017" class="visually-hidden">
           Pagination
         </h2>
+        {state.currentPage}
+        {state.totalPages}
         <ul class="pager__items">
           {/* Previous */}
           {state.currentPage !== 1 && (

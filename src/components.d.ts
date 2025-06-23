@@ -185,6 +185,7 @@ export namespace Components {
     interface LodPaginator {
     }
     interface LodProcessingRegister {
+        "itemsPerPage": number;
     }
     interface LodProcessingRegisterDetail {
         "processingId": string;
@@ -571,6 +572,7 @@ declare namespace LocalJSX {
     interface LodPaginator {
     }
     interface LodProcessingRegister {
+        "itemsPerPage"?: number;
     }
     interface LodProcessingRegisterDetail {
         "processingId"?: string;

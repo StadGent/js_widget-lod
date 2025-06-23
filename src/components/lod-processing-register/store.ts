@@ -47,6 +47,7 @@ const { state, onChange } = createStore({
   searchInputFiltered: "",
   modalFilters: {} as { [key: string]: string },
   initialAnimationFinished: false,
+  itemsPerPage: 10,
 });
 
 onChange("facetFilters", (updatedFacets) => {
@@ -63,7 +64,9 @@ onChange("checkedFacets", (updatedFacets) => {
 });
 
 onChange("queryData", (updatedQueryData) => {
-  state.totalPages = Math.ceil(updatedQueryData.total_count / 10);
+  state.totalPages = Math.ceil(
+    updatedQueryData.total_count / state.itemsPerPage,
+  );
 });
 
 const updateFacetCount = debounce(() => {
@@ -175,8 +178,8 @@ export const updateData = async (newFilters?: boolean) => {
     params.set("where", `name like '%${state.searchInputFiltered}%'`);
   }
 
-  params.set("offset", `${(state.currentPage - 1) * 10}`);
-  params.set("limit", `10`);
+  params.set("offset", `${(state.currentPage - 1) * state.itemsPerPage}`);
+  params.set("limit", state.itemsPerPage.toString());
 
   const newUrl = `${window.location.pathname}?${params.toString()}`;
   window.history.replaceState(null, "", newUrl);
