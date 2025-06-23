@@ -1,6 +1,6 @@
 import { Component, h, Fragment, State, Prop } from "@stencil/core";
-import { getPersonalDataProcessingDetail } from "../../services/queries";
-import { isString } from "../../utils/utils";
+import { getPersonalDataProcessingDetail } from "../../../services/queries";
+import { isString } from "../../../utils/utils";
 
 @Component({
   tag: "lod-processing-register-detail",

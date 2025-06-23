@@ -1,10 +1,14 @@
 import { Component, h } from "@stencil/core";
-import state from "./store";
+import state from "../store";
 
 @Component({
   tag: "lod-processing-register-results",
   shadow: false,
 })
+
+/**
+ * @internal
+ */
 export class LodProcessingRegisterResults {
   render() {
     return (
