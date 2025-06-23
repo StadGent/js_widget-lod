@@ -186,6 +186,9 @@ export namespace Components {
     }
     interface LodProcessingRegister {
         "itemsPerPage": number;
+        "openDataSoftPublicApiKey"?: string;
+        "opendataSoftEndpoint"?: string;
+        "sparqlEndpoint"?: string;
     }
     interface LodProcessingRegisterDetail {
         "processingId": string;
@@ -573,6 +576,9 @@ declare namespace LocalJSX {
     }
     interface LodProcessingRegister {
         "itemsPerPage"?: number;
+        "openDataSoftPublicApiKey"?: string;
+        "opendataSoftEndpoint"?: string;
+        "sparqlEndpoint"?: string;
     }
     interface LodProcessingRegisterDetail {
         "processingId"?: string;

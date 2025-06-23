@@ -34,7 +34,7 @@ export class LodProcessingRegisterResults {
                       </div>
                     )}
                 </dl>
-                <a href="#" class="read-more standalone-link">
+                <a href={item.uri} class="read-more standalone-link">
                   Lees meer{" "}
                   <span class="visually-hidden">over {item.name}</span>
                 </a>

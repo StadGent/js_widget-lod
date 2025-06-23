@@ -16,12 +16,27 @@ declare global {
 })
 export class LodProcessingRegister {
   @Prop() itemsPerPage: number;
+  @Prop() sparqlEndpoint?: string;
+  @Prop()
+  opendataSoftEndpoint?: string;
+  @Prop()
+  openDataSoftPublicApiKey?: string;
 
   async componentWillLoad() {
     if (this.itemsPerPage) {
       state.itemsPerPage = this.itemsPerPage;
-      console.log(this.itemsPerPage);
     }
+
+    if (this.opendataSoftEndpoint) {
+      state.opendataSoftEndpoint = this.opendataSoftEndpoint;
+    }
+    if (this.openDataSoftPublicApiKey) {
+      state.openDataSoftPublicApiKey = this.openDataSoftPublicApiKey;
+    }
+    if (this.sparqlEndpoint) {
+      state.sparqlEndpoint = this.sparqlEndpoint;
+    }
+
     this.getInitialData();
     setBaseFacets();
 

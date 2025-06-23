@@ -21,6 +21,7 @@ export interface FacetChild {
 
 export interface FacetData {
   id: string;
+  uri: string;
   processor: string;
   type: string;
   name: string;
@@ -48,6 +49,11 @@ const { state, onChange } = createStore({
   modalFilters: {} as { [key: string]: string },
   initialAnimationFinished: false,
   itemsPerPage: 10,
+  opendataSoftEndpoint:
+    "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent",
+  sparqlEndpoint: "https://stad.gent/sparql",
+  openDataSoftPublicApiKey:
+    "c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204",
 });
 
 onChange("facetFilters", (updatedFacets) => {

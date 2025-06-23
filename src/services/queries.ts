@@ -3,10 +3,6 @@ import { isString } from "../utils/utils";
 import { fetchJson } from "./apiClient";
 import state from "../components/lod-processing-register/store";
 
-const openDataPortalUrl =
-  "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent";
-const publicApiKey = "c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204";
-
 export async function getProcessingRegisterDetail(id: string) {
   return fetchJson(`/api/users/${id}`);
 }
@@ -16,7 +12,7 @@ export async function getBaseFacets(
   disjunctiveFacets?: Facet[],
   checkedFacets?: Facet[],
 ) {
-  const baseUrl = `${openDataPortalUrl}/facets?facet=processor&facet=personaldata&facet=grantees&facet=type&facet=formal_framework&facet=audience`;
+  const baseUrl = `${state.opendataSoftEndpoint}/facets?facet=processor&facet=personaldata&facet=grantees&facet=type&facet=formal_framework&facet=audience`;
   const url = new URL(baseUrl);
 
   const params = new URLSearchParams();
@@ -45,7 +41,7 @@ export async function getBaseFacets(
     ),
   );
 
-  params.set("apikey", publicApiKey);
+  params.set("apikey", state.openDataSoftPublicApiKey);
 
   // Remove audience from facets
   const data = await fetchJson(`${url.toString()}&${params.toString()}`);
@@ -63,9 +59,9 @@ export async function getPersonalDataProcessingList(
 export async function getPersonalDataProcessingList(param: string | number) {
   let baseUrl = "";
   if (typeof param === "number") {
-    baseUrl = `${openDataPortalUrl}/records?limit=${state.itemsPerPage}&offset=${param}&apikey=${publicApiKey}`;
+    baseUrl = `${state.opendataSoftEndpoint}/records?limit=${state.itemsPerPage}&offset=${param}&apikey=${state.openDataSoftPublicApiKey}`;
   } else {
-    baseUrl = `${openDataPortalUrl}/records${param.startsWith("?") ? "" : "?"}${param}&apikey=${publicApiKey}`;
+    baseUrl = `${state.opendataSoftEndpoint}/records${param.startsWith("?") ? "" : "?"}${param}&apikey=${state.openDataSoftPublicApiKey}`;
   }
   return fetchJson(baseUrl);
 }
@@ -73,7 +69,7 @@ export async function getPersonalDataProcessingList(param: string | number) {
 export async function getPersonalDataProcessingDetail(
   id: string,
 ): Promise<ProcessingRegisterDetailItem> {
-  const url = new URL("https://stad.gent/sparql");
+  const url = new URL(state.sparqlEndpoint);
   const query = `
   PREFIX skos: <http://www.w3.org/2004/02/skos/core#> 
   PREFIX dcterms: <http://purl.org/dc/terms/> 
