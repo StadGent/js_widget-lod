@@ -6,6 +6,10 @@ import state, { updatePage } from "./store";
   shadow: false,
 })
 export class LodPaginator {
+  private blur(e: Event) {
+    (e.target as HTMLElement).blur();
+  }
+
   render() {
     return (
       <nav class="pager" aria-labelledby="pagination_1-2017">
@@ -13,130 +17,132 @@ export class LodPaginator {
           Pagination
         </h2>
         <ul class="pager__items">
+          {/* Previous */}
           {state.currentPage !== 1 && (
-            <li
-              onClick={() => {
-                updatePage(state.currentPage - 1);
-              }}
-              class="previous"
-            >
-              <a href="javascript:;" class="standalone-link back">
+            <li class="previous">
+              <a
+                href="#result"
+                class="previous"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.blur(e);
+                  updatePage(state.currentPage - 1);
+                }}
+              >
                 Vorige
                 <span class="visually-hidden">pagina</span>
               </a>
             </li>
           )}
-          <li
-            onClick={() => {
-              updatePage(1);
-            }}
-            class={state.currentPage === 1 ? "active" : ""}
-          >
-            <a href="javascript:;" title="Go to page 1">
-              <span class="visually-hidden">Page</span>1
+
+          {/* Page 1 */}
+          <li class={state.currentPage === 1 ? "active" : ""}>
+            <a
+              href="#result"
+              title={`Ga naar pagina 1`}
+              onClick={(e) => {
+                e.preventDefault();
+                this.blur(e);
+                updatePage(1);
+              }}
+            >
+              <span class="visually-hidden">Pagina</span>
+              {1}
             </a>
           </li>
-          {state.currentPage < 4 && state.totalPages > 2 && (
-            <>
-              {[...Array(3)].map((_, i) => (
-                <li
-                  onClick={() => {
-                    updatePage(i + 2);
-                  }}
-                  class={state.currentPage === i + 2 ? "active" : ""}
-                >
-                  <a href="javascript:;" title={`Ga naar pagina ${i + 2}`}>
-                    <span class="visually-hidden">Page</span>
-                    {i + 2}
-                  </a>
-                </li>
-              ))}
-            </>
-          )}
-          {state.currentPage >= 4 &&
-            state.currentPage < state.totalPages - 2 && (
-              <>
-                <li class="spacing">...</li>
-                <li
-                  onClick={() => {
+
+          {/* Ellipsis before */}
+          {state.currentPage > 3 && <li>...</li>}
+
+          {/* Previous page (if not 1 or total) */}
+          {state.currentPage - 1 > 1 &&
+            state.currentPage - 1 !== state.totalPages && (
+              <li>
+                <a
+                  href="#result"
+                  title={`Ga naar pagina ${state.currentPage - 1}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.blur(e);
                     updatePage(state.currentPage - 1);
                   }}
-                  class="prev--number"
                 >
-                  <a href="javascript:;" title="Go to page 1">
-                    <span class="visually-hidden">Page</span>
-                    {state.currentPage - 1}
-                  </a>
-                </li>
-                <li class="active">
-                  <a href="javascript:;" title="Go to page 1">
-                    <span class="visually-hidden">Page</span>
-                    {state.currentPage}
-                  </a>
-                </li>
-                <li
-                  onClick={() => {
-                    updatePage(state.currentPage + 1);
-                  }}
-                  class="next--number"
-                >
-                  <a href="javascript:;" title="Go to page 1">
-                    <span class="visually-hidden">Page</span>
-                    {state.currentPage + 1}
-                  </a>
-                </li>
-              </>
+                  <span class="visually-hidden">Pagina</span>
+                  {state.currentPage - 1}
+                </a>
+              </li>
             )}
 
-          {state.totalPages > 3 && state.currentPage < state.totalPages - 2 && (
-            <li class="spacing">...</li>
+          {/* Current page (if not 1 or total) */}
+          {state.currentPage !== 1 &&
+            state.currentPage !== state.totalPages && (
+              <li class="active">
+                <a
+                  href="#result"
+                  title={`Ga naar pagina ${state.currentPage}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    this.blur(e);
+                    updatePage(state.currentPage);
+                  }}
+                >
+                  <span class="visually-hidden">Pagina</span>
+                  {state.currentPage}
+                </a>
+              </li>
+            )}
+
+          {/* Next page (if not last or second to last) */}
+          {state.currentPage + 1 < state.totalPages && (
+            <li>
+              <a
+                href="#result"
+                title={`Ga naar pagina ${state.currentPage + 1}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.blur(e);
+                  updatePage(state.currentPage + 1);
+                }}
+              >
+                <span class="visually-hidden">Pagina</span>
+                {state.currentPage + 1}
+              </a>
+            </li>
           )}
 
-          {state.currentPage >= 4 &&
-            state.currentPage > state.totalPages - 3 && (
-              <>
-                <li class="spacing">...</li>
-                {[...Array(3)].map((_, i) => (
-                  <li
-                    onClick={() => {
-                      updatePage(state.totalPages - 3 + i);
-                    }}
-                    class={
-                      state.totalPages - 3 + i === state.currentPage
-                        ? "active"
-                        : ""
-                    }
-                  >
-                    <a
-                      href="javascript:;"
-                      title={`Ga naar pagina ${state.totalPages - 3 + i}`}
-                    >
-                      <span class="visually-hidden">Pagina</span>
-                      {state.totalPages - 3 + i}
-                    </a>
-                  </li>
-                ))}
-              </>
-            )}
+          {/* Ellipsis after */}
+          {state.totalPages - state.currentPage > 2 && <li>...</li>}
 
-          <li
-            onClick={() => {
-              updatePage(state.totalPages);
-            }}
-          >
-            <a href="javascript:;" title={`Ga naar pagina ${state.totalPages}`}>
-              <span class="visually-hidden">Pagina</span>
-              {state.totalPages}
-            </a>
-          </li>
+          {/* Last page */}
+          {state.totalPages > 1 && (
+            <li class={state.currentPage === state.totalPages ? "active" : ""}>
+              <a
+                href="#result"
+                title={`Ga naar pagina ${state.totalPages}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.blur(e);
+                  updatePage(state.totalPages);
+                }}
+              >
+                <span class="visually-hidden">Pagina</span>
+                {state.totalPages}
+              </a>
+            </li>
+          )}
+
+          {/* Next */}
           {state.currentPage !== state.totalPages && (
-            <li
-              onClick={() => {
-                updatePage(state.currentPage + 1);
-              }}
-              class="next"
-            >
-              <a href="javascript:;" class="standalone-link">
+            <li class="next">
+              <a
+                href="#result"
+                class="next"
+                onClick={(e) => {
+                  e.preventDefault();
+                  this.blur(e);
+                  updatePage(state.currentPage + 1);
+                }}
+              >
                 Volgende
                 <span class="visually-hidden">pagina</span>
               </a>
