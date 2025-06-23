@@ -71,21 +71,21 @@
 $grid-gutter-width: 65px;
 
 .lod-hidden {
-  display: none;
+  display: none !important;
 }
 
 @media (max-width: 960px) {
-  .mobile-hidden {
-    display: none;
+  .lod-mobile-hidden {
+    display: none !important;
   }
 }
 
 @media (max-width: 960px) {
-  .full-width-mobile {
-    width: 100%;
+  .lod-full-width-mobile {
+    width: 100% !important;
   }
 }
 
-.full-width {
-  width: 100%;
+.lod-full-width {
+  width: 100% !important;
 }
