@@ -27,7 +27,20 @@ export class LodProcessingRegisterSideBar {
         ".modal:not(.has-custom-binding)",
       );
 
-      modals?.forEach((modal) => new Modal(modal));
+      const filterModal = document.querySelector("#modal-filter");
+      new Modal(filterModal, {
+        changeHash: false,
+        resizeEvent: (_, close) => {
+          if (window.innerWidth > 960) {
+            close();
+            filterModal.setAttribute("aria-hidden", "false");
+          } else if (!filterModal.classList.contains("visible")) {
+            filterModal.setAttribute("aria-hidden", "true");
+          }
+        },
+      });
+
+      modals?.forEach((modal) => new Modal(modal, { changeHash: false }));
 
       const accordions = document.querySelectorAll(".checkbox-accordion");
       accordions?.forEach((accordion) =>
@@ -66,7 +79,8 @@ export class LodProcessingRegisterSideBar {
           <div class="modal-header">
             <button
               class="button button-secondary close icon-cross modal-close"
-              data-target="filter"
+              data-target="modal-filter"
+              type="button"
             >
               <span>Sluit</span>
             </button>
@@ -257,6 +271,7 @@ export class LodProcessingRegisterSideBar {
                                 <button
                                   class="button button-secondary close icon-cross modal-close checkbox-filter__close"
                                   data-target={`modal-${index}`}
+                                  type="button"
                                 >
                                   <span>Sluit</span>
                                 </button>
@@ -395,7 +410,11 @@ export class LodProcessingRegisterSideBar {
             ))}
           </div>
           <div class="modal-actions">
-            <button type="submit" class="button button-primary filter__submit">
+            <button
+              data-target="modal-filter"
+              type="submit"
+              class="button button-primary filter__submit modal-close"
+            >
               Zoek
             </button>
           </div>
@@ -403,7 +422,7 @@ export class LodProcessingRegisterSideBar {
 
         <div
           class="modal-overlay modal-close"
-          data-target="filter"
+          data-target="modal-filter"
           tabindex="-1"
         ></div>
       </>

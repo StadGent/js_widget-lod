@@ -18,6 +18,10 @@ export class LodProcessingRegister {
   async componentWillLoad() {
     this.getInitialData();
     setBaseFacets();
+
+    setTimeout(() => {
+      state.initialAnimationFinished = true;
+    }, 250);
   }
 
   getInitialData = async () => {
@@ -65,64 +69,24 @@ export class LodProcessingRegister {
     return (
       <>
         <div id="lod-processing-register" class="filter-page">
-          {/* <div class="highlight sidebar-layout">
-            <div class="highlight__inner">
-              <div>
-                <p>
-                  De Algemene Verordening Gegevensbescherming verplicht ons een
-                  intern register bij te houden met al onze verwerkingen van
-                  persoonsgegevens.
-                </p>{" "}
-                <p>
-                  De Stad en OCMW Gent vinden de bescherming van jouw
-                  persoonsgegevens erg belangrijk.
-                </p>{" "}
-                <p>
-                  Daarom vind je op deze pagina een overzicht van de
-                  verwerkingen van de persoonsgegevens die we uitvoeren.
-                </p>{" "}
-                <p>
-                  Dit overzicht is een samenvatting van ons intern register dat
-                  regelmatig wordt bijgewerkt.
-                </p>{" "}
-                <p>
-                  Heb je een vraag over dit register of denk je dat er een
-                  verwerking ontbreekt, neem dan contact op met de functionaris
-                  van gegevensbescherming (DPO) via het{" "}
-                  <a href="https://formulieren.stad.gent/productie4.2/formulier/nl-NL/DefaultEnvironment/scprivacystad.aspx">
-                    contactformulier
-                  </a>{" "}
-                  of <a href="mailto:privacy@stad.gent">privacy@stad.gent</a>.
-                </p>{" "}
-                <p>
-                  Wens je meer informatie over hoe we met jouw persoonsgegevens
-                  omgaan?
-                </p>{" "}
-                <p>
-                  Lees dan de{" "}
-                  <a href="https://stad.gent/over-gent-en-het-stadsbestuur/vragen-suggesties-en-meldingen/met-respect-voor-uw-privacy">
-                    privacyverklaring op onze website
-                  </a>
-                  .
-                </p>
-              </div>
-            </div>
-          </div> */}
           <div class="sidebar-layout filter">
-            {!state.modalsMade && (
-              <lod-processing-register-sidebar-skeleton class="sidebar filter-section modal--fixed-height " />
+            {(!state.modalsMade || !state.initialAnimationFinished) && (
+              <lod-processing-register-sidebar-skeleton class="sidebar mobile-hidden filter-section modal--fixed-height " />
             )}
 
             <lod-processing-register-sidebar
-              id="filter"
-              class="modal sidebar filter-section modal--fixed-height"
+              id="modal-filter"
+              class={`modal sidebar filter-section modal--fixed-height has-custom-binding ${!state.modalsMade || !state.initialAnimationFinished ? "lod-hidden" : ""}`}
               role="dialog"
               aria-modal="true"
               aria-labelledby="filter-title"
               tabindex="-1"
             />
 
-            <section class="content result-section" id="result">
+            <section
+              class={`content result-section ${!state.modalsMade || !state.initialAnimationFinished ? "full-width-mobile" : ""}`}
+              id="result"
+            >
               {((state.appliedFilters && state.appliedFilters.length > 0) ||
                 (state.searchInputFiltered &&
                   state.searchInputFiltered.trim().length > 0)) && (
@@ -141,7 +105,7 @@ export class LodProcessingRegister {
                           >
                             <span class="tag filter ">
                               {state.searchInputFiltered}
-                              <button>
+                              <button type="button">
                                 <span class="visually-hidden">
                                   Verwijder filter {state.searchInputFiltered}
                                 </span>
@@ -160,7 +124,7 @@ export class LodProcessingRegister {
                             >
                               <span class="tag filter ">
                                 {facetChild.name}
-                                <button>
+                                <button type="button">
                                   <span class="visually-hidden">
                                     Verwijder filter {facetChild.name}
                                   </span>
@@ -182,24 +146,24 @@ export class LodProcessingRegister {
               )}
 
               <div class="filter__result-count">
-                {state?.queryData?.total_count && (
-                  <div class="filter-page-label">
-                    We vonden {state.queryData?.total_count} resultaten
-                  </div>
-                )}
+                <div class="filter-page-label">
+                  We vonden {state.queryData?.total_count} resultaten
+                </div>
+
                 <button
                   type="button"
                   class="button button-secondary icon-filter result__show-filters modal-trigger"
+                  id="modal-filter-button"
+                  aria-controls="modal-filter"
                   aria-expanded="false"
-                  aria-controls="filter"
                 >
                   Filters
                 </button>
               </div>
 
-              {!state.queryData ? (
-                <div class="skeleton-container">
-                  <div>
+              {!state.queryData || !state.initialAnimationFinished ? (
+                <div class="skeleton-container filter__results">
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -208,7 +172,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -217,7 +181,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -226,7 +190,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -235,7 +199,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -244,7 +208,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -253,7 +217,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -262,7 +226,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -271,7 +235,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>
@@ -280,7 +244,7 @@ export class LodProcessingRegister {
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-short"></div>
                   </div>
-                  <div>
+                  <div class="teaser teaser--wide">
                     <div class="skeleton skeleton-h3-long"></div>
                     <div class="skeleton skeleton-h3"></div>
                     <div class="skeleton skeleton-h3-medium"></div>

@@ -46,6 +46,7 @@ const { state, onChange } = createStore({
   searchInput: "",
   searchInputFiltered: "",
   modalFilters: {} as { [key: string]: string },
+  initialAnimationFinished: false,
 });
 
 onChange("facetFilters", (updatedFacets) => {

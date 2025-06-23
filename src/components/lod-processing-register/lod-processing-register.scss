@@ -67,3 +67,25 @@
 .skeleton-footer {
   width: 30%;
 }
+
+$grid-gutter-width: 65px;
+
+.lod-hidden {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .full-width-mobile {
+    width: 100%;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
