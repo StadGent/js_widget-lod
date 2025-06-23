@@ -16,15 +16,13 @@ export class LodPaginator {
         <h2 id="pagination_1-2017" class="visually-hidden">
           Pagination
         </h2>
-        {state.currentPage}
-        {state.totalPages}
         <ul class="pager__items">
           {/* Previous */}
           {state.currentPage !== 1 && (
             <li class="previous">
               <a
                 href="#result"
-                class="previous"
+                class="standalone-link back"
                 onClick={(e) => {
                   e.preventDefault();
                   this.blur(e);
@@ -137,8 +135,8 @@ export class LodPaginator {
           {state.currentPage !== state.totalPages && (
             <li class="next">
               <a
+                class="standalone-link"
                 href="#result"
-                class="next"
                 onClick={(e) => {
                   e.preventDefault();
                   this.blur(e);
