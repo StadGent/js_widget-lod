@@ -185,9 +185,21 @@ export namespace Components {
     interface LodPaginator {
     }
     interface LodProcessingRegister {
+        "itemsPerPage": number;
+        "openDataSoftPublicApiKey"?: string;
+        "opendataSoftEndpoint"?: string;
+        "sparqlEndpoint"?: string;
     }
     interface LodProcessingRegisterDetail {
         "processingId": string;
+    }
+    interface LodProcessingRegisterResultSkeleton {
+    }
+    interface LodProcessingRegisterResults {
+    }
+    interface LodProcessingRegisterSidebar {
+    }
+    interface LodProcessingRegisterSidebarSkeleton {
     }
     interface LodRegulationsList {
         /**
@@ -234,8 +246,6 @@ export namespace Components {
           * Types
          */
         "types": string;
-    }
-    interface LodSidebar {
     }
     interface LodTable {
         /**
@@ -331,17 +341,35 @@ declare global {
         prototype: HTMLLodProcessingRegisterDetailElement;
         new (): HTMLLodProcessingRegisterDetailElement;
     };
+    interface HTMLLodProcessingRegisterResultSkeletonElement extends Components.LodProcessingRegisterResultSkeleton, HTMLStencilElement {
+    }
+    var HTMLLodProcessingRegisterResultSkeletonElement: {
+        prototype: HTMLLodProcessingRegisterResultSkeletonElement;
+        new (): HTMLLodProcessingRegisterResultSkeletonElement;
+    };
+    interface HTMLLodProcessingRegisterResultsElement extends Components.LodProcessingRegisterResults, HTMLStencilElement {
+    }
+    var HTMLLodProcessingRegisterResultsElement: {
+        prototype: HTMLLodProcessingRegisterResultsElement;
+        new (): HTMLLodProcessingRegisterResultsElement;
+    };
+    interface HTMLLodProcessingRegisterSidebarElement extends Components.LodProcessingRegisterSidebar, HTMLStencilElement {
+    }
+    var HTMLLodProcessingRegisterSidebarElement: {
+        prototype: HTMLLodProcessingRegisterSidebarElement;
+        new (): HTMLLodProcessingRegisterSidebarElement;
+    };
+    interface HTMLLodProcessingRegisterSidebarSkeletonElement extends Components.LodProcessingRegisterSidebarSkeleton, HTMLStencilElement {
+    }
+    var HTMLLodProcessingRegisterSidebarSkeletonElement: {
+        prototype: HTMLLodProcessingRegisterSidebarSkeletonElement;
+        new (): HTMLLodProcessingRegisterSidebarSkeletonElement;
+    };
     interface HTMLLodRegulationsListElement extends Components.LodRegulationsList, HTMLStencilElement {
     }
     var HTMLLodRegulationsListElement: {
         prototype: HTMLLodRegulationsListElement;
         new (): HTMLLodRegulationsListElement;
-    };
-    interface HTMLLodSidebarElement extends Components.LodSidebar, HTMLStencilElement {
-    }
-    var HTMLLodSidebarElement: {
-        prototype: HTMLLodSidebarElement;
-        new (): HTMLLodSidebarElement;
     };
     interface HTMLLodTableElement extends Components.LodTable, HTMLStencilElement {
     }
@@ -359,8 +387,11 @@ declare global {
         "lod-paginator": HTMLLodPaginatorElement;
         "lod-processing-register": HTMLLodProcessingRegisterElement;
         "lod-processing-register-detail": HTMLLodProcessingRegisterDetailElement;
+        "lod-processing-register-result-skeleton": HTMLLodProcessingRegisterResultSkeletonElement;
+        "lod-processing-register-results": HTMLLodProcessingRegisterResultsElement;
+        "lod-processing-register-sidebar": HTMLLodProcessingRegisterSidebarElement;
+        "lod-processing-register-sidebar-skeleton": HTMLLodProcessingRegisterSidebarSkeletonElement;
         "lod-regulations-list": HTMLLodRegulationsListElement;
-        "lod-sidebar": HTMLLodSidebarElement;
         "lod-table": HTMLLodTableElement;
     }
 }
@@ -544,9 +575,21 @@ declare namespace LocalJSX {
     interface LodPaginator {
     }
     interface LodProcessingRegister {
+        "itemsPerPage"?: number;
+        "openDataSoftPublicApiKey"?: string;
+        "opendataSoftEndpoint"?: string;
+        "sparqlEndpoint"?: string;
     }
     interface LodProcessingRegisterDetail {
         "processingId"?: string;
+    }
+    interface LodProcessingRegisterResultSkeleton {
+    }
+    interface LodProcessingRegisterResults {
+    }
+    interface LodProcessingRegisterSidebar {
+    }
+    interface LodProcessingRegisterSidebarSkeleton {
     }
     interface LodRegulationsList {
         /**
@@ -593,8 +636,6 @@ declare namespace LocalJSX {
           * Types
          */
         "types"?: string;
-    }
-    interface LodSidebar {
     }
     interface LodTable {
         /**
@@ -644,8 +685,11 @@ declare namespace LocalJSX {
         "lod-paginator": LodPaginator;
         "lod-processing-register": LodProcessingRegister;
         "lod-processing-register-detail": LodProcessingRegisterDetail;
+        "lod-processing-register-result-skeleton": LodProcessingRegisterResultSkeleton;
+        "lod-processing-register-results": LodProcessingRegisterResults;
+        "lod-processing-register-sidebar": LodProcessingRegisterSidebar;
+        "lod-processing-register-sidebar-skeleton": LodProcessingRegisterSidebarSkeleton;
         "lod-regulations-list": LodRegulationsList;
-        "lod-sidebar": LodSidebar;
         "lod-table": LodTable;
     }
 }
@@ -662,8 +706,11 @@ declare module "@stencil/core" {
             "lod-paginator": LocalJSX.LodPaginator & JSXBase.HTMLAttributes<HTMLLodPaginatorElement>;
             "lod-processing-register": LocalJSX.LodProcessingRegister & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterElement>;
             "lod-processing-register-detail": LocalJSX.LodProcessingRegisterDetail & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterDetailElement>;
+            "lod-processing-register-result-skeleton": LocalJSX.LodProcessingRegisterResultSkeleton & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterResultSkeletonElement>;
+            "lod-processing-register-results": LocalJSX.LodProcessingRegisterResults & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterResultsElement>;
+            "lod-processing-register-sidebar": LocalJSX.LodProcessingRegisterSidebar & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterSidebarElement>;
+            "lod-processing-register-sidebar-skeleton": LocalJSX.LodProcessingRegisterSidebarSkeleton & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterSidebarSkeletonElement>;
             "lod-regulations-list": LocalJSX.LodRegulationsList & JSXBase.HTMLAttributes<HTMLLodRegulationsListElement>;
-            "lod-sidebar": LocalJSX.LodSidebar & JSXBase.HTMLAttributes<HTMLLodSidebarElement>;
             "lod-table": LocalJSX.LodTable & JSXBase.HTMLAttributes<HTMLLodTableElement>;
         }
     }

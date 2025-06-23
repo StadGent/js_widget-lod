@@ -21,6 +21,7 @@ export interface FacetChild {
 
 export interface FacetData {
   id: string;
+  uri: string;
   processor: string;
   type: string;
   name: string;
@@ -46,6 +47,13 @@ const { state, onChange } = createStore({
   searchInput: "",
   searchInputFiltered: "",
   modalFilters: {} as { [key: string]: string },
+  initialAnimationFinished: false,
+  itemsPerPage: 10,
+  opendataSoftEndpoint:
+    "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent",
+  sparqlEndpoint: "https://stad.gent/sparql",
+  openDataSoftPublicApiKey:
+    "c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204",
 });
 
 onChange("facetFilters", (updatedFacets) => {
@@ -62,7 +70,9 @@ onChange("checkedFacets", (updatedFacets) => {
 });
 
 onChange("queryData", (updatedQueryData) => {
-  state.totalPages = Math.ceil(updatedQueryData.total_count / 10);
+  state.totalPages = Math.ceil(
+    updatedQueryData.total_count / state.itemsPerPage,
+  );
 });
 
 const updateFacetCount = debounce(() => {
@@ -174,8 +184,8 @@ export const updateData = async (newFilters?: boolean) => {
     params.set("where", `name like '%${state.searchInputFiltered}%'`);
   }
 
-  params.set("offset", `${(state.currentPage - 1) * 10}`);
-  params.set("limit", `10`);
+  params.set("offset", `${(state.currentPage - 1) * state.itemsPerPage}`);
+  params.set("limit", state.itemsPerPage.toString());
 
   const newUrl = `${window.location.pathname}?${params.toString()}`;
   window.history.replaceState(null, "", newUrl);

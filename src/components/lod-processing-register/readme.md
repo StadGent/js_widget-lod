@@ -14,8 +14,8 @@
 ### Graph
 ```mermaid
 graph TD;
-  lod-processing-register --> lod-sidebar
-  style lod-sidebar fill:#f9f,stroke:#333,stroke-width:4px
+  lod-processing-register --> lod-processing-register-sidebar-skeleton
+  style lod-processing-register-sidebar-skeleton fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------
