@@ -189,6 +189,8 @@ export namespace Components {
     interface LodProcessingRegisterDetail {
         "processingId": string;
     }
+    interface LodProcessingRegisterResultSkeleton {
+    }
     interface LodProcessingRegisterSidebar {
     }
     interface LodProcessingRegisterSidebarSkeleton {
@@ -333,6 +335,12 @@ declare global {
         prototype: HTMLLodProcessingRegisterDetailElement;
         new (): HTMLLodProcessingRegisterDetailElement;
     };
+    interface HTMLLodProcessingRegisterResultSkeletonElement extends Components.LodProcessingRegisterResultSkeleton, HTMLStencilElement {
+    }
+    var HTMLLodProcessingRegisterResultSkeletonElement: {
+        prototype: HTMLLodProcessingRegisterResultSkeletonElement;
+        new (): HTMLLodProcessingRegisterResultSkeletonElement;
+    };
     interface HTMLLodProcessingRegisterSidebarElement extends Components.LodProcessingRegisterSidebar, HTMLStencilElement {
     }
     var HTMLLodProcessingRegisterSidebarElement: {
@@ -367,6 +375,7 @@ declare global {
         "lod-paginator": HTMLLodPaginatorElement;
         "lod-processing-register": HTMLLodProcessingRegisterElement;
         "lod-processing-register-detail": HTMLLodProcessingRegisterDetailElement;
+        "lod-processing-register-result-skeleton": HTMLLodProcessingRegisterResultSkeletonElement;
         "lod-processing-register-sidebar": HTMLLodProcessingRegisterSidebarElement;
         "lod-processing-register-sidebar-skeleton": HTMLLodProcessingRegisterSidebarSkeletonElement;
         "lod-regulations-list": HTMLLodRegulationsListElement;
@@ -557,6 +566,8 @@ declare namespace LocalJSX {
     interface LodProcessingRegisterDetail {
         "processingId"?: string;
     }
+    interface LodProcessingRegisterResultSkeleton {
+    }
     interface LodProcessingRegisterSidebar {
     }
     interface LodProcessingRegisterSidebarSkeleton {
@@ -655,6 +666,7 @@ declare namespace LocalJSX {
         "lod-paginator": LodPaginator;
         "lod-processing-register": LodProcessingRegister;
         "lod-processing-register-detail": LodProcessingRegisterDetail;
+        "lod-processing-register-result-skeleton": LodProcessingRegisterResultSkeleton;
         "lod-processing-register-sidebar": LodProcessingRegisterSidebar;
         "lod-processing-register-sidebar-skeleton": LodProcessingRegisterSidebarSkeleton;
         "lod-regulations-list": LodRegulationsList;
@@ -674,6 +686,7 @@ declare module "@stencil/core" {
             "lod-paginator": LocalJSX.LodPaginator & JSXBase.HTMLAttributes<HTMLLodPaginatorElement>;
             "lod-processing-register": LocalJSX.LodProcessingRegister & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterElement>;
             "lod-processing-register-detail": LocalJSX.LodProcessingRegisterDetail & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterDetailElement>;
+            "lod-processing-register-result-skeleton": LocalJSX.LodProcessingRegisterResultSkeleton & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterResultSkeletonElement>;
             "lod-processing-register-sidebar": LocalJSX.LodProcessingRegisterSidebar & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterSidebarElement>;
             "lod-processing-register-sidebar-skeleton": LocalJSX.LodProcessingRegisterSidebarSkeleton & JSXBase.HTMLAttributes<HTMLLodProcessingRegisterSidebarSkeletonElement>;
             "lod-regulations-list": LocalJSX.LodRegulationsList & JSXBase.HTMLAttributes<HTMLLodRegulationsListElement>;

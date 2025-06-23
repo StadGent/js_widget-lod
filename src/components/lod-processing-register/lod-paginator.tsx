@@ -1,4 +1,4 @@
-import { Component, h, Fragment } from "@stencil/core";
+import { Component, h } from "@stencil/core";
 import state, { updatePage } from "./store";
 
 @Component({
