@@ -15,12 +15,26 @@ declare global {
   styleUrl: "lod-processing-register.scss",
 })
 export class LodProcessingRegister {
-  @Prop() itemsPerPage: number;
-  @Prop() sparqlEndpoint?: string;
+  /**
+   * Items that should be shown per page
+   */
+  @Prop() itemsPerPage: number = 10;
+  /**
+   * Custom sparqlEndpoint
+   */
+  @Prop() sparqlEndpoint?: string = "https://stad.gent/sparql";
+  /**
+   * Custom open data soft endpoint
+   */
   @Prop()
-  opendataSoftEndpoint?: string;
+  opendataSoftEndpoint?: string =
+    "https://data.stad.gent/api/explore/v2.1/catalog/datasets/verwerkingsregister-stad-gent";
+  /**
+   * Custom PUBLIC api key for open data soft
+   */
   @Prop()
-  openDataSoftPublicApiKey?: string;
+  openDataSoftPublicApiKey?: string =
+    "c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204";
 
   async componentWillLoad() {
     if (this.itemsPerPage) {

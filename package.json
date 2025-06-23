@@ -1,6 +1,6 @@
 {
   "name": "@district09/lod-widgets",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -44,6 +44,10 @@
     "./lod-card": {
       "import": "./dist/components/lod-card.js",
       "types": "./dist/components/lod-card.ts"
+    },
+    "./lod-processing-register": {
+      "import": "./dist/components/lod-processing-register.js",
+      "types": "./dist/components/lod-processing-register.ts"
     },
     "./loader": {
       "import": "./loader/index.js",

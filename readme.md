@@ -63,7 +63,9 @@ Need help? Check out the docs [here](https://stenciljs.com/docs/my-first-compone
 - LodOpeningHours
   - HTML: <lod-opening-hours/>
   - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-opening-hours/readme.md)
-
+- LodProcessingRegister
+  - HTML: <lod-opening-hours/>
+  - [Documentation](https://github.com/StadGent/js_widget-lod/blob/main/src/components/lod-processing-register/readme.md)
 ### Using the components
 
 You can install the components with npm and just use import

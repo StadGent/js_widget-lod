@@ -185,9 +185,21 @@ export namespace Components {
     interface LodPaginator {
     }
     interface LodProcessingRegister {
+        /**
+          * Items that should be shown per page
+         */
         "itemsPerPage": number;
+        /**
+          * Custom PUBLIC api key for open data soft
+         */
         "openDataSoftPublicApiKey"?: string;
+        /**
+          * Custom open data soft endpoint
+         */
         "opendataSoftEndpoint"?: string;
+        /**
+          * Custom sparqlEndpoint
+         */
         "sparqlEndpoint"?: string;
     }
     interface LodProcessingRegisterDetail {
@@ -575,9 +587,21 @@ declare namespace LocalJSX {
     interface LodPaginator {
     }
     interface LodProcessingRegister {
+        /**
+          * Items that should be shown per page
+         */
         "itemsPerPage"?: number;
+        /**
+          * Custom PUBLIC api key for open data soft
+         */
         "openDataSoftPublicApiKey"?: string;
+        /**
+          * Custom open data soft endpoint
+         */
         "opendataSoftEndpoint"?: string;
+        /**
+          * Custom sparqlEndpoint
+         */
         "sparqlEndpoint"?: string;
     }
     interface LodProcessingRegisterDetail {

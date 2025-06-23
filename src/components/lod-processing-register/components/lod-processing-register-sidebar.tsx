@@ -1,17 +1,20 @@
 import { Component, h, Fragment } from "@stencil/core";
 import Modal from "@digipolis-gent/modal";
-import "../../assets/accordion.js";
+import "../../../assets/accordion.js";
 import state, {
   toggleChecked,
   updateData,
   updateModalSearchFilter,
   updateSearchInput,
-} from "./store.js";
-import { capitalizeFirstLetter, toKebabCase } from "../../utils/utils.js";
-import { useTranslations } from "../../i18n/utils.js";
+} from "../store.js";
+import { capitalizeFirstLetter, toKebabCase } from "../../../utils/utils.js";
+import { useTranslations } from "../../../i18n/utils.js";
 
 const t = useTranslations("nl");
 
+/**
+ * @internal
+ */
 @Component({
   tag: "lod-processing-register-sidebar",
   shadow: false,

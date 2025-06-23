@@ -4,6 +4,10 @@ import { Component, h } from "@stencil/core";
   tag: "lod-processing-register-sidebar-skeleton",
   shadow: false,
 })
+
+/**
+ * @internal
+ */
 export class LodProcessingRegisterSidebarSkeleton {
   render() {
     return (
