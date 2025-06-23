@@ -96,9 +96,8 @@ export class LodProcessingRegister {
         <div id="lod-processing-register" class="filter-page">
           <div class="sidebar-layout filter">
             {(!state.modalsMade || !state.initialAnimationFinished) && (
-              <lod-processing-register-sidebar-skeleton class="sidebar mobile-hidden filter-section modal--fixed-height " />
+              <lod-processing-register-sidebar-skeleton class="sidebar lod-mobile-hidden filter-section modal--fixed-height " />
             )}
-
             <lod-processing-register-sidebar
               id="modal-filter"
               class={`modal sidebar filter-section modal--fixed-height has-custom-binding ${!state.modalsMade || !state.initialAnimationFinished ? "lod-hidden" : ""}`}
@@ -107,9 +106,8 @@ export class LodProcessingRegister {
               aria-labelledby="filter-title"
               tabindex="-1"
             />
-
             <section
-              class={`content result-section ${!state.modalsMade || !state.initialAnimationFinished ? "full-width-mobile" : ""}`}
+              class={`content result-section ${!state.modalsMade || !state.initialAnimationFinished ? "lod-full-width-mobile" : ""}`}
               id="result"
             >
               {((state.appliedFilters && state.appliedFilters.length > 0) ||
@@ -170,7 +168,9 @@ export class LodProcessingRegister {
                 </div>
               )}
 
-              <div class="filter__result-count">
+              <div
+                class={`filter__result-count ${!state.modalsMade || !state.initialAnimationFinished ? "lod-hidden" : ""}`}
+              >
                 <div class="filter-page-label">
                   We vonden {state.queryData?.total_count} resultaten
                 </div>
