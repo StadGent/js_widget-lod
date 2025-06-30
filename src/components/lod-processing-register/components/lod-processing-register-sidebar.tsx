@@ -436,15 +436,6 @@ export class LodProcessingRegisterSideBar {
               </div>
             ))}
           </div>
-          <div class="modal-actions">
-            <button
-              data-target="modal-filter"
-              type="submit"
-              class="button button-primary filter__submit modal-close"
-            >
-              Zoek
-            </button>
-          </div>
         </form>
 
         <div

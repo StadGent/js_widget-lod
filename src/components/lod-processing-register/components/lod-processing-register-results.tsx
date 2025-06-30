@@ -20,19 +20,19 @@ export class LodProcessingRegisterResults {
                 <h3 class="h4">{item.name}</h3>
                 <dl>
                   {item?.type && item?.type.length > 0 && (
-                    <div>
+                    <div class="lod-description-row">
                       <dt>Categorie</dt> <dd>{item.type}</dd>
                     </div>
                   )}
                   {item?.processor && item?.processor.length > 0 && (
-                    <div>
+                    <div class="lod-description-row">
                       <dt>Verwerkende dienst</dt>
                       <dd>{item.processor}</dd>
                     </div>
                   )}
                   {item?.formal_framework &&
                     item?.formal_framework.length > 0 && (
-                      <div>
+                      <div class="lod-description-row">
                         <dt>Rechtmatigheid</dt>
                         <dd>{item.formal_framework}</dd>
                       </div>

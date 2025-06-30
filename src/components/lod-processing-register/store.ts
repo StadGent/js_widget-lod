@@ -216,6 +216,7 @@ export const toggleChecked = (facet: string, facetChild: string) => {
     };
   });
   setNewFacetCounts();
+  updateData(true);
 };
 
 export const updatePage = (page: number) => {
