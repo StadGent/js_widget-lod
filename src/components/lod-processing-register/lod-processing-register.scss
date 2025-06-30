@@ -89,3 +89,12 @@ $grid-gutter-width: 65px;
 .lod-full-width {
   width: 100% !important;
 }
+
+@media (min-width: 960px) {
+  .lod-description-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    word-break: normal;
+  }
+}

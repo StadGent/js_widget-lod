@@ -59,9 +59,9 @@ export async function getPersonalDataProcessingList(
 export async function getPersonalDataProcessingList(param: string | number) {
   let baseUrl = "";
   if (typeof param === "number") {
-    baseUrl = `${state.opendataSoftEndpoint}/records?limit=${state.itemsPerPage}&offset=${param}&apikey=${state.openDataSoftPublicApiKey}`;
+    baseUrl = `${state.opendataSoftEndpoint}/records?limit=${state.itemsPerPage}&offset=${param}&order_by=name&apikey=${state.openDataSoftPublicApiKey}`;
   } else {
-    baseUrl = `${state.opendataSoftEndpoint}/records${param.startsWith("?") ? "" : "?"}${param}&apikey=${state.openDataSoftPublicApiKey}`;
+    baseUrl = `${state.opendataSoftEndpoint}/records${param.startsWith("?") ? "" : "?"}${param}&order_by=name&apikey=${state.openDataSoftPublicApiKey}`;
   }
   return fetchJson(baseUrl);
 }
