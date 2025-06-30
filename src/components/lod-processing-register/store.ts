@@ -45,6 +45,7 @@ const { state, onChange } = createStore({
   totalPages: undefined as number | undefined,
   currentPage: undefined as number | undefined,
   searchInput: "",
+  isUpdatingData: false,
   searchInputFiltered: "",
   modalFilters: {} as { [key: string]: string },
   initialAnimationFinished: false,
@@ -75,14 +76,15 @@ onChange("queryData", (updatedQueryData) => {
   );
 });
 
-const updateFacetCount = debounce(() => {
+const updateFacetCount = () => {
   setNewFacetCounts();
-}, 400); // Wait 400ms after user stops typing
+}; // Wait 400ms after user stops typing
 
-export const updateSearchInput = (event: any) => {
+export const updateSearchInput = debounce((event: any) => {
   state.searchInput = event.target.value;
   updateFacetCount();
-};
+  updateData(true);
+}, 700);
 
 export const setNewFacetCounts = async () => {
   const data = await getBaseFacets(
@@ -154,6 +156,7 @@ export const updateModalSearchFilter = (event: any, facetName: string) => {
 };
 
 export const updateData = async (newFilters?: boolean) => {
+  state.isUpdatingData = true;
   state.searchInputFiltered = state.searchInput;
   if (newFilters) {
     state.currentPage = 1;
@@ -190,16 +193,14 @@ export const updateData = async (newFilters?: boolean) => {
   const newUrl = `${window.location.pathname}?${params.toString()}`;
   window.history.replaceState(null, "", newUrl);
 
-  params.set(
-    "apikey",
-    "c5e39099e6c0c9d23041ef66b64cf82df92f31f27291836b97d57204",
-  );
+  params.set("apikey", state.openDataSoftPublicApiKey);
 
   state.queryData = await getPersonalDataProcessingList(params.toString());
 
   document.getElementById("lod-processing-register").scrollIntoView();
   state.appliedFilters = state.disjunctiveFacets;
   updateFacetCount();
+  state.isUpdatingData = false;
 };
 
 export const toggleChecked = (facet: string, facetChild: string) => {

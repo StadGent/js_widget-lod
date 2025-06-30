@@ -96,6 +96,7 @@ export class LodProcessingRegisterSideBar {
               <div class="form-columns">
                 <div class="form-item-column">
                   <input
+                    disabled={state.isUpdatingData}
                     type="text"
                     id="lod-processing-register-name"
                     class="text"
@@ -125,6 +126,7 @@ export class LodProcessingRegisterSideBar {
                           {facet.facets.map((facetChild) => (
                             <div class="checkbox">
                               <input
+                                disabled={state.isUpdatingData}
                                 type="checkbox"
                                 id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                 name="checkboxes-dynamic"
@@ -170,6 +172,7 @@ export class LodProcessingRegisterSideBar {
                             {facet.facets.slice(0, 3)?.map((facetChild) => (
                               <div class="checkbox">
                                 <input
+                                  disabled={state.isUpdatingData}
                                   type="checkbox"
                                   id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                   name="checkboxes-dynamic"
@@ -203,6 +206,7 @@ export class LodProcessingRegisterSideBar {
                               {facet.facets.slice(3).map((facetChild) => (
                                 <div class="checkbox">
                                   <input
+                                    disabled={state.isUpdatingData}
                                     type="checkbox"
                                     id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                     name="checkboxes-dynamic"
@@ -263,6 +267,7 @@ export class LodProcessingRegisterSideBar {
                                 class="checkbox preview"
                               >
                                 <input
+                                  disabled={state.isUpdatingData}
                                   type="checkbox"
                                   value={`${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                   class="checkbox"
@@ -311,6 +316,7 @@ export class LodProcessingRegisterSideBar {
 
                                 <div class="form-item checkbox-filter__filter__search-wrapper">
                                   <input
+                                    disabled={state.isUpdatingData}
                                     type="search"
                                     id={`checkboxes__filter_id_${index}`}
                                     class="checkbox-filter__filter"
@@ -370,6 +376,7 @@ export class LodProcessingRegisterSideBar {
                                               class="checkbox"
                                             >
                                               <input
+                                                disabled={state.isUpdatingData}
                                                 type="checkbox"
                                                 id={`input-${toKebabCase(facet.name)}-${toKebabCase(facetChild.name)}`}
                                                 name="checkboxes-dynamic"
