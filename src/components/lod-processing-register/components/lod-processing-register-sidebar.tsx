@@ -443,6 +443,17 @@ export class LodProcessingRegisterSideBar {
               </div>
             ))}
           </div>
+          <div class="hidden-desktop">
+            <div class="modal-actions ">
+              <button
+                data-target="modal-filter"
+                type="button"
+                class="button button-primary filter__submit modal-close"
+              >
+                Zoek
+              </button>
+            </div>
+          </div>
         </form>
 
         <div
