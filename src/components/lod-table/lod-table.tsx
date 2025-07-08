@@ -177,7 +177,7 @@ export class LodTable {
   }
 
   async incrementPage() {
-    if (this.page < this.count) {
+    if (this.page < Math.ceil(this.count / this.itemsPerPage)) {
       this.queryModified = this.queryWithoutLimit;
       this.page += 1;
       this.paginationString = `LIMIT ${this.itemsPerPage} OFFSET ${this.itemsPerPage * this.page - this.itemsPerPage}`;
@@ -253,7 +253,7 @@ export class LodTable {
                         this.headers.map((header) => (
                           <Fragment>
                             <dt>{this.formatHeader(header)}</dt>
-                            <dd>{item?.[header].value}</dd>
+                            <dd>{item?.[header]?.value}</dd>
                           </Fragment>
                         ))}
                     </dl>
@@ -309,7 +309,7 @@ export class LodTable {
                     this.visualPage === this.page ? this.incrementPage() : null
                   }
                   style={{
-                    display: this.visualPage === this.count ? "none" : "block",
+                    display: this.visualPage === Math.ceil(this.count / this.itemsPerPage) ? "none" : "block",
                   }}
                   id="next"
                   class="next"
