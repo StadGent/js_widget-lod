@@ -7,6 +7,7 @@
 
   .table-list {
     padding-bottom: 0;
+    display: none;
   }
 
   td {
@@ -79,5 +80,15 @@
   #next {
     cursor: pointer;
     display: block;
+  }
+
+  @media screen and (max-width: 768px) {
+    .responsive-table {
+      display: none;
+    }
+
+    .table-list {
+      display: block;
+    }
   }
 }
