@@ -45,7 +45,7 @@ export class LodProcessingRegisterResults {
               </div>
             </article>
             <a
-              href="{item.uri}"
+              href={item.uri}
               class="teaser-overlay-link"
               tabindex="-1"
               aria-hidden="true"
