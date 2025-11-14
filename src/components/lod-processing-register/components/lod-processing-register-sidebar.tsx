@@ -105,7 +105,17 @@ export class LodProcessingRegisterSideBar {
                       event.preventDefault();
                       updateSearchInput(event);
                     }}
+                    style={{ marginBottom: ".5rem" }}
                   />
+
+                  <button
+                    type="button"
+                    class="button button-secondary button-small icon-left icon-search lod-mobile-hidden"
+                    disabled={state.isUpdatingData}
+                    onClick={() => updateData(true)}
+                  >
+                    Zoek
+                  </button>
                 </div>
                 <div class="form-item-column"></div>
               </div>
