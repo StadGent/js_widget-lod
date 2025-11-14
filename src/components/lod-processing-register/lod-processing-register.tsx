@@ -68,7 +68,7 @@ export class LodProcessingRegister {
     if (offsetString && offsetString.length > 0) {
       const nameFilter = params
         .get("where")
-        ?.match(/name\s+like\s+'%(.+)%'/)?.[1];
+        ?.match(/search\(name,\s*"(.+?)"\)/)?.[1];
       if (nameFilter && nameFilter.length > 0) {
         state.searchInput = nameFilter;
         state.searchInputFiltered = nameFilter;

@@ -184,7 +184,7 @@ export const updateData = async (newFilters?: boolean) => {
   );
 
   if (state.searchInputFiltered.trim().length > 1) {
-    params.set("where", `name like '%${state.searchInputFiltered}%'`);
+    params.set("where", `search(name, "${state.searchInputFiltered}")`);
   }
 
   params.set("offset", `${(state.currentPage - 1) * state.itemsPerPage}`);

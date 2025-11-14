@@ -24,7 +24,7 @@ export async function getBaseFacets(
   );
 
   if (isString(name)) {
-    params.set("where", `name like '%${name}%'`);
+    params.set("where", `search(name, "${name}")`);
   }
 
   // Add additional facet parameters
