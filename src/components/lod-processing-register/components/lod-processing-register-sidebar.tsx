@@ -459,6 +459,7 @@ export class LodProcessingRegisterSideBar {
                 data-target="modal-filter"
                 type="button"
                 class="button button-primary filter__submit modal-close"
+                onClick={() => updateData(true)}
               >
                 Zoek
               </button>

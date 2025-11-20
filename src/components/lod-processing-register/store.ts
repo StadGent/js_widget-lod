@@ -3,7 +3,6 @@ import {
   getBaseFacets,
   getPersonalDataProcessingList,
 } from "../../services/queries";
-import { debounce } from "../../i18n/utils";
 import { isString } from "../../utils/utils";
 
 export interface Facet {
@@ -78,13 +77,11 @@ onChange("queryData", (updatedQueryData) => {
 
 const updateFacetCount = () => {
   setNewFacetCounts();
-}; // Wait 400ms after user stops typing
+};
 
-export const updateSearchInput = debounce((event: any) => {
+export const updateSearchInput = (event: any) => {
   state.searchInput = event.target.value;
-  updateFacetCount();
-  updateData(true);
-}, 700);
+};
 
 export const setNewFacetCounts = async () => {
   const data = await getBaseFacets(
