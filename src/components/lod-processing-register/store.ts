@@ -75,6 +75,45 @@ onChange("queryData", (updatedQueryData) => {
   );
 });
 
+/**
+ * Natural sort comparator for facet values
+ * Handles alphanumeric sorting (e.g., "3-00", "K.", "N2:", "N3:")
+ */
+const naturalSort = (a: FacetChild, b: FacetChild): number => {
+  const nameA = a.name;
+  const nameB = b.name;
+
+  // Split strings into parts (numbers and non-numbers)
+  const splitRegex = /(\d+)/;
+  const partsA = nameA.split(splitRegex);
+  const partsB = nameB.split(splitRegex);
+
+  const maxLength = Math.max(partsA.length, partsB.length);
+
+  for (let i = 0; i < maxLength; i++) {
+    const partA = partsA[i] || '';
+    const partB = partsB[i] || '';
+
+    // Check if both parts are numeric
+    const numA = parseInt(partA, 10);
+    const numB = parseInt(partB, 10);
+
+    if (!isNaN(numA) && !isNaN(numB)) {
+      // Compare numerically
+      if (numA !== numB) {
+        return numA - numB;
+      }
+    } else {
+      // Compare lexicographically
+      if (partA !== partB) {
+        return partA.localeCompare(partB);
+      }
+    }
+  }
+
+  return 0;
+};
+
 const updateFacetCount = () => {
   setNewFacetCounts();
 };
@@ -108,7 +147,8 @@ export const setNewFacetCounts = async () => {
             ...facetChild,
             count: updatedChild ? updatedChild.count : 0,
           };
-        }),
+        })
+        .sort(naturalSort),
     };
   });
 
@@ -121,7 +161,7 @@ export const setBaseFacets = async () => {
 
   state.baseFacets = data.facets.map((facetGroup) => ({
     ...facetGroup,
-    facets: facetGroup.facets.filter((f) => f.name !== ""),
+    facets: facetGroup.facets.filter((f) => f.name !== "").sort(naturalSort),
   }));
 
   data.facets.forEach((facet) => {
@@ -138,7 +178,7 @@ export const setBaseFacets = async () => {
           .getAll("refine")
           .includes(`${facet.name}:${facetChild.name}`),
       };
-    }),
+    }).sort(naturalSort),
   }));
 
   await setNewFacetCounts();
