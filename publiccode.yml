@@ -1,0 +1,45 @@
+publiccodeYmlVersion: 0.5.0
+name: LOD Widget
+url: https://github.com/StadGent/js_widget-lod
+softwareVersion: 1.6.8
+releaseDate: 2024-09-10
+platforms:
+  - web
+categories:
+  - data-analytics
+  - knowledge-management
+  - data-visualization
+  - SPARQL clients
+  - Linked Open Data
+developmentStatus: stable
+softwareType: standalone/web
+description:
+  en:
+    localisedName: LOD Widget
+    shortDescription: A collection of web components designed to display Linked Open
+      Data from Belgian government and civic sources.
+    longDescription: LOD Widgets (@district09/lod-widgets) is a Stencil-based web
+      component library that provides ready-to-use interfaces for displaying
+      structured data from the city of Ghent's open data infrastructure. The
+      library transforms complex SPARQL queries and REST API calls into simple
+      HTML tags that can be embedded in any web application or website.
+    features:
+      - "Web Component–Based Integration: Uses standard Web Components that work
+        in any HTML application"
+      - "Self-Contained Components: No external framework dependency required"
+      - "Address Display Features: Displays structured address information from
+        the Flemish address registry"
+      - "Data Visualization with Cards: SPARQL-powered data querying"
+      - "Linked Open Data (LOD) Friendly: Designed for Linked Open Data
+        consumption"
+legal:
+  license: MIT
+maintenance:
+  type: internal
+  contacts:
+    - name: District09
+      email: ttweb@district09.gent
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - en
