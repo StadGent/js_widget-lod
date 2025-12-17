@@ -9,16 +9,16 @@ categories:
   - data-analytics
   - knowledge-management
   - data-visualization
-  - SPARQL clients
-  - Linked Open Data
 developmentStatus: stable
 softwareType: standalone/web
 description:
   en:
     localisedName: LOD Widget
-    shortDescription: A collection of web components designed to display Linked Open
+    shortDescription:
+      A collection of web components designed to display Linked Open
       Data from Belgian government and civic sources.
-    longDescription: LOD Widgets (@district09/lod-widgets) is a Stencil-based web
+    longDescription:
+      LOD Widgets (@district09/lod-widgets) is a Stencil-based web
       component library that provides ready-to-use interfaces for displaying
       structured data from the city of Ghent's open data infrastructure. The
       library transforms complex SPARQL queries and REST API calls into simple
