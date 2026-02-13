@@ -12,7 +12,7 @@ export async function getBaseFacets(
   disjunctiveFacets?: Facet[],
   checkedFacets?: Facet[],
 ) {
-  const baseUrl = `${state.opendataSoftEndpoint}/facets?facet=processor&facet=personaldata&facet=grantees&facet=type&facet=formal_framework&facet=audience`;
+  const baseUrl = `${state.opendataSoftEndpoint}/facets?facet=processor&facet=personaldata&facet=grantees&facet=type&facet=formal_framework&facet=audience&refine=audience:burger`;
   const url = new URL(baseUrl);
 
   const params = new URLSearchParams();
@@ -46,7 +46,7 @@ export async function getBaseFacets(
   // Remove audience from facets
   const data = await fetchJson(`${url.toString()}&${params.toString()}`);
   data.facets = data.facets.filter((facet) => facet.name !== "audience");
-  return fetchJson(`${url.toString()}&${params.toString()}`);
+  return data;
 }
 
 export async function getPersonalDataProcessingList(
@@ -59,9 +59,9 @@ export async function getPersonalDataProcessingList(
 export async function getPersonalDataProcessingList(param: string | number) {
   let baseUrl = "";
   if (typeof param === "number") {
-    baseUrl = `${state.opendataSoftEndpoint}/records?limit=${state.itemsPerPage}&offset=${param}&order_by=name&apikey=${state.openDataSoftPublicApiKey}`;
+    baseUrl = `${state.opendataSoftEndpoint}/records?limit=${state.itemsPerPage}&offset=${param}&order_by=name&refine=audience:burger&apikey=${state.openDataSoftPublicApiKey}`;
   } else {
-    baseUrl = `${state.opendataSoftEndpoint}/records${param.startsWith("?") ? "" : "?"}${param}&order_by=name&apikey=${state.openDataSoftPublicApiKey}`;
+    baseUrl = `${state.opendataSoftEndpoint}/records${param.startsWith("?") ? "" : "?"}${param}&order_by=name&refine=audience:burger&apikey=${state.openDataSoftPublicApiKey}`;
   }
   return fetchJson(baseUrl);
 }
