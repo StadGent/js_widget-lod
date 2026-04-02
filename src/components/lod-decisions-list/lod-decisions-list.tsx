@@ -128,7 +128,7 @@ export class LodDecisionsList {
         VALUES ?concept { ` +
         conceptsArray.map((concept) => `<${concept.trim()}>`).join(" ") +
         ` }
-        FILTER (!CONTAINS(STR(?url), "/notulen"))
+        FILTER (REGEX(STR(?url), "/agendapunten/[0-9]"))
         FILTER (!CONTAINS(STR(?orgaan), "personeel"))
         FILTER (!CONTAINS(STR(?orgaan), "gemeenteraad"))
       `;
